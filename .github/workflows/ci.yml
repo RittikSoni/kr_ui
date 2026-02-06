@@ -29,15 +29,15 @@ jobs:
         run: melos bootstrap
 
       - name: 🔍 Run Flutter analyze
-        run: melos run analyze
+        run: melos exec -- flutter analyze
         continue-on-error: false
 
       - name: 💅 Check formatting
-        run: dart format --set-exit-if-changed .
+        run: melos exec -- dart format --set-exit-if-changed .
         continue-on-error: false
 
       - name: 🧪 Run tests
-        run: melos run test
+        run: melos exec --dir-exists=test -- flutter test
         continue-on-error: false
 
       - name: 🏗️ Build kr_ui_docs (web)
