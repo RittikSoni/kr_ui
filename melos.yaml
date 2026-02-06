@@ -1,0 +1,51 @@
+name: kr_ui
+
+packages:
+  - packages/kr_ui
+  - apps/kr_ui_docs
+
+command:
+  bootstrap:
+    environment:
+      sdk: ">=3.6.0 <4.0.0"
+      flutter: ">=3.27.0"
+
+scripts:
+  # Launch showcase app
+  demo:
+    run: cd apps/kr_ui_docs && flutter run -d chrome
+    description: Launch the showcase app in Chrome
+    
+  demo:mobile:
+    run: cd apps/kr_ui_docs && flutter run
+    description: Launch the showcase app on mobile device
+
+  # Analyze all packages
+  analyze:
+    run: melos exec -- flutter analyze .
+    description: Run static analysis on all packages
+
+  # Format all code
+  format:
+    run: melos exec -- dart format .
+    description: Format all Dart code
+
+  # Test all packages
+  test:
+    run: melos exec --dir-exists=test -- flutter test
+    description: Run tests for all packages
+
+  # Publish to pub.dev (dry-run)
+  publish:dry:
+    run: cd packages/kr_ui && dart pub publish --dry-run
+    description: Dry-run publish to pub.dev
+
+  # Publish to pub.dev (production)
+  publish:
+    run: cd packages/kr_ui && dart pub publish
+    description: Publish kr_ui to pub.dev
+
+  # Clean all packages
+  clean:
+    run: melos exec -- flutter clean
+    description: Clean all packages

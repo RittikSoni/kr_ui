@@ -1,0 +1,23 @@
+# flutter pub get
+# dart run flutter_launcher_icons
+
+dev_dependencies:
+  flutter_launcher_icons: "^0.14.4"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "../../assets/logo/krui_logo_only.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "../../assets/logo/krui_logo_only.png"
+    background_color: "#000000"
+    theme_color: "#000000"
+  windows:
+    generate: true
+    image_path: "../../assets/logo/krui_logo_only.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "../../assets/logo/krui_logo_only.png"

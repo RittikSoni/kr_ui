@@ -1,0 +1,16 @@
+name: kr_ui_workspace
+description: King Rittik's Premium UI Components - Workspace Root
+publish_to: none
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
+
+# Pub Workspaces (Flutter 3.27+ native feature)
+workspace:
+  - packages/kr_ui
+  - apps/kr_ui_docs
+
+dev_dependencies:
+  melos: ^7.3.0
+  flutter_lints: ^6.0.0
