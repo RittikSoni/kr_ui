@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discord Community
+    url: https://discord.gg/Tmn6BKwSnr
+    about: Join our Discord community for help, discussions, and support
+  - name: 📚 Documentation
+    url: https://github.com/RittikSoni/kr_ui#readme
+    about: Read the documentation and getting started guide
+  - name: 🔒 Security Issues
+    url: https://github.com/RittikSoni/kr_ui/security/advisories/new
+    about: Report security vulnerabilities privately
+  - name: 🎥 Video Tutorials
+    url: https://www.youtube.com/@king_rittik
+    about: Watch video tutorials and demos on YouTube

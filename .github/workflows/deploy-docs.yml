@@ -1,0 +1,66 @@
+name: Deploy Docs to GitHub Pages
+
+on:
+  # Trigger on version tags
+  push:
+    tags:
+      - 'v*'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+# Sets permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+      - name: 📚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.0'
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install Melos
+        run: dart pub global activate melos
+
+      - name: 🔧 Bootstrap packages
+        run: melos bootstrap
+
+      - name: 🏗️ Build kr_ui_docs for web
+        run: |
+          cd apps/kr_ui_docs
+          flutter build web --release --base-href /kr_ui/
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: apps/kr_ui_docs/build/web
+          publish_branch: gh-pages
+          cname: # Add custom domain if you have one
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy docs: ${{ github.ref_name }}'
+
+      - name: 📝 Deployment summary
+        run: |
+          echo "✅ Documentation deployed successfully!"
+          echo "🌐 URL: https://rittiksoni.github.io/kr_ui/"
+          echo "📦 Version: ${{ github.ref_name }}"

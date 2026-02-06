@@ -1,0 +1,152 @@
+name: Publish Package to pub.dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 0.0.2)'
+        required: true
+        type: string
+
+jobs:
+  dry-run:
+    name: Dry Run - Validate Package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: 📚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.0'
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install Melos
+        run: dart pub global activate melos
+
+      - name: 🔧 Bootstrap packages
+        run: melos bootstrap
+
+      - name: 🔍 Validate version input
+        run: |
+          echo "Requested version: ${{ inputs.version }}"
+          
+          # Extract version from pubspec.yaml
+          PUBSPEC_VERSION=$(grep '^version:' packages/kr_ui/pubspec.yaml | sed 's/version: //')
+          echo "pubspec.yaml version: $PUBSPEC_VERSION"
+          
+          if [ "$PUBSPEC_VERSION" != "${{ inputs.version }}" ]; then
+            echo "❌ Error: Version mismatch!"
+            echo "The version in pubspec.yaml ($PUBSPEC_VERSION) doesn't match the requested version (${{ inputs.version }})"
+            echo "Please update packages/kr_ui/pubspec.yaml first."
+            exit 1
+          fi
+          
+          echo "✅ Version validated successfully!"
+
+      - name: 🧪 Run tests
+        run: |
+          cd packages/kr_ui
+          flutter test
+
+      - name: 🔍 Run analyze
+        run: |
+          cd packages/kr_ui
+          flutter analyze
+
+      - name: 🏃 Dry run publish
+        run: |
+          cd packages/kr_ui
+          dart pub publish --dry-run
+
+      - name: ✅ Dry run successful
+        run: |
+          echo "✅ Dry run completed successfully!"
+          echo "📦 Package: kr_ui"
+          echo "🏷️ Version: ${{ inputs.version }}"
+          echo ""
+          echo "The package is ready to be published."
+          echo "Waiting for manual approval in the production job..."
+
+  publish:
+    name: Publish to pub.dev
+    needs: dry-run
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: 
+      name: pub-dev-production
+      url: https://pub.dev/packages/kr_ui
+    
+    steps:
+      - name: 📚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.0'
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install Melos
+        run: dart pub global activate melos
+
+      - name: 🔧 Bootstrap packages
+        run: melos bootstrap
+
+      - name: 🔐 Setup pub credentials
+        run: |
+          mkdir -p ~/.pub-cache
+          echo '${{ secrets.PUB_DEV_CREDENTIALS }}' > ~/.pub-cache/credentials.json
+
+      - name: 🚀 Publish to pub.dev
+        run: |
+          cd packages/kr_ui
+          dart pub publish --force
+
+      - name: 🏷️ Create Git tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v${{ inputs.version }}" -m "Release v${{ inputs.version }}"
+          git push origin "v${{ inputs.version }}"
+
+      - name: 📝 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          name: kr_ui v${{ inputs.version }}
+          body: |
+            ## kr_ui v${{ inputs.version }}
+            
+            Published to pub.dev: https://pub.dev/packages/kr_ui/versions/${{ inputs.version }}
+            
+            ### What's Changed
+            
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+            
+            ### Installation
+            
+            ```yaml
+            dependencies:
+              kr_ui: ^${{ inputs.version }}
+            ```
+            
+            ---
+            
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/v0.0.1...v${{ inputs.version }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ✅ Publish successful
+        run: |
+          echo "🎉 Package published successfully!"
+          echo "📦 Package: kr_ui"
+          echo "🏷️ Version: ${{ inputs.version }}"
+          echo "🌐 URL: https://pub.dev/packages/kr_ui/versions/${{ inputs.version }}"

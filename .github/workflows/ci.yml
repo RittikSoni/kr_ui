@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  analyze-and-test:
+    name: Analyze, Format & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: 📚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.0'
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install Melos
+        run: dart pub global activate melos
+
+      - name: 🔧 Bootstrap packages
+        run: melos bootstrap
+
+      - name: 🔍 Run Flutter analyze
+        run: melos analyze
+        continue-on-error: false
+
+      - name: 💅 Check formatting
+        run: |
+          melos exec -- dart format --set-exit-if-changed .
+        continue-on-error: false
+
+      - name: 🧪 Run tests
+        run: melos test
+        continue-on-error: false
+
+      - name: 🏗️ Build kr_ui_docs (web)
+        run: |
+          cd apps/kr_ui_docs
+          flutter build web --release
+        continue-on-error: false
+
+      - name: ✅ All checks passed
+        run: echo "All CI checks passed successfully!"

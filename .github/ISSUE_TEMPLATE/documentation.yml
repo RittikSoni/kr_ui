@@ -1,0 +1,96 @@
+name: Documentation Improvement
+description: Suggest improvements to documentation
+title: "[Docs]: "
+labels: ["documentation", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve kr_ui documentation! Clear docs help everyone.
+
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation needs improvement?
+      options:
+        - README
+        - API Documentation
+        - Code Examples
+        - Getting Started Guide
+        - Component Documentation
+        - Migration Guide
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Location
+      description: Where is this documentation located?
+      placeholder: |
+        - File: packages/kr_ui/README.md
+        - URL: https://github.com/RittikSoni/kr_ui
+        - Component: GlassyCard documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: What does the documentation currently say (or what's missing)?
+      placeholder: Describe what exists now or what's missing
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired-state
+    attributes:
+      label: Desired State
+      description: What should the documentation say instead?
+      placeholder: Describe what you'd like to see
+    validations:
+      required: true
+
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Reasoning
+      description: Why is this change needed?
+      placeholder: |
+        - Confusing for new users
+        - Missing important information
+        - Outdated or incorrect
+        - Could be clearer
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Proposed Examples
+      description: If suggesting code examples, provide them here
+      placeholder: |
+        ```dart
+        // Proposed example code
+        ```
+      render: dart
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Screenshots, links to similar docs, or other helpful context
+      placeholder: Any additional information
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to submit a PR to fix this documentation
+          required: false
