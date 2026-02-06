@@ -48,7 +48,8 @@ class KruiTimePicker extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final radius = borderRadius ?? BorderRadius.circular(12);
-    final padding = this.padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
+    final padding = this.padding ??
+        const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
     final hasError = errorText != null && errorText!.isNotEmpty;
 
     return Column(
@@ -84,7 +85,9 @@ class KruiTimePicker extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    value != null ? _formatTime(value!) : (hint ?? 'Select time'),
+                    value != null
+                        ? _formatTime(value!)
+                        : (hint ?? 'Select time'),
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: value != null ? null : theme.hintColor,
                     ),
@@ -98,7 +101,8 @@ class KruiTimePicker extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             errorText!,
-            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
+            style: theme.textTheme.bodySmall
+                ?.copyWith(color: theme.colorScheme.error),
           ),
         ],
       ],

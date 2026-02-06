@@ -57,7 +57,8 @@ class KruiDatePicker extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final radius = borderRadius ?? BorderRadius.circular(12);
-    final padding = this.padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
+    final padding = this.padding ??
+        const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
     final hasError = errorText != null && errorText!.isNotEmpty;
 
     return Column(
@@ -89,11 +90,14 @@ class KruiDatePicker extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.calendar_today_outlined, size: 20, color: theme.hintColor),
+                Icon(Icons.calendar_today_outlined,
+                    size: 20, color: theme.hintColor),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    value != null ? _formatDate(value!, format) : (hint ?? 'Select date'),
+                    value != null
+                        ? _formatDate(value!, format)
+                        : (hint ?? 'Select date'),
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: value != null ? null : theme.hintColor,
                     ),
@@ -107,7 +111,8 @@ class KruiDatePicker extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             errorText!,
-            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
+            style: theme.textTheme.bodySmall
+                ?.copyWith(color: theme.colorScheme.error),
           ),
         ],
       ],

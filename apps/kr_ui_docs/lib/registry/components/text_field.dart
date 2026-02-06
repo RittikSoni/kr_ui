@@ -11,18 +11,67 @@ final kruiTextFieldInfo = ComponentInfo(
   category: 'Forms',
   icon: Icons.text_fields_outlined,
   properties: [
-    const PropertyInfo(name: 'name', type: 'String?', defaultValue: 'null', description: 'Form field key when inside KruiForm (links to controller)'),
-    const PropertyInfo(name: 'id', type: 'String?', defaultValue: 'null', description: 'Form field key alias; if set, used instead of name'),
-    const PropertyInfo(name: 'label', type: 'String?', defaultValue: 'null', description: 'Label above the field'),
-    const PropertyInfo(name: 'hint', type: 'String?', defaultValue: 'null', description: 'Placeholder text'),
-    const PropertyInfo(name: 'errorText', type: 'String?', defaultValue: 'null', description: 'Error message (overrides validator result)'),
-    const PropertyInfo(name: 'validator', type: 'String? Function(String?)?', defaultValue: 'null', description: 'Custom validator; return error string or null'),
-    const PropertyInfo(name: 'autovalidate', type: 'bool', defaultValue: 'true', description: 'Run validator on every change when validator is set'),
-    const PropertyInfo(name: 'validation', type: 'KruiTextFieldValidation', defaultValue: 'none', description: 'email, password, url, number, phone, custom'),
-    const PropertyInfo(name: 'obscureText', type: 'bool', defaultValue: 'false', description: 'Hide text (password)'),
-    const PropertyInfo(name: 'labelColor', type: 'Color?', defaultValue: 'null', description: 'Label text color'),
-    const PropertyInfo(name: 'fillColor', type: 'Color?', defaultValue: 'null', description: 'Background color'),
-    const PropertyInfo(name: 'focusBorderColor', type: 'Color?', defaultValue: 'null', description: 'Border color when focused'),
+    const PropertyInfo(
+        name: 'name',
+        type: 'String?',
+        defaultValue: 'null',
+        description:
+            'Form field key when inside KruiForm (links to controller)'),
+    const PropertyInfo(
+        name: 'id',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Form field key alias; if set, used instead of name'),
+    const PropertyInfo(
+        name: 'label',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Label above the field'),
+    const PropertyInfo(
+        name: 'hint',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Placeholder text'),
+    const PropertyInfo(
+        name: 'errorText',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Error message (overrides validator result)'),
+    const PropertyInfo(
+        name: 'validator',
+        type: 'String? Function(String?)?',
+        defaultValue: 'null',
+        description: 'Custom validator; return error string or null'),
+    const PropertyInfo(
+        name: 'autovalidate',
+        type: 'bool',
+        defaultValue: 'true',
+        description: 'Run validator on every change when validator is set'),
+    const PropertyInfo(
+        name: 'validation',
+        type: 'KruiTextFieldValidation',
+        defaultValue: 'none',
+        description: 'email, password, url, number, phone, custom'),
+    const PropertyInfo(
+        name: 'obscureText',
+        type: 'bool',
+        defaultValue: 'false',
+        description: 'Hide text (password)'),
+    const PropertyInfo(
+        name: 'labelColor',
+        type: 'Color?',
+        defaultValue: 'null',
+        description: 'Label text color'),
+    const PropertyInfo(
+        name: 'fillColor',
+        type: 'Color?',
+        defaultValue: 'null',
+        description: 'Background color'),
+    const PropertyInfo(
+        name: 'focusBorderColor',
+        type: 'Color?',
+        defaultValue: 'null',
+        description: 'Border color when focused'),
   ],
   basicExample: '''KruiTextField(
   label: 'Email',

@@ -21,7 +21,9 @@ class KruiForm extends StatelessWidget {
 
   /// Returns the [KruiFormController] from the nearest [KruiForm] ancestor, or null.
   static KruiFormController? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<_KruiFormScope>()?.controller;
+    return context
+        .dependOnInheritedWidgetOfExactType<_KruiFormScope>()
+        ?.controller;
   }
 
   @override

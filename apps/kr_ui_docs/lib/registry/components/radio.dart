@@ -11,11 +11,33 @@ final kruiRadioInfo = ComponentInfo(
   category: 'Forms',
   icon: Icons.radio_button_checked_outlined,
   properties: [
-    const PropertyInfo(name: 'value', type: 'T?', defaultValue: 'null', description: 'Selected value'),
-    const PropertyInfo(name: 'options', type: 'List<KruiRadioOption<T>>', defaultValue: 'required', description: 'Options', isRequired: true),
-    const PropertyInfo(name: 'onChanged', type: 'ValueChanged<T?>', defaultValue: 'required', description: 'Selection callback', isRequired: true),
-    const PropertyInfo(name: 'label', type: 'String?', defaultValue: 'null', description: 'Group label'),
-    const PropertyInfo(name: 'direction', type: 'Axis', defaultValue: 'Axis.vertical', description: 'vertical or horizontal'),
+    const PropertyInfo(
+        name: 'value',
+        type: 'T?',
+        defaultValue: 'null',
+        description: 'Selected value'),
+    const PropertyInfo(
+        name: 'options',
+        type: 'List<KruiRadioOption<T>>',
+        defaultValue: 'required',
+        description: 'Options',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'onChanged',
+        type: 'ValueChanged<T?>',
+        defaultValue: 'required',
+        description: 'Selection callback',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'label',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Group label'),
+    const PropertyInfo(
+        name: 'direction',
+        type: 'Axis',
+        defaultValue: 'Axis.vertical',
+        description: 'vertical or horizontal'),
   ],
   basicExample: '''KruiRadioGroup<String>(
   label: 'Size',
@@ -64,7 +86,8 @@ final kruiRadioInfo = ComponentInfo(
     PresetInfo(
       name: 'With subtitle',
       description: 'Option with subtitle',
-      code: '''KruiRadioOption(value: 'pro', label: 'Pro', subtitle: '\$12/mo')''',
+      code:
+          '''KruiRadioOption(value: 'pro', label: 'Pro', subtitle: '\$12/mo')''',
       builder: () => KruiRadioGroup<String>(
         label: 'Plan',
         options: const [

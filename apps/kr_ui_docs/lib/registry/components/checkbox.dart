@@ -11,14 +11,48 @@ final kruiCheckboxInfo = ComponentInfo(
   category: 'Forms',
   icon: Icons.check_box_outlined,
   properties: [
-    const PropertyInfo(name: 'value', type: 'bool', defaultValue: 'required', description: 'Checked state', isRequired: true),
-    const PropertyInfo(name: 'onChanged', type: 'ValueChanged<bool?>', defaultValue: 'required', description: 'Callback when toggled', isRequired: true),
-    const PropertyInfo(name: 'label', type: 'String?', defaultValue: 'null', description: 'Label text'),
-    const PropertyInfo(name: 'subtitle', type: 'String?', defaultValue: 'null', description: 'Secondary text'),
-    const PropertyInfo(name: 'checkboxPosition', type: 'KruiCheckboxPosition', defaultValue: 'leading', description: 'leading or trailing'),
-    const PropertyInfo(name: 'labelLinkText', type: 'String?', defaultValue: 'null', description: 'Substring in label to make tappable'),
-    const PropertyInfo(name: 'onLabelLinkTap', type: 'VoidCallback?', defaultValue: 'null', description: 'Called when label link is tapped'),
-    const PropertyInfo(name: 'activeColor', type: 'Color?', defaultValue: 'null', description: 'Checked color'),
+    const PropertyInfo(
+        name: 'value',
+        type: 'bool',
+        defaultValue: 'required',
+        description: 'Checked state',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'onChanged',
+        type: 'ValueChanged<bool?>',
+        defaultValue: 'required',
+        description: 'Callback when toggled',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'label',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Label text'),
+    const PropertyInfo(
+        name: 'subtitle',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Secondary text'),
+    const PropertyInfo(
+        name: 'checkboxPosition',
+        type: 'KruiCheckboxPosition',
+        defaultValue: 'leading',
+        description: 'leading or trailing'),
+    const PropertyInfo(
+        name: 'labelLinkText',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Substring in label to make tappable'),
+    const PropertyInfo(
+        name: 'onLabelLinkTap',
+        type: 'VoidCallback?',
+        defaultValue: 'null',
+        description: 'Called when label link is tapped'),
+    const PropertyInfo(
+        name: 'activeColor',
+        type: 'Color?',
+        defaultValue: 'null',
+        description: 'Checked color'),
   ],
   basicExample: '''KruiCheckbox(
   label: 'Accept terms',

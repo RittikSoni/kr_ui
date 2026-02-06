@@ -22,7 +22,8 @@ final kruiGlassyDialogInfo = ComponentInfo(
       name: 'title',
       type: 'Widget?',
       defaultValue: 'null',
-      description: 'Optional dialog title. Use any widget (e.g. Text, or Text with custom style, color, size) for full control.',
+      description:
+          'Optional dialog title. Use any widget (e.g. Text, or Text with custom style, color, size) for full control.',
     ),
     const PropertyInfo(
       name: 'content',
@@ -181,7 +182,8 @@ final kruiGlassyDialogInfo = ComponentInfo(
     ),
     PresetInfo(
       name: 'Barrier not dismissible',
-      description: 'Tapping outside does nothing. Must use a button. barrierDismissible: false.',
+      description:
+          'Tapping outside does nothing. Must use a button. barrierDismissible: false.',
       code: '''showKruiGlassyDialog(
   context,
   barrierDismissible: false,
@@ -236,14 +238,15 @@ final kruiGlassyDialogInfo = ComponentInfo(
               title: Text(
                 'Custom Title',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ) ?? const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ) ??
+                    const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
               ),
               content: const Text(
                 'Control title color, size, and more with a Widget.',
@@ -292,8 +295,8 @@ final kruiGlassyDialogInfo = ComponentInfo(
                   Text(
                     'Liquid glass panel',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ) ??
+                              fontWeight: FontWeight.w600,
+                            ) ??
                         const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w600),
                   ),

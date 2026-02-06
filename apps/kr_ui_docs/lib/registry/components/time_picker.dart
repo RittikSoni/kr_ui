@@ -11,10 +11,27 @@ final kruiTimePickerInfo = ComponentInfo(
   category: 'Forms',
   icon: Icons.schedule_outlined,
   properties: [
-    const PropertyInfo(name: 'value', type: 'TimeOfDay?', defaultValue: 'null', description: 'Selected time'),
-    const PropertyInfo(name: 'onTimeChanged', type: 'ValueChanged<TimeOfDay>', defaultValue: 'required', description: 'Callback with picked time', isRequired: true),
-    const PropertyInfo(name: 'label', type: 'String?', defaultValue: 'null', description: 'Label above field'),
-    const PropertyInfo(name: 'hint', type: 'String?', defaultValue: 'null', description: 'Placeholder when empty'),
+    const PropertyInfo(
+        name: 'value',
+        type: 'TimeOfDay?',
+        defaultValue: 'null',
+        description: 'Selected time'),
+    const PropertyInfo(
+        name: 'onTimeChanged',
+        type: 'ValueChanged<TimeOfDay>',
+        defaultValue: 'required',
+        description: 'Callback with picked time',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'label',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Label above field'),
+    const PropertyInfo(
+        name: 'hint',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Placeholder when empty'),
   ],
   basicExample: '''KruiTimePicker(
   label: 'Meeting time',

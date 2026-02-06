@@ -81,7 +81,9 @@ class _ComponentShowcaseState extends State<ComponentShowcase> {
           !targetBox.hasSize) {
         if (deferredFrames < 2 && mounted) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted) _scrollToSection(section, deferredFrames: deferredFrames + 1);
+            if (mounted) {
+              _scrollToSection(section, deferredFrames: deferredFrames + 1);
+            }
           });
         } else {
           Scrollable.ensureVisible(
@@ -97,7 +99,9 @@ class _ComponentShowcaseState extends State<ComponentShowcase> {
       if (!_scrollController.hasClients) {
         if (deferredFrames < 2 && mounted) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted) _scrollToSection(section, deferredFrames: deferredFrames + 1);
+            if (mounted) {
+              _scrollToSection(section, deferredFrames: deferredFrames + 1);
+            }
           });
         } else {
           Scrollable.ensureVisible(

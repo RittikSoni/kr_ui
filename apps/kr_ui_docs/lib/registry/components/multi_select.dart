@@ -11,11 +11,33 @@ final kruiMultiSelectInfo = ComponentInfo(
   category: 'Forms',
   icon: Icons.checklist_outlined,
   properties: [
-    const PropertyInfo(name: 'value', type: 'List<T>', defaultValue: '[]', description: 'Selected values'),
-    const PropertyInfo(name: 'options', type: 'List<KruiSelectOption<T>>', defaultValue: 'required', description: 'Options list', isRequired: true),
-    const PropertyInfo(name: 'onChanged', type: 'ValueChanged<List<T>>', defaultValue: 'required', description: 'Selection callback', isRequired: true),
-    const PropertyInfo(name: 'showChips', type: 'bool', defaultValue: 'false', description: 'Show selected as chips'),
-    const PropertyInfo(name: 'searchable', type: 'bool', defaultValue: 'false', description: 'Show search input'),
+    const PropertyInfo(
+        name: 'value',
+        type: 'List<T>',
+        defaultValue: '[]',
+        description: 'Selected values'),
+    const PropertyInfo(
+        name: 'options',
+        type: 'List<KruiSelectOption<T>>',
+        defaultValue: 'required',
+        description: 'Options list',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'onChanged',
+        type: 'ValueChanged<List<T>>',
+        defaultValue: 'required',
+        description: 'Selection callback',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'showChips',
+        type: 'bool',
+        defaultValue: 'false',
+        description: 'Show selected as chips'),
+    const PropertyInfo(
+        name: 'searchable',
+        type: 'bool',
+        defaultValue: 'false',
+        description: 'Show search input'),
   ],
   basicExample: '''KruiMultiSelect<String>(
   label: 'Tags',

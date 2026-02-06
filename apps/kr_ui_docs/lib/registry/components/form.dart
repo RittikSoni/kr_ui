@@ -15,7 +15,8 @@ final kruiFormInfo = ComponentInfo(
       name: 'controller',
       type: 'KruiFormController',
       defaultValue: 'required',
-      description: 'Form state: values, errors, getTextController, validate, reset.',
+      description:
+          'Form state: values, errors, getTextController, validate, reset.',
       isRequired: true,
     ),
     const PropertyInfo(
@@ -26,7 +27,8 @@ final kruiFormInfo = ComponentInfo(
       isRequired: true,
     ),
   ],
-  basicExample: '''// 1. Same key everywhere: initialValues, name/id, getValue, validate
+  basicExample:
+      '''// 1. Same key everywhere: initialValues, name/id, getValue, validate
 final controller = KruiFormController(
   initialValues: {'email': '', 'country': 'us'},
 );
@@ -53,7 +55,8 @@ KruiForm(
     ],
   ),
 )''',
-  advancedExample: '''// Linking: use one key per field (name or id). Same key in:
+  advancedExample:
+      '''// Linking: use one key per field (name or id). Same key in:
 // - initialValues['email'], validate({'email': ...})
 // - KruiTextField(name: 'email') or KruiTextField(id: 'email')
 // - controller.getValue('email'), controller.setValue('email', v)
@@ -75,7 +78,8 @@ controller.reset();''',
   presets: [
     PresetInfo(
       name: 'Link by name or id',
-      description: 'Use name or id as the form field key; same key in initialValues and validate',
+      description:
+          'Use name or id as the form field key; same key in initialValues and validate',
       code: '''// Field key = id ?? name. Use the same key everywhere.
 final c = KruiFormController(initialValues: {'email': '', 'fullName': ''});
 
@@ -187,7 +191,8 @@ class _LinkByNameOrIdDemoState extends State<_LinkByNameOrIdDemo> {
   @override
   void initState() {
     super.initState();
-    _controller = KruiFormController(initialValues: {'email': '', 'fullName': ''});
+    _controller =
+        KruiFormController(initialValues: {'email': '', 'fullName': ''});
   }
 
   @override
@@ -214,8 +219,10 @@ class _LinkByNameOrIdDemoState extends State<_LinkByNameOrIdDemo> {
               ElevatedButton(
                 onPressed: () {
                   if (_controller.validate({
-                    'email': (v) => (v as String?)?.isEmpty == true ? 'Required' : null,
-                    'fullName': (v) => (v as String?)?.isEmpty == true ? 'Required' : null,
+                    'email': (v) =>
+                        (v as String?)?.isEmpty == true ? 'Required' : null,
+                    'fullName': (v) =>
+                        (v as String?)?.isEmpty == true ? 'Required' : null,
                   })) {
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -277,12 +284,16 @@ class _SignUpFormDemoState extends State<_SignUpFormDemo> {
       'email': (v) {
         final s = v as String?;
         if (s == null || s.trim().isEmpty) return 'Email is required';
-        if (!RegExp(r'^[\w.-]+@[\w.-]+\.\w+$').hasMatch(s)) return 'Enter a valid email';
+        if (!RegExp(r'^[\w.-]+@[\w.-]+\.\w+$').hasMatch(s)) {
+          return 'Enter a valid email';
+        }
         return null;
       },
       'password': (v) {
         final s = v as String?;
-        if (s == null || s.length < 6) return 'Password must be at least 6 characters';
+        if (s == null || s.length < 6) {
+          return 'Password must be at least 6 characters';
+        }
         return null;
       },
       'terms': (v) => v == true ? null : 'You must accept the terms',
@@ -339,7 +350,9 @@ class _SignUpFormDemoState extends State<_SignUpFormDemo> {
                   labelLinkText: 'Terms & Conditions',
                   onLabelLinkTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Open T&C'), behavior: SnackBarBehavior.floating),
+                      const SnackBar(
+                          content: Text('Open T&C'),
+                          behavior: SnackBarBehavior.floating),
                     );
                   },
                 ),

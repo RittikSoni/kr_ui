@@ -28,6 +28,7 @@ class KruiTextField extends StatefulWidget {
   /// Form field key when inside [KruiForm]. Links to controller.getValue(key),
   /// getTextController(key), getError(key). Same key as in initialValues/validate.
   final String? name;
+
   /// Alias for [name]. When set, used as the form field key (takes precedence over [name]).
   final String? id;
   final TextEditingController? controller;
@@ -47,8 +48,10 @@ class KruiTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final KruiTextFieldValidation validation;
+
   /// Custom validator. When set, [autovalidate] controls whether it runs on every change.
   final String? Function(String?)? validator;
+
   /// When true (default) and [validator] is set, validation runs on every change and error is shown.
   final bool autovalidate;
   final RegExp? customPattern;
@@ -191,108 +194,118 @@ class _KruiTextFieldState extends State<KruiTextField> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final radius = widget.borderRadius ?? BorderRadius.circular(12);
-    final padding = widget.padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
+    final padding = widget.padding ??
+        const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
     final formKey = widget.id ?? widget.name;
     final form = KruiForm.of(context);
     final formBound = formKey != null && form != null;
     final effectiveController = formBound
         ? form.getTextController(formKey)
         : (widget.controller ?? _controller);
-    final effectiveErrorText = formBound ? form.getError(formKey) : widget.errorText;
-    final hasError = (effectiveErrorText != null && effectiveErrorText.isNotEmpty) ||
-        (_validationError != null && _validationError!.isNotEmpty);
-    final errorMessage = (effectiveErrorText != null && effectiveErrorText.isNotEmpty)
-        ? effectiveErrorText
-        : _validationError;
+    final effectiveErrorText =
+        formBound ? form.getError(formKey) : widget.errorText;
+    final hasError =
+        (effectiveErrorText != null && effectiveErrorText.isNotEmpty) ||
+            (_validationError != null && _validationError!.isNotEmpty);
+    final errorMessage =
+        (effectiveErrorText != null && effectiveErrorText.isNotEmpty)
+            ? effectiveErrorText
+            : _validationError;
     final focusColor = widget.focusBorderColor ?? theme.colorScheme.primary;
     final errorColor = widget.errorBorderColor ?? theme.colorScheme.error;
-    final fill = widget.fillColor ?? (isDark ? const Color(0xFF2C2C2E) : Colors.grey.shade50);
+    final fill = widget.fillColor ??
+        (isDark ? const Color(0xFF2C2C2E) : Colors.grey.shade50);
     final labelColor = widget.labelColor ?? (hasError ? errorColor : null);
     final hintColor = widget.hintColor ?? theme.hintColor;
     final textColor = widget.textColor;
     final helperColor = widget.helperTextColor ?? theme.hintColor;
 
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (widget.label != null) ...[
-            Text(
-              widget.label!,
-              style: theme.textTheme.labelLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: labelColor,
-              ),
-            ),
-            const SizedBox(height: 8),
-          ],
-          TextField(
-            controller: effectiveController,
-            onChanged: _onChanged,
-            onSubmitted: widget.onSubmitted,
-            obscureText: widget.obscureText && _obscureText,
-            enabled: widget.enabled,
-            readOnly: widget.readOnly,
-            maxLines: widget.maxLines,
-            maxLength: widget.maxLength,
-            style: textColor != null ? TextStyle(color: textColor) : null,
-            keyboardType: widget.keyboardType ?? (widget.validation == KruiTextFieldValidation.email
-                ? TextInputType.emailAddress
-                : (widget.validation == KruiTextFieldValidation.url
-                    ? TextInputType.url
-                    : (widget.validation == KruiTextFieldValidation.number ||
-                            widget.validation == KruiTextFieldValidation.phone
-                        ? TextInputType.number
-                        : null))),
-            inputFormatters: widget.inputFormatters,
-            decoration: InputDecoration(
-              hintText: widget.hint,
-              hintStyle: TextStyle(color: hintColor),
-              filled: true,
-              fillColor: fill,
-              contentPadding: padding,
-              border: OutlineInputBorder(borderRadius: radius),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: radius,
-                borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.grey.shade300),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: radius,
-                borderSide: BorderSide(color: focusColor, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: radius,
-                borderSide: BorderSide(color: errorColor),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: radius,
-                borderSide: BorderSide(color: errorColor, width: 2),
-              ),
-              prefixIcon: widget.prefixIcon,
-              suffixIcon: widget.obscureText
-                  ? IconButton(
-                      icon: Icon(_obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined),
-                      onPressed: () => setState(() => _obscureText = !_obscureText),
-                    )
-                  : widget.suffixIcon,
-              counterText: widget.maxLength != null ? null : '',
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.label != null) ...[
+          Text(
+            widget.label!,
+            style: theme.textTheme.labelLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: labelColor,
             ),
           ),
-          if (widget.helperText != null && !hasError) ...[
-            const SizedBox(height: 6),
-            Text(
-              widget.helperText!,
-              style: theme.textTheme.bodySmall?.copyWith(color: helperColor),
-            ),
-          ],
-          if (hasError && errorMessage != null) ...[
-            const SizedBox(height: 6),
-            Text(
-              errorMessage,
-              style: theme.textTheme.bodySmall?.copyWith(color: errorColor),
-            ),
-          ],
+          const SizedBox(height: 8),
         ],
+        TextField(
+          controller: effectiveController,
+          onChanged: _onChanged,
+          onSubmitted: widget.onSubmitted,
+          obscureText: widget.obscureText && _obscureText,
+          enabled: widget.enabled,
+          readOnly: widget.readOnly,
+          maxLines: widget.maxLines,
+          maxLength: widget.maxLength,
+          style: textColor != null ? TextStyle(color: textColor) : null,
+          keyboardType: widget.keyboardType ??
+              (widget.validation == KruiTextFieldValidation.email
+                  ? TextInputType.emailAddress
+                  : (widget.validation == KruiTextFieldValidation.url
+                      ? TextInputType.url
+                      : (widget.validation == KruiTextFieldValidation.number ||
+                              widget.validation == KruiTextFieldValidation.phone
+                          ? TextInputType.number
+                          : null))),
+          inputFormatters: widget.inputFormatters,
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            hintStyle: TextStyle(color: hintColor),
+            filled: true,
+            fillColor: fill,
+            contentPadding: padding,
+            border: OutlineInputBorder(borderRadius: radius),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: radius,
+              borderSide: BorderSide(
+                  color: isDark ? Colors.white24 : Colors.grey.shade300),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: radius,
+              borderSide: BorderSide(color: focusColor, width: 2),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: radius,
+              borderSide: BorderSide(color: errorColor),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: radius,
+              borderSide: BorderSide(color: errorColor, width: 2),
+            ),
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    icon: Icon(_obscureText
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined),
+                    onPressed: () =>
+                        setState(() => _obscureText = !_obscureText),
+                  )
+                : widget.suffixIcon,
+            counterText: widget.maxLength != null ? null : '',
+          ),
+        ),
+        if (widget.helperText != null && !hasError) ...[
+          const SizedBox(height: 6),
+          Text(
+            widget.helperText!,
+            style: theme.textTheme.bodySmall?.copyWith(color: helperColor),
+          ),
+        ],
+        if (hasError && errorMessage != null) ...[
+          const SizedBox(height: 6),
+          Text(
+            errorMessage,
+            style: theme.textTheme.bodySmall?.copyWith(color: errorColor),
+          ),
+        ],
+      ],
     );
   }
 }

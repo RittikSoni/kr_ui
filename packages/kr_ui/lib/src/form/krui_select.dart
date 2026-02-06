@@ -7,7 +7,8 @@ class KruiSelectOption<T> {
   final String label;
   final String? category;
 
-  const KruiSelectOption({required this.value, required this.label, this.category});
+  const KruiSelectOption(
+      {required this.value, required this.label, this.category});
 }
 
 /// A modern dropdown/select with optional search, scrollable list, and categories.
@@ -104,12 +105,14 @@ class _KruiSelectState<T> extends State<KruiSelect<T>> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final radius = widget.borderRadius ?? BorderRadius.circular(12);
-    final padding = widget.padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
+    final padding = widget.padding ??
+        const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
     final hasError = widget.errorText != null && widget.errorText!.isNotEmpty;
-    final selectedOption = widget.options.cast<KruiSelectOption<T>?>().firstWhere(
-          (o) => o?.value == widget.value,
-          orElse: () => null,
-        );
+    final selectedOption =
+        widget.options.cast<KruiSelectOption<T>?>().firstWhere(
+              (o) => o?.value == widget.value,
+              orElse: () => null,
+            );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +166,8 @@ class _KruiSelectState<T> extends State<KruiSelect<T>> {
           const SizedBox(height: 6),
           Text(
             widget.errorText!,
-            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
+            style: theme.textTheme.bodySmall
+                ?.copyWith(color: theme.colorScheme.error),
           ),
         ],
       ],
@@ -211,7 +215,9 @@ class _SelectOverlayState<T> extends State<_SelectOverlay<T>> {
   List<KruiSelectOption<T>> get _filtered {
     if (_query.trim().isEmpty) return widget.options;
     final q = _query.trim().toLowerCase();
-    return widget.options.where((o) => o.label.toLowerCase().contains(q)).toList();
+    return widget.options
+        .where((o) => o.label.toLowerCase().contains(q))
+        .toList();
   }
 
   Map<String, List<KruiSelectOption<T>>> get _grouped {
@@ -223,7 +229,8 @@ class _SelectOverlayState<T> extends State<_SelectOverlay<T>> {
     return map;
   }
 
-  bool get _hasCategories => widget.options.any((o) => o.category != null && o.category!.isNotEmpty);
+  bool get _hasCategories =>
+      widget.options.any((o) => o.category != null && o.category!.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
@@ -262,8 +269,10 @@ class _SelectOverlayState<T> extends State<_SelectOverlay<T>> {
                           decoration: InputDecoration(
                             hintText: widget.searchHint ?? 'Search...',
                             isDense: true,
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
                           ),
                         ),
                       ),
@@ -276,10 +285,12 @@ class _SelectOverlayState<T> extends State<_SelectOverlay<T>> {
                                 return [
                                   if (e.key.isNotEmpty)
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12, 8, 12, 4),
                                       child: Text(
                                         e.key,
-                                        style: theme.textTheme.labelSmall?.copyWith(
+                                        style: theme.textTheme.labelSmall
+                                            ?.copyWith(
                                           color: theme.hintColor,
                                         ),
                                       ),

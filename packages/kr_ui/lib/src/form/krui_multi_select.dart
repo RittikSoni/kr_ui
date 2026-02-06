@@ -16,6 +16,7 @@ class KruiMultiSelect<T> extends StatefulWidget {
   final EdgeInsets? padding;
   final BorderRadius? borderRadius;
   final double? dropdownMaxHeight;
+
   /// Show selected as chips inside the field when true; otherwise show count.
   final bool showChips;
 
@@ -102,7 +103,8 @@ class _KruiMultiSelectState<T> extends State<KruiMultiSelect<T>> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final radius = widget.borderRadius ?? BorderRadius.circular(12);
-    final padding = widget.padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
+    final padding = widget.padding ??
+        const EdgeInsets.symmetric(horizontal: 16, vertical: 14);
     final hasError = widget.errorText != null && widget.errorText!.isNotEmpty;
     final selectedLabels = widget.options
         .where((o) => widget.value.contains(o.value))
@@ -145,21 +147,28 @@ class _KruiMultiSelectState<T> extends State<KruiMultiSelect<T>> {
                         ? Wrap(
                             spacing: 6,
                             runSpacing: 6,
-                            children: selectedLabels.map((l) => Chip(
-                              label: Text(l, style: const TextStyle(fontSize: 12)),
-                              deleteIcon: const Icon(Icons.close, size: 16),
-                              onDeleted: () {
-                                final o = widget.options.firstWhere((x) => x.label == l);
-                                _toggleOption(o.value);
-                              },
-                            )).toList(),
+                            children: selectedLabels
+                                .map((l) => Chip(
+                                      label: Text(l,
+                                          style: const TextStyle(fontSize: 12)),
+                                      deleteIcon:
+                                          const Icon(Icons.close, size: 16),
+                                      onDeleted: () {
+                                        final o = widget.options
+                                            .firstWhere((x) => x.label == l);
+                                        _toggleOption(o.value);
+                                      },
+                                    ))
+                                .toList(),
                           )
                         : Text(
                             selectedLabels.isEmpty
                                 ? (widget.hint ?? 'Select...')
                                 : '${selectedLabels.length} selected',
                             style: theme.textTheme.bodyLarge?.copyWith(
-                              color: selectedLabels.isEmpty ? theme.hintColor : null,
+                              color: selectedLabels.isEmpty
+                                  ? theme.hintColor
+                                  : null,
                             ),
                           ),
                   ),
@@ -176,7 +185,8 @@ class _KruiMultiSelectState<T> extends State<KruiMultiSelect<T>> {
           const SizedBox(height: 6),
           Text(
             widget.errorText!,
-            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
+            style: theme.textTheme.bodySmall
+                ?.copyWith(color: theme.colorScheme.error),
           ),
         ],
       ],
@@ -224,7 +234,9 @@ class _MultiSelectOverlayState<T> extends State<_MultiSelectOverlay<T>> {
   List<KruiSelectOption<T>> get _filtered {
     if (_query.trim().isEmpty) return widget.options;
     final q = _query.trim().toLowerCase();
-    return widget.options.where((o) => o.label.toLowerCase().contains(q)).toList();
+    return widget.options
+        .where((o) => o.label.toLowerCase().contains(q))
+        .toList();
   }
 
   Map<String, List<KruiSelectOption<T>>> get _grouped {
@@ -236,7 +248,8 @@ class _MultiSelectOverlayState<T> extends State<_MultiSelectOverlay<T>> {
     return map;
   }
 
-  bool get _hasCategories => widget.options.any((o) => o.category != null && o.category!.isNotEmpty);
+  bool get _hasCategories =>
+      widget.options.any((o) => o.category != null && o.category!.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +259,10 @@ class _MultiSelectOverlayState<T> extends State<_MultiSelectOverlay<T>> {
 
     return Stack(
       children: [
-        GestureDetector(behavior: HitTestBehavior.opaque, onTap: widget.onDismiss, child: const SizedBox.expand()),
+        GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: widget.onDismiss,
+            child: const SizedBox.expand()),
         Positioned(
           width: 240,
           child: CompositedTransformFollower(
@@ -271,8 +287,10 @@ class _MultiSelectOverlayState<T> extends State<_MultiSelectOverlay<T>> {
                           decoration: InputDecoration(
                             hintText: widget.searchHint ?? 'Search...',
                             isDense: true,
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
                           ),
                         ),
                       ),
@@ -285,10 +303,12 @@ class _MultiSelectOverlayState<T> extends State<_MultiSelectOverlay<T>> {
                                 return [
                                   if (e.key.isNotEmpty)
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12, 8, 12, 4),
                                       child: Text(
                                         e.key,
-                                        style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor),
+                                        style: theme.textTheme.labelSmall
+                                            ?.copyWith(color: theme.hintColor),
                                       ),
                                     ),
                                   ...e.value.map((o) => _tile(o)),

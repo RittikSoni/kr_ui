@@ -11,12 +11,38 @@ final kruiSelectInfo = ComponentInfo(
   category: 'Forms',
   icon: Icons.arrow_drop_down_circle_outlined,
   properties: [
-    const PropertyInfo(name: 'value', type: 'T?', defaultValue: 'null', description: 'Selected value'),
-    const PropertyInfo(name: 'options', type: 'List<KruiSelectOption<T>>', defaultValue: 'required', description: 'Options list', isRequired: true),
-    const PropertyInfo(name: 'onChanged', type: 'ValueChanged<T?>', defaultValue: 'required', description: 'Selection callback', isRequired: true),
-    const PropertyInfo(name: 'label', type: 'String?', defaultValue: 'null', description: 'Label above field'),
-    const PropertyInfo(name: 'searchable', type: 'bool', defaultValue: 'false', description: 'Show search input'),
-    const PropertyInfo(name: 'hint', type: 'String?', defaultValue: 'null', description: 'Placeholder when empty'),
+    const PropertyInfo(
+        name: 'value',
+        type: 'T?',
+        defaultValue: 'null',
+        description: 'Selected value'),
+    const PropertyInfo(
+        name: 'options',
+        type: 'List<KruiSelectOption<T>>',
+        defaultValue: 'required',
+        description: 'Options list',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'onChanged',
+        type: 'ValueChanged<T?>',
+        defaultValue: 'required',
+        description: 'Selection callback',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'label',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Label above field'),
+    const PropertyInfo(
+        name: 'searchable',
+        type: 'bool',
+        defaultValue: 'false',
+        description: 'Show search input'),
+    const PropertyInfo(
+        name: 'hint',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Placeholder when empty'),
   ],
   basicExample: '''KruiSelect<String>(
   label: 'Country',
@@ -90,8 +116,10 @@ final kruiSelectInfo = ComponentInfo(
         label: 'Choose item',
         options: const [
           KruiSelectOption(value: 'apple', label: 'Apple', category: 'Fruits'),
-          KruiSelectOption(value: 'banana', label: 'Banana', category: 'Fruits'),
-          KruiSelectOption(value: 'broccoli', label: 'Broccoli', category: 'Vegetables'),
+          KruiSelectOption(
+              value: 'banana', label: 'Banana', category: 'Fruits'),
+          KruiSelectOption(
+              value: 'broccoli', label: 'Broccoli', category: 'Vegetables'),
         ],
         onChanged: (_) {},
       ),

@@ -11,12 +11,37 @@ final kruiDatePickerInfo = ComponentInfo(
   category: 'Forms',
   icon: Icons.calendar_today_outlined,
   properties: [
-    const PropertyInfo(name: 'value', type: 'DateTime?', defaultValue: 'null', description: 'Selected date'),
-    const PropertyInfo(name: 'onDateChanged', type: 'ValueChanged<DateTime>', defaultValue: 'required', description: 'Callback with picked date', isRequired: true),
-    const PropertyInfo(name: 'firstDate', type: 'DateTime?', defaultValue: 'null', description: 'Earliest selectable date'),
-    const PropertyInfo(name: 'lastDate', type: 'DateTime?', defaultValue: 'null', description: 'Latest selectable date'),
-    const PropertyInfo(name: 'label', type: 'String?', defaultValue: 'null', description: 'Label above field'),
-    const PropertyInfo(name: 'format', type: 'KruiDateFormat?', defaultValue: 'null', description: 'Display format (e.g. KruiDateFormat(\'yyyy-MM-dd\'))'),
+    const PropertyInfo(
+        name: 'value',
+        type: 'DateTime?',
+        defaultValue: 'null',
+        description: 'Selected date'),
+    const PropertyInfo(
+        name: 'onDateChanged',
+        type: 'ValueChanged<DateTime>',
+        defaultValue: 'required',
+        description: 'Callback with picked date',
+        isRequired: true),
+    const PropertyInfo(
+        name: 'firstDate',
+        type: 'DateTime?',
+        defaultValue: 'null',
+        description: 'Earliest selectable date'),
+    const PropertyInfo(
+        name: 'lastDate',
+        type: 'DateTime?',
+        defaultValue: 'null',
+        description: 'Latest selectable date'),
+    const PropertyInfo(
+        name: 'label',
+        type: 'String?',
+        defaultValue: 'null',
+        description: 'Label above field'),
+    const PropertyInfo(
+        name: 'format',
+        type: 'KruiDateFormat?',
+        defaultValue: 'null',
+        description: 'Display format (e.g. KruiDateFormat(\'yyyy-MM-dd\'))'),
   ],
   basicExample: '''KruiDatePicker(
   label: 'Birth date',

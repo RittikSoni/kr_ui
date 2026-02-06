@@ -34,7 +34,8 @@ final kruiSnackbarInfo = ComponentInfo(
       name: 'onAction',
       type: 'VoidCallback?',
       defaultValue: 'null',
-      description: 'Called when the action is tapped; also dismisses the snackbar.',
+      description:
+          'Called when the action is tapped; also dismisses the snackbar.',
     ),
     const PropertyInfo(
       name: 'duration',

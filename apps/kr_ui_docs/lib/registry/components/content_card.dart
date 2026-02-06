@@ -201,11 +201,13 @@ final kruiContentCardInfo = ComponentInfo(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('• Unlimited projects', style: TextStyle(color: textColor)),
+                Text('• Unlimited projects',
+                    style: TextStyle(color: textColor)),
                 const SizedBox(height: 4),
                 Text('• Priority support', style: TextStyle(color: textColor)),
                 const SizedBox(height: 4),
-                Text('• Advanced analytics', style: TextStyle(color: textColor)),
+                Text('• Advanced analytics',
+                    style: TextStyle(color: textColor)),
               ],
             ),
             footer: KruiGlassyButton(
@@ -213,7 +215,8 @@ final kruiContentCardInfo = ComponentInfo(
               color: const Color(0xFF007AFF),
               child: const Text(
                 'Subscribe',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
               ),
             ),
           );
@@ -406,7 +409,8 @@ final kruiContentCardInfo = ComponentInfo(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('• Unlimited projects', style: TextStyle(color: secondaryColor)),
+            Text('• Unlimited projects',
+                style: TextStyle(color: secondaryColor)),
             const SizedBox(height: 4),
             Text('• Priority support', style: TextStyle(color: secondaryColor)),
           ],

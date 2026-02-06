@@ -17,9 +17,11 @@ class KruiCheckbox extends StatelessWidget {
   final ValueChanged<bool?> onChanged;
   final String? label;
   final String? subtitle;
+
   /// When set, the matching substring in [label] is made tappable and triggers [onLabelLinkTap].
   final String? labelLinkText;
   final VoidCallback? onLabelLinkTap;
+
   /// When set, the matching substring in [subtitle] is made tappable and triggers [onSubtitleLinkTap].
   final String? subtitleLinkText;
   final VoidCallback? onSubtitleLinkTap;
@@ -46,10 +48,12 @@ class KruiCheckbox extends StatelessWidget {
     this.subtitleColor,
   });
 
-  Widget _buildLabelWithLink(BuildContext context, String text, String? linkText, VoidCallback? onLinkTap, Color? color) {
+  Widget _buildLabelWithLink(BuildContext context, String text,
+      String? linkText, VoidCallback? onLinkTap, Color? color) {
     final theme = Theme.of(context);
     final baseStyle = theme.textTheme.bodyLarge ?? const TextStyle();
-    final style = baseStyle.copyWith(color: color ?? theme.colorScheme.onSurface);
+    final style =
+        baseStyle.copyWith(color: color ?? theme.colorScheme.onSurface);
     final linkStyle = baseStyle.copyWith(
       color: theme.colorScheme.primary,
       decoration: TextDecoration.underline,
@@ -107,21 +111,30 @@ class KruiCheckbox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                _buildLabelWithLink(context, label!, labelLinkText, onLabelLinkTap, labelColor),
+                _buildLabelWithLink(
+                    context, label!, labelLinkText, onLabelLinkTap, labelColor),
                 const SizedBox(height: 2),
-                _buildLabelWithLink(context, subtitle!, subtitleLinkText, onSubtitleLinkTap, subtitleColor),
+                _buildLabelWithLink(context, subtitle!, subtitleLinkText,
+                    onSubtitleLinkTap, subtitleColor),
               ],
             )
-          : _buildLabelWithLink(context, label!, labelLinkText, onLabelLinkTap, labelColor);
+          : _buildLabelWithLink(
+              context, label!, labelLinkText, onLabelLinkTap, labelColor);
     }
 
     final rowChildren = checkboxPosition == KruiCheckboxPosition.leading
         ? [
             checkbox,
-            if (content != null) ...[const SizedBox(width: 12), Expanded(child: content)],
+            if (content != null) ...[
+              const SizedBox(width: 12),
+              Expanded(child: content)
+            ],
           ]
         : [
-            if (content != null) ...[Expanded(child: content), const SizedBox(width: 12)],
+            if (content != null) ...[
+              Expanded(child: content),
+              const SizedBox(width: 12)
+            ],
             checkbox,
           ];
 
