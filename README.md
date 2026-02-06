@@ -2,9 +2,9 @@
 
 <div align="center">
 
-**Premium glassmorphic UI components for Flutter**
+**Premium glassmorphic UI, Elegant Simple & Clean UI components for Flutter**
 
-Beautiful, customizable iOS-style glass effects. Pure Flutter. Zero dependencies.
+Beautiful, customizable iOS-style glass effects, Elegant Simple & Clean UI. Pure Flutter. Zero dependencies.
 
 <!-- [![pub package](https://img.shields.io/pub/v/kr_ui.svg)](https://pub.dev/packages/kr_ui)
 [![likes](https://img.shields.io/pub/likes/kr_ui)](https://pub.dev/packages/kr_ui)
@@ -17,7 +17,7 @@ Beautiful, customizable iOS-style glass effects. Pure Flutter. Zero dependencies
 
 [Get Started](#-installation) • [Components](#-components) • [Examples](#-examples) • [Community](#-community)
 
-<img src="screenshots/hero.png" alt="kr_ui Components" width="100%">
+<img src="./assets/logo/krui_logo.png" alt="kr_ui Components" width="100%">
 
 </div>
 
@@ -107,52 +107,53 @@ class MyApp extends StatelessWidget {
 
 ## 🧩 Components & Roadmap
 
-[x] KruiAccordion
+✅ KruiAccordion
 
-[x] KruiGlassyCard
+✅ KruiGlassyCard
 
-[x] KruiContentCard
+✅ KruiContentCard
 
 
-[x] KruiGlassyButton
+✅ KruiGlassyButton
 
-[x] KruiSimpleButton
+✅ KruiSimpleButton
 
-[x] KruiGlassyIconButton
+✅ KruiGlassyIconButton
 
-[x] KruiSimpleIconButton
+✅ KruiSimpleIconButton
 
-[x] KruiToast
+✅ KruiToast
 
-[x] KruiSnackbar
+✅ KruiSnackbar
 
-[x] KruiForm
+✅ KruiForm
 
-[x] KruiTextField
+✅ KruiTextField
 
-[x] KruiSelect
+✅ KruiSelect
 
-[x] KruiMultiSelect
+✅ KruiMultiSelect
 
-[x] KruiRadioGroup
+✅ KruiRadioGroup
 
-[x] KruiCheckbox
+✅ KruiCheckbox
 
-[x] KruiSwitch
+✅ KruiSwitch
 
-[x] KruiDatePicker
+✅ KruiDatePicker
 
-[x] KruiCalendar
+✅ KruiCalendar
 
-[x] KruiTimePicker
+✅ KruiTimePicker
 
-[x] showKruiGlassyDialog
+✅ showKruiGlassyDialog
 
-[x] showKruiSimpleDialog
+✅ showKruiSimpleDialog
 
-[x] showKruiGlassySheet
+✅ showKruiGlassySheet
 
-[x] showKruiSimpleSheet
+✅ showKruiSimpleSheet
+
 
 ---
 

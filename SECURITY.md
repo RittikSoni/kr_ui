@@ -4,10 +4,12 @@
 
 Use this section to tell people about which versions of your project are currently being supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.0.x   | :white_check_mark: |
-| < 0.0.1 | :x:                |
+| Version         | Supported |
+|----------------|-----------|
+| `main / latest` | ✅        |
+| Older versions  | ❌        |
+
+---
 
 ## Reporting a Vulnerability
 
@@ -16,6 +18,15 @@ Use this section to tell people how to report a vulnerability.
 Tell them where to go, how often they can expect to get an update on a reported vulnerability, what to expect if the vulnerability is accepted or rejected, etc.
 
 If you discover a security vulnerability within this project, please send an e-mail to Rittik Soni via [contact.kingrittik@gmail.com](mailto:contact.kingrittik@gmail.com). All security vulnerabilities will be promptly addressed.
+
+---
+
+### 🔗 Contact Channels
+
+- 📧 Email: [contact.kingrittik@gmail.com](mailto:contact.kingrittik@gmail.com)
+- 💬 Discord: DM any `@👑 KR Team member` or `@Admin` in our [Community Server](https://discord.gg/Tmn6BKwSnr)
+
+We aim to acknowledge all reports within **24 hours**.
 
 ---
 
