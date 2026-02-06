@@ -11,7 +11,7 @@ on:
 
 # Sets permissions for GitHub Pages deployment
 permissions:
-  contents: read
+  contents: write  # Required to push to gh-pages branch
   pages: write
   id-token: write
 
