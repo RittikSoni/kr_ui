@@ -11,9 +11,21 @@ Beautiful, customizable iOS-style glass effects, Elegant Simple & Clean UI. Pure
 [![popularity](https://img.shields.io/pub/popularity/kr_ui)](https://pub.dev/packages/kr_ui)
 [![pub points](https://img.shields.io/pub/points/kr_ui)](https://pub.dev/packages/kr_ui/score) -->
 
+
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](/packages/kr_ui/LICENSE)
-[![Flutter](https://img.shields.io/badge/Flutter-3.27%2B-02569B?logo=flutter)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.6%2B-0175C2?logo=dart)](https://dart.dev)
+[![📖 - docs](https://img.shields.io/badge/📖-docs-13D4D4)](https://rittiksoni.github.io/kr_ui/)
+
+[![CI](https://github.com/RittikSoni/kr_ui/actions/workflows/ci.yml/badge.svg)](https://github.com/RittikSoni/kr_ui/actions/workflows/ci.yml)
+[![GitHub issues](https://img.shields.io/github/issues/RittikSoni/kr_ui)](https://github.com/RittikSoni/kr_ui/issues)
+[![GitHub PRs](https://img.shields.io/github/issues-pr/RittikSoni/kr_ui)](https://github.com/RittikSoni/kr_ui/pulls)
+<!-- [![codecov](https://codecov.io/gh/RittikSoni/kr_ui/branch/main/graph/badge.svg)](https://codecov.io/gh/RittikSoni/kr_ui) -->
+
+
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/RittikSoni)
+[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?logo=YouTube&logoColor=white)](https://www.youtube.com/@king_rittik?sub_confirmation=1)
+[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?logo=discord&logoColor=white)](https://discord.gg/Tmn6BKwSnr)
+[![GitHub stars](https://img.shields.io/github/stars/RittikSoni/kr_ui?style=social)](https://github.com/RittikSoni/kr_ui)
 
 [Get Started](#-installation) • [Components](#-components) • [Examples](#-examples) • [Community](#-community)
 
