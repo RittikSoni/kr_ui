@@ -9,7 +9,7 @@ license: MIT
 
 screenshots:
   - description: 'kr_ui logo'
-    path: '../../assets/logo/krui_logo.png'
+    path: 'screenshots/krui-banner.png'
 
 platforms:
   android:

@@ -27,9 +27,9 @@ Beautiful, customizable iOS-style glass effects, Elegant Simple & Clean UI. Pure
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?logo=discord&logoColor=white)](https://discord.gg/Tmn6BKwSnr)
 [![GitHub stars](https://img.shields.io/github/stars/RittikSoni/kr_ui?style=social)](https://github.com/RittikSoni/kr_ui)
 
-[Get Started](#-installation) • [Components](#-components) • [Examples](#-examples) • [Community](#-community)
+[Get Started](#-installation) • [Live Demo](#-live-demo) • [Quick Start](#-quick-start) • [Community](#-community)
 
-<img src="./assets/logo/krui_logo.png" alt="kr_ui Components" width="100%">
+<img src="screenshots/krui-banner.png" alt="kr_ui Components" width="100%">
 
 </div>
 
@@ -166,6 +166,7 @@ class MyApp extends StatelessWidget {
 
 ✅ showKruiSimpleSheet
 
+more Coming soon! Stay tuned! & Don't forget to [🌟 Star](https://github.com/RittikSoni/kr_ui) this repo if you like it!
 
 ---
 
@@ -173,7 +174,7 @@ class MyApp extends StatelessWidget {
 
 Try out all components in our interactive showcase app:
 
-**[Launch Showcase App](https://kingrittik.github.io/kr_ui)** (Coming Soon)
+**[Launch Showcase App](https://rittiksoni.github.io/kr_ui/)**
 
 Or run locally:
 
@@ -220,7 +221,6 @@ Join the kr_ui community:
 - 💬 **Discord**: [Join Server](https://discord.gg/Tmn6BKwSnr)
 - 🎥 **YouTube**: [@king_rittik](https://www.youtube.com/@king_rittik)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/RittikSoni/kr_ui/issues)
-- 💡 **Discussions**: [GitHub Discussions](https://github.com/RittikSoni/kr_ui/discussions)
 
 ---
 
@@ -245,7 +245,7 @@ Inspired by:
 
 If you like kr_ui, please give it a star on GitHub and like it on pub.dev! It helps others discover this package.
 
-[![GitHub stars](https://img.shields.io/github/stars/kingrittik/kr_ui?style=social)](https://github.com/RittikSoni/kr_ui)
+[![GitHub stars](https://img.shields.io/github/stars/RittikSoni/kr_ui?style=social)](https://github.com/RittikSoni/kr_ui)
 
 ---
 
