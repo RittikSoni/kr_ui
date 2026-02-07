@@ -22,6 +22,10 @@ import '../registry/components/date_picker.dart';
 import '../registry/components/calendar.dart';
 import '../registry/components/time_picker.dart';
 import '../registry/components/form.dart';
+import '../registry/components/liquid_swipe_button.dart';
+import '../registry/components/animated_gradient_background.dart';
+import '../registry/components/particle_burst.dart';
+import '../registry/components/glow_button.dart';
 
 export 'component_models.dart';
 
@@ -51,6 +55,10 @@ class ComponentRegistry {
     kruiCalendarInfo,
     kruiTimePickerInfo,
     kruiFormInfo,
+    kruiLiquidSwipeButtonInfo,
+    kruiAnimatedGradientBackgroundInfo,
+    kruiParticleBurstInfo,
+    kruiGlowButtonInfo,
   ];
 
   /// Get all registered components

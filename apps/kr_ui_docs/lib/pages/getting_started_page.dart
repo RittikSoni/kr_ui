@@ -67,7 +67,7 @@ class GettingStartedPage extends StatelessWidget {
               const SizedBox(height: 16),
               const CodeBlock(
                 code: '''dependencies:
-  kr_ui: ^1.0.0''',
+  kr_ui: <latest_version>''',
                 language: 'yaml',
               ),
               const SizedBox(height: 16),
