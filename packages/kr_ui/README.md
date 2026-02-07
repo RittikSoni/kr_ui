@@ -114,45 +114,45 @@ class MyApp extends StatelessWidget {
 
 ## 🧩 Components & Roadmap
 
-✅ KruiAccordion
+✅ Accordion
 
-✅ KruiCarousel
+✅ Carousel
 
-✅ KruiGlassyCard
+✅ GlassyCard
 
-✅ KruiContentCard
+✅ ContentCard
 
-✅ KruiGlassyButton
+✅ GlassyButton
 
-✅ KruiSimpleButton
+✅ SimpleButton
 
-✅ KruiGlassyIconButton
+✅ GlassyIconButton
 
-✅ KruiSimpleIconButton
+✅ SimpleIconButton
 
-✅ KruiToast
+✅ Toast
 
-✅ KruiSnackbar
+✅ Snackbar
 
-✅ KruiForm
+✅ Form
 
-✅ KruiTextField
+✅ TextField
 
-✅ KruiSelect
+✅ Select
 
-✅ KruiMultiSelect
+✅ MultiSelect
 
-✅ KruiRadioGroup
+✅ RadioGroup
 
-✅ KruiCheckbox
+✅ Checkbox
 
-✅ KruiSwitch
+✅ Switch
 
-✅ KruiDatePicker
+✅ DatePicker
 
-✅ KruiCalendar
+✅ Calendar
 
-✅ KruiTimePicker
+✅ TimePicker
 
 ✅ showKruiGlassyDialog
 
@@ -162,19 +162,19 @@ class MyApp extends StatelessWidget {
 
 ✅ showKruiSimpleSheet
 
-✅ KruiFloatingDock
+✅ FloatingDock
 
-✅ KruiRippleReveal
+✅ RippleReveal
 
-✅ KruiSkeletonShimmer
+✅ SkeletonShimmer
 
-✅ KruiConfetti
+✅ Confetti
 
-✅ KruiGlowButton
+✅ GlowButton
 
-✅ KruiAnimatedGradientBackground
+✅ AnimatedGradientBackground
 
-✅ KruiParticleBurst
+✅ ParticleBurst
 
 more Coming soon! Stay tuned! & Don't forget to [🌟 Star](https://github.com/RittikSoni/kr_ui) this repo if you like it!
 
