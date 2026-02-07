@@ -6,13 +6,8 @@
 
 Beautiful, customizable iOS-style glass effects, Elegant Simple & Clean UI. Pure Flutter. Zero dependencies.
 
-<!-- [![pub package](https://img.shields.io/pub/v/kr_ui.svg)](https://pub.dev/packages/kr_ui)
-[![likes](https://img.shields.io/pub/likes/kr_ui)](https://pub.dev/packages/kr_ui)
-[![popularity](https://img.shields.io/pub/popularity/kr_ui)](https://pub.dev/packages/kr_ui)
-[![pub points](https://img.shields.io/pub/points/kr_ui)](https://pub.dev/packages/kr_ui/score) -->
-
-
-
+[![pub package](https://img.shields.io/pub/v/kr_ui.svg)](https://pub.dev/packages/kr_ui)
+[![pub points](https://img.shields.io/pub/points/kr_ui)](https://pub.dev/packages/kr_ui/score)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](/packages/kr_ui/LICENSE)
 [![📖 - docs](https://img.shields.io/badge/📖-docs-13D4D4)](https://rittiksoni.github.io/kr_ui/)
 
