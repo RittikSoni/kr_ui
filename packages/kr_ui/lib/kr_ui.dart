@@ -50,3 +50,8 @@ export 'src/krui_liquid_swipe_button.dart';
 export 'src/krui_animated_gradient_background.dart';
 export 'src/krui_particle_burst.dart';
 export 'src/krui_glow_button.dart';
+export 'src/krui_floating_dock.dart';
+export 'src/krui_ripple_reveal.dart';
+export 'src/krui_skeleton_shimmer.dart';
+export 'src/krui_confetti.dart';
+export 'src/krui_confetti_controller.dart' hide ConfettiParticle;

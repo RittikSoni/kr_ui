@@ -238,13 +238,14 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
           ),
           border: widget.borderWidth > 0
               ? Border.all(
-                  color: widget.borderColor ?? Colors.white.withOpacity(0.3),
+                  color:
+                      widget.borderColor ?? Colors.white.withValues(alpha: 0.3),
                   width: widget.borderWidth,
                 )
               : null,
           boxShadow: [
             BoxShadow(
-              color: widget.primaryColor.withOpacity(0.4),
+              color: widget.primaryColor.withValues(alpha: 0.4),
               blurRadius: widget.shadowBlurRadius,
               offset: const Offset(0, 10),
             ),
@@ -267,7 +268,8 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
                         decoration: BoxDecoration(
                           borderRadius: widget.borderRadius ??
                               BorderRadius.circular(widget.height / 2),
-                          color: Colors.white.withOpacity(widget.fillOpacity),
+                          color: Colors.white
+                              .withValues(alpha: widget.fillOpacity),
                         ),
                       ),
                       // Shimmer effect
@@ -284,10 +286,10 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      Colors.white.withOpacity(0),
-                                      Colors.white.withOpacity(
-                                          0.3 * _pulseAnimation.value),
-                                      Colors.white.withOpacity(0),
+                                      Colors.white.withValues(alpha: 0),
+                                      Colors.white.withValues(
+                                          alpha: 0.3 * _pulseAnimation.value),
+                                      Colors.white.withValues(alpha: 0),
                                     ],
                                   ),
                                 ),
@@ -356,7 +358,7 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
+                            color: Colors.black.withValues(alpha: 0.2),
                             blurRadius: 15,
                             spreadRadius: 2,
                           ),
@@ -397,7 +399,7 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white
-                                .withOpacity(0.3 + (dotProgress * 0.7)),
+                                .withValues(alpha: 0.3 + (dotProgress * 0.7)),
                           ),
                         );
                       }),

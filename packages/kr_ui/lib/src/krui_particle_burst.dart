@@ -124,7 +124,7 @@ class _ParticlePainter extends CustomPainter {
       final opacity = 1.0 - progress;
       final particleSize = 4 * (1.0 - progress) + 1;
 
-      paint.color = color.withOpacity(opacity);
+      paint.color = color.withValues(alpha: opacity);
       canvas.drawCircle(Offset(x, y), particleSize, paint);
     }
   }

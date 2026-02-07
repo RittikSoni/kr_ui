@@ -41,6 +41,7 @@ class ComponentInfo {
   final String category;
   final IconData icon;
   final List<PropertyInfo> properties;
+  final List<PropertyInfo>? itemProperties;
   final String basicExample;
   final String advancedExample;
   final List<PresetInfo> presets;
@@ -54,6 +55,7 @@ class ComponentInfo {
     required this.category,
     required this.icon,
     required this.properties,
+    this.itemProperties,
     required this.basicExample,
     required this.advancedExample,
     required this.presets,

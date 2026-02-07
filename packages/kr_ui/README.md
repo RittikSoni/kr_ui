@@ -120,7 +120,6 @@ class MyApp extends StatelessWidget {
 
 ✅ KruiContentCard
 
-
 ✅ KruiGlassyButton
 
 ✅ KruiSimpleButton
@@ -160,6 +159,20 @@ class MyApp extends StatelessWidget {
 ✅ showKruiGlassySheet
 
 ✅ showKruiSimpleSheet
+
+✅ KruiFloatingDock
+
+✅ KruiRippleReveal
+
+✅ KruiSkeletonShimmer
+
+✅ KruiConfetti
+
+✅ KruiGlowButton
+
+✅ KruiAnimatedGradientBackground
+
+✅ KruiParticleBurst
 
 more Coming soon! Stay tuned! & Don't forget to [🌟 Star](https://github.com/RittikSoni/kr_ui) this repo if you like it!
 

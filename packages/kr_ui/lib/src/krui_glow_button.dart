@@ -95,19 +95,19 @@ class _KruiGlowButtonState extends State<KruiGlowButton>
               gradient: LinearGradient(
                 colors: [
                   widget.glowColor,
-                  widget.glowColor.withOpacity(0.8),
+                  widget.glowColor.withValues(alpha: 0.8),
                 ],
               ),
               boxShadow: [
                 BoxShadow(
-                  color:
-                      widget.glowColor.withOpacity(0.6 * _glowAnimation.value),
+                  color: widget.glowColor
+                      .withValues(alpha: 0.6 * _glowAnimation.value),
                   blurRadius: 30 * _glowAnimation.value,
                   spreadRadius: 5 * _glowAnimation.value,
                 ),
                 BoxShadow(
-                  color:
-                      widget.glowColor.withOpacity(0.3 * _glowAnimation.value),
+                  color: widget.glowColor
+                      .withValues(alpha: 0.3 * _glowAnimation.value),
                   blurRadius: 60 * _glowAnimation.value,
                   spreadRadius: 10 * _glowAnimation.value,
                 ),
@@ -123,7 +123,7 @@ class _KruiGlowButtonState extends State<KruiGlowButton>
                   letterSpacing: 1.5,
                   shadows: [
                     Shadow(
-                      color: widget.glowColor.withOpacity(0.8),
+                      color: widget.glowColor.withValues(alpha: 0.8),
                       blurRadius: 10,
                     ),
                   ],

@@ -26,6 +26,10 @@ import '../registry/components/liquid_swipe_button.dart';
 import '../registry/components/animated_gradient_background.dart';
 import '../registry/components/particle_burst.dart';
 import '../registry/components/glow_button.dart';
+import '../registry/components/floating_dock.dart';
+import '../registry/components/ripple_reveal.dart';
+import '../registry/components/skeleton_shimmer.dart';
+import '../registry/components/confetti.dart';
 
 export 'component_models.dart';
 
@@ -59,6 +63,10 @@ class ComponentRegistry {
     kruiAnimatedGradientBackgroundInfo,
     kruiParticleBurstInfo,
     kruiGlowButtonInfo,
+    kruiFloatingDockInfo,
+    kruiRippleRevealInfo,
+    kruiSkeletonShimmerInfo,
+    kruiConfettiInfo,
   ];
 
   /// Get all registered components
