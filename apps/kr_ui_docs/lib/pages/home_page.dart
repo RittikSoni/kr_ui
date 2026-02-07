@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kr_ui/kr_ui.dart';
+import 'package:kr_ui_docs/constants/kassets.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:go_router/go_router.dart';
@@ -57,6 +58,34 @@ class HomePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: AppTheme.bodyLarge
                         .copyWith(color: dynamicTheme.textSecondary),
+                  ),
+                  const SizedBox(height: 48),
+                  // Banner Image
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth: isMobile ? 350 : 700,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: AppTheme.borderRadiusXLarge,
+                      boxShadow: [
+                        BoxShadow(
+                          color: dynamicTheme.primary.withValues(alpha: 0.2),
+                          blurRadius: 30,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: AppTheme.borderRadiusXLarge,
+                      child: Image.asset(
+                        Kassets.banner,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          // Fallback if banner not found
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 48),
                   Wrap(
