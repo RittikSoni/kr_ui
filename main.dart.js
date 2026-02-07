@@ -101165,7 +101165,7 @@ this.aj()},
 D(a){var s,r,q,p,o=this,n=null,m=A.hn(a,t.eC),l=new A.hN(m),k=A.a8(a,n,t.w).w.a.a<768,j=A.b3r(a).b.gcC(),i=o.d
 i===$&&A.a()
 $.a1()
-if(k){s=A.aSJ("../../assets/logo/krui_logo_only.png",B.c5,24)
+if(k){s=A.aSJ("assets/logo/krui_logo_only.png",B.c5,24)
 r=$.ql()
 s=A.aY(A.b([s,B.bD,A.T("kr_ui",n,n,n,n,r.a6(m.a===B.n?B.O:B.h),n,n,n)],t.p),B.q,B.l,B.p,0,n)}else s=o.abw(a,l)
 r=(m.a===B.n?B.eQ:B.f).ar(0.7)
@@ -101187,7 +101187,7 @@ ag0(a){if(a==="/")return 0
 if(B.c.bG(a,"/components"))return 1
 if(B.c.bG(a,"/getting-started"))return 2
 return 0},
-abw(a,b){var s=null,r=A.aSJ("../../assets/logo/krui_logo_only.png",B.c5,28),q=$.ql(),p=t.p
+abw(a,b){var s=null,r=A.aSJ("assets/logo/krui_logo_only.png",B.c5,28),q=$.ql(),p=t.p
 return A.aY(A.b([A.cT(!1,s,!0,A.aY(A.b([r,B.bk,A.T("kr_ui",s,s,s,s,q.a6(b.a.a===B.n?B.O:B.h),s,s,s)],p),B.q,B.l,B.M,0,s),s,!0,s,s,s,s,s,s,s,s,s,s,new A.aCN(a),s,s,s,s,s,s,s),B.Eo,A.bw(new A.dj(B.lc,new A.FD(new A.aCO(a),s),s),1),B.a0C],p),B.q,B.l,B.p,0,s)},
 abW(a,b,c){var s,r,q,p,o,n,m,l,k,j=this,i=null,h="/getting-started",g=A.aRG(),f=A.Y(g).h("aM<1>"),e=A.a_(new A.aM(g,new A.aCV(),f),f.h("D.E"))
 g=j.Qr(a,b,B.rX,c==="/","Home","/",B.rM)
