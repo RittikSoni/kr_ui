@@ -101,7 +101,7 @@ void main() {
             .first,
       );
 
-      expect(textWidget.style.color?.value, Colors.yellow.value);
+      expect(textWidget.style.color?.toARGB32(), Colors.yellow.toARGB32());
     });
 
     testWidgets('applies custom padding', (tester) async {
