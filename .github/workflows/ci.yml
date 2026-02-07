@@ -36,9 +36,19 @@ jobs:
         run: melos exec -- dart format --set-exit-if-changed .
         continue-on-error: false
 
-      - name: 🧪 Run tests
-        run: melos exec --dir-exists=test -- flutter test
+      - name: 🧪 Run tests with coverage
+        run: melos exec --dir-exists=test -- flutter test --coverage
         continue-on-error: false
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./packages/kr_ui/coverage/lcov.info
+          flags: unittests
+          name: kr_ui-coverage
+          fail_ci_if_error: false
+          verbose: true
 
       - name: 🏗️ Build kr_ui_docs (web)
         run: |

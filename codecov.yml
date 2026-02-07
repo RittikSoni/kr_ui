@@ -1,0 +1,53 @@
+# Codecov Configuration for kr_ui
+# Big-tech standard configuration for Flutter/Dart monorepo
+
+coverage:
+  status:
+    # Overall project coverage
+    project:
+      default:
+        target: 80%                    # Standard big-tech threshold
+        threshold: 1%                  # Allow 1% drop
+        if_ci_failed: error            # Fail if CI fails
+    
+    # Individual PR coverage
+    patch:
+      default:
+        target: 70%                    # New code should be well-tested
+        threshold: 0%                  # Don't allow coverage drops on new code
+        if_ci_failed: error
+
+  # Precision for coverage percentages
+  precision: 2
+  round: down
+  range: "60...100"
+
+# PR comment behavior
+comment:
+  layout: "reach,diff,flags,tree"
+  behavior: default                    # Comment on every PR
+  require_changes: false               # Always comment
+  require_base: false                  # Comment even on first PR
+  require_head: true
+
+# Ignore patterns
+ignore:
+  - "**/*_test.dart"                   # Don't count test files
+  - "**/*.g.dart"                      # Ignore generated files
+  - "**/*.freezed.dart"                # Ignore freezed files
+  - "apps/kr_ui_docs/**"               # Ignore docs/demo app
+  - "example/**"                       # Ignore example apps
+  - "test/**"                          # Ignore test directories
+
+# Flags for different test types
+flags:
+  unittests:
+    paths:
+      - packages/kr_ui/lib/
+    carryforward: true                 # Use previous results if none uploaded
+
+# Require CI to pass before considering coverage
+codecov:
+  require_ci_to_pass: true
+  notify:
+    wait_for_ci: true

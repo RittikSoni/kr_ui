@@ -14,7 +14,7 @@ Beautiful, customizable iOS-style glass effects, Elegant Simple & Clean UI. Pure
 [![CI](https://github.com/RittikSoni/kr_ui/actions/workflows/ci.yml/badge.svg)](https://github.com/RittikSoni/kr_ui/actions/workflows/ci.yml)
 [![GitHub issues](https://img.shields.io/github/issues/RittikSoni/kr_ui)](https://github.com/RittikSoni/kr_ui/issues)
 [![GitHub PRs](https://img.shields.io/github/issues-pr/RittikSoni/kr_ui)](https://github.com/RittikSoni/kr_ui/pulls)
-<!-- [![codecov](https://codecov.io/gh/RittikSoni/kr_ui/branch/main/graph/badge.svg)](https://codecov.io/gh/RittikSoni/kr_ui) -->
+[![codecov](https://codecov.io/gh/RittikSoni/kr_ui/branch/main/graph/badge.svg)](https://codecov.io/gh/RittikSoni/kr_ui)
 
 
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/RittikSoni)

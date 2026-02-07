@@ -34,6 +34,11 @@ scripts:
   test:
     run: melos exec --dir-exists=test -- flutter test
     description: Run tests for all packages
+  
+  # Test all packages with coverage
+  test:coverage:
+    run: melos exec --dir-exists=test -- flutter test --coverage
+    description: Run tests with coverage for all packages
 
   # Publish to pub.dev (dry-run)
   publish:dry:
