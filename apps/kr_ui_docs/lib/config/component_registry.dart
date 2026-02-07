@@ -30,6 +30,7 @@ import '../registry/components/floating_dock.dart';
 import '../registry/components/ripple_reveal.dart';
 import '../registry/components/skeleton_shimmer.dart';
 import '../registry/components/confetti.dart';
+import '../registry/components/carousel.dart';
 
 export 'component_models.dart';
 
@@ -67,6 +68,7 @@ class ComponentRegistry {
     kruiRippleRevealInfo,
     kruiSkeletonShimmerInfo,
     kruiConfettiInfo,
+    kruiCarouselInfo,
   ];
 
   /// Get all registered components

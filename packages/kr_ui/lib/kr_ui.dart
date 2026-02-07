@@ -55,3 +55,4 @@ export 'src/krui_ripple_reveal.dart';
 export 'src/krui_skeleton_shimmer.dart';
 export 'src/krui_confetti.dart';
 export 'src/krui_confetti_controller.dart' hide ConfettiParticle;
+export 'src/krui_carousel.dart';

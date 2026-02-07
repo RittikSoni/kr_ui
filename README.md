@@ -116,6 +116,8 @@ class MyApp extends StatelessWidget {
 
 ✅ KruiAccordion
 
+✅ KruiCarousel
+
 ✅ KruiGlassyCard
 
 ✅ KruiContentCard
