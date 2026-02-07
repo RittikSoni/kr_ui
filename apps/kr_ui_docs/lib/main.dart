@@ -167,7 +167,9 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
 
             // Main content
             Expanded(
-              child: widget.child,
+              child: SelectionArea(
+                child: widget.child,
+              ),
             ),
           ],
         ),
