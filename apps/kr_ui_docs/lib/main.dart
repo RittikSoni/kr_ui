@@ -130,21 +130,6 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
                 elevation: 0,
                 centerTitle: false,
                 actions: [
-                  if (!isMobile) ...[
-                    IconButton(
-                      icon: const FaIcon(FontAwesomeIcons.github, size: 20),
-                      tooltip: 'GitHub Repository',
-                      onPressed: () =>
-                          _launchURL('https://github.com/RittikSoni/kr_ui'),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.bug_report_rounded),
-                      tooltip: 'Report Issue',
-                      onPressed: () => _launchURL(
-                          'https://github.com/RittikSoni/kr_ui/issues'),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
                   if (isMobile)
                     SearchTrigger(onComponentSelected: (component) {
                       context.go('/components/${component.id}');

@@ -176,6 +176,8 @@ class MyApp extends StatelessWidget {
 
 ✅ KruiParticleBurst
 
+check out [kr_ui_docs](https://rittiksoni.github.io/kr_ui/) for more examples
+
 more Coming soon! Stay tuned! & Don't forget to [🌟 Star](https://github.com/RittikSoni/kr_ui) this repo if you like it!
 
 ---
