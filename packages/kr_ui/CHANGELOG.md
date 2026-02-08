@@ -1,3 +1,16 @@
+## 0.0.3
+
+- New Components
+  - Avatar
+  - Seperator
+  - Button
+  - Gap spacer
+  - Appbar
+
+- Optimization
+- Improvements
+
+
 ## 0.0.2+1
 
 - add example
