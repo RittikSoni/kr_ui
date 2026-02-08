@@ -21,20 +21,52 @@ class TabbedExample extends StatefulWidget {
   State<TabbedExample> createState() => _TabbedExampleState();
 }
 
+enum _PreviewBackground {
+  gradient,
+  solid,
+}
+
 class _TabbedExampleState extends State<TabbedExample>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  _PreviewBackground _backgroundType = _PreviewBackground.gradient;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      if (mounted) setState(() {});
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Widget _getPreviewBackground(DynamicTheme dynamicTheme, Widget child) {
+    switch (_backgroundType) {
+      case _PreviewBackground.gradient:
+        return Container(
+          padding: const EdgeInsets.all(40),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: dynamicTheme.gradientColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: child,
+        );
+      case _PreviewBackground.solid:
+        return Container(
+          padding: const EdgeInsets.all(40),
+          color: dynamicTheme.surfaceCard,
+          child: child,
+        );
+    }
   }
 
   @override
@@ -66,26 +98,59 @@ class _TabbedExampleState extends State<TabbedExample>
                     bottom: BorderSide(color: dynamicTheme.borderLight),
                   ),
                 ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.space16,
+                  vertical: AppTheme.space12,
+                ),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: TabBar(
-                        controller: _tabController,
-                        labelColor: dynamicTheme.primary,
-                        unselectedLabelColor: dynamicTheme.textSecondary,
-                        indicatorColor: dynamicTheme.primary,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        dividerColor: Colors.transparent,
-                        labelStyle: AppTheme.bodySmall.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                        tabs: const [
-                          Tab(text: 'Preview'),
-                          Tab(text: 'Code'),
+                    // Modern Pill-style tabs
+                    Container(
+                      decoration: BoxDecoration(
+                        color: dynamicTheme.surfaceCard.withValues(alpha: 0.5),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _buildPillTab(
+                            index: 0,
+                            icon: Icons.visibility_outlined,
+                            label: 'Preview',
+                            dynamicTheme: dynamicTheme,
+                          ),
+                          const SizedBox(width: 4),
+                          _buildPillTab(
+                            index: 1,
+                            icon: Icons.code,
+                            label: 'Code',
+                            dynamicTheme: dynamicTheme,
+                          ),
                         ],
                       ),
                     ),
-                    const Spacer(flex: 3),
+                    const Spacer(),
+                    // Background selector (only show on Preview tab)
+                    if (_tabController.index == 0)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _buildBackgroundButton(
+                            _PreviewBackground.gradient,
+                            Icons.gradient,
+                            'Gradient',
+                            dynamicTheme,
+                          ),
+                          const SizedBox(width: 4),
+                          _buildBackgroundButton(
+                            _PreviewBackground.solid,
+                            Icons.rectangle_outlined,
+                            'Solid',
+                            dynamicTheme,
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -94,22 +159,21 @@ class _TabbedExampleState extends State<TabbedExample>
                   bottomLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16),
                 ),
-                child: SizedBox(
-                  height: 400,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: 400,
+                  ),
                   child: TabBarView(
                     controller: _tabController,
                     children: [
                       // Preview Tab
                       _TabContentWrapper(
-                        child: Container(
-                          padding: const EdgeInsets.all(AppTheme.space32),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: dynamicTheme.gradientColors,
+                        child: _getPreviewBackground(
+                          dynamicTheme,
+                          SingleChildScrollView(
+                            child: Center(
+                              child: widget.preview,
                             ),
-                          ),
-                          child: SingleChildScrollView(
-                            child: Center(child: widget.preview),
                           ),
                         ),
                       ),
@@ -128,6 +192,105 @@ class _TabbedExampleState extends State<TabbedExample>
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildPillTab({
+    required int index,
+    required IconData icon,
+    required String label,
+    required DynamicTheme dynamicTheme,
+  }) {
+    final isSelected = _tabController.index == index;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOutCubic,
+      decoration: BoxDecoration(
+        color: isSelected ? dynamicTheme.primary : Colors.transparent,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            _tabController.animateTo(index);
+            setState(() {});
+          },
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  size: 16,
+                  color: isSelected ? Colors.white : dynamicTheme.textSecondary,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  label,
+                  style: AppTheme.bodySmall.copyWith(
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    color:
+                        isSelected ? Colors.white : dynamicTheme.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackgroundButton(
+    _PreviewBackground type,
+    IconData icon,
+    String tooltip,
+    DynamicTheme dynamicTheme,
+  ) {
+    final isSelected = _backgroundType == type;
+
+    return Tooltip(
+      message: tooltip,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? dynamicTheme.primary.withValues(alpha: 0.15)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(6),
+          border: isSelected
+              ? Border.all(color: dynamicTheme.primary.withValues(alpha: 0.3))
+              : null,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                _backgroundType = type;
+              });
+            },
+            borderRadius: BorderRadius.circular(6),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Icon(
+                icon,
+                size: 16,
+                color: isSelected
+                    ? dynamicTheme.primary
+                    : dynamicTheme.textTertiary,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -149,5 +312,41 @@ class _TabContentWrapperState extends State<_TabContentWrapper>
   Widget build(BuildContext context) {
     super.build(context);
     return widget.child;
+  }
+}
+
+// Checkerboard pattern painter
+class _CheckerboardPainter extends CustomPainter {
+  final Color color1;
+  final Color color2;
+  final double squareSize;
+
+  _CheckerboardPainter({
+    required this.color1,
+    required this.color2,
+  }) : squareSize = 20.0;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint1 = Paint()..color = color1;
+    final paint2 = Paint()..color = color2;
+
+    for (var y = 0.0; y < size.height; y += squareSize) {
+      for (var x = 0.0; x < size.width; x += squareSize) {
+        final isEven =
+            ((x / squareSize).floor() + (y / squareSize).floor()) % 2 == 0;
+        canvas.drawRect(
+          Rect.fromLTWH(x, y, squareSize, squareSize),
+          isEven ? paint1 : paint2,
+        );
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_CheckerboardPainter oldDelegate) {
+    return oldDelegate.color1 != color1 ||
+        oldDelegate.color2 != color2 ||
+        oldDelegate.squareSize != squareSize;
   }
 }
