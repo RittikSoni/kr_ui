@@ -94,21 +94,32 @@ final ComponentInfo kruiCarouselInfo = ComponentInfo(
     ),
   ],
   basicExample: '''KruiCarousel(
+  height: 300,
   items: [
     Container(
-      color: Colors.blue,
-      child: Center(child: Text('Slide 1', style: TextStyle(fontSize: 24, color: Colors.white))),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [Color(0xFF6C63FF), Color(0xFF4ECDC4)]),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(child: Text('Slide 1', style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold))),
     ),
     Container(
-      color: Colors.purple,
-      child: Center(child: Text('Slide 2', style: TextStyle(fontSize: 24, color: Colors.white))),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [Color(0xFFFF6B6B), Color(0xFFFFD93D)]),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(child: Text('Slide 2', style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold))),
     ),
     Container(
-      color: Colors.pink,
-      child: Center(child: Text('Slide 3', style: TextStyle(fontSize: 24, color: Colors.white))),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [Color(0xFFA8E6CF), Color(0xFFDCEDC1)]),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Center(child: Text('Slide 3', style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold))),
     ),
   ],
   autoPlay: true,
+  borderRadius: BorderRadius.circular(20),
 )''',
   advancedExample: '''KruiCarousel(
   items: List.generate(5, (index) {
@@ -445,7 +456,7 @@ final ComponentInfo kruiCarouselInfo = ComponentInfo(
   ],
   demoBuilder: () {
     return Container(
-      height: 350,
+      height: 450,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -457,7 +468,7 @@ final ComponentInfo kruiCarouselInfo = ComponentInfo(
         child: SizedBox(
           width: 700,
           child: KruiCarousel(
-            height: 300,
+            height: 380,
             styleMode: CarouselStyleMode.glass,
             autoPlay: true,
             autoPlayDuration: const Duration(seconds: 4),

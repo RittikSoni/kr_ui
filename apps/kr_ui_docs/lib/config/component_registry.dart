@@ -32,6 +32,10 @@ import '../registry/components/skeleton_shimmer.dart';
 import '../registry/components/confetti.dart';
 import '../registry/components/carousel.dart';
 import '../registry/components/button_unified.dart';
+import '../registry/components/gap.dart';
+import '../registry/components/separator.dart';
+import '../registry/components/avatar.dart';
+import '../registry/components/app_bar.dart';
 
 export 'component_models.dart';
 
@@ -71,6 +75,10 @@ class ComponentRegistry {
     kruiConfettiInfo,
     kruiCarouselInfo,
     kruiButtonInfo,
+    kruiGapInfo,
+    kruiSeparatorInfo,
+    kruiAvatarInfo,
+    kruiAppBarInfo,
   ];
 
   /// Get all registered components

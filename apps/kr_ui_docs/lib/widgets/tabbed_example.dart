@@ -161,7 +161,7 @@ class _TabbedExampleState extends State<TabbedExample>
                 ),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(
-                    maxHeight: 400,
+                    maxHeight: 600,
                   ),
                   child: TabBarView(
                     controller: _tabController,

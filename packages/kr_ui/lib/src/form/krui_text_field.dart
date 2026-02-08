@@ -47,6 +47,8 @@ class KruiTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final Widget? prefix;
+  final Widget? suffix;
   final KruiTextFieldValidation validation;
 
   /// Custom validator. When set, [autovalidate] controls whether it runs on every change.
@@ -87,6 +89,8 @@ class KruiTextField extends StatefulWidget {
     this.inputFormatters,
     this.prefixIcon,
     this.suffixIcon,
+    this.prefix,
+    this.suffix,
     this.validation = KruiTextFieldValidation.none,
     this.validator,
     this.autovalidate = true,
@@ -243,7 +247,9 @@ class _KruiTextFieldState extends State<KruiTextField> {
           readOnly: widget.readOnly,
           maxLines: widget.maxLines,
           maxLength: widget.maxLength,
-          style: textColor != null ? TextStyle(color: textColor) : null,
+          style: TextStyle(
+            color: textColor ?? (isDark ? Colors.white : Colors.black87),
+          ),
           keyboardType: widget.keyboardType ??
               (widget.validation == KruiTextFieldValidation.email
                   ? TextInputType.emailAddress
@@ -279,6 +285,8 @@ class _KruiTextFieldState extends State<KruiTextField> {
               borderSide: BorderSide(color: errorColor, width: 2),
             ),
             prefixIcon: widget.prefixIcon,
+            prefix: widget.prefix,
+            suffix: widget.suffix,
             suffixIcon: widget.obscureText
                 ? IconButton(
                     icon: Icon(_obscureText

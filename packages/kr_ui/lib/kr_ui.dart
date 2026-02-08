@@ -57,3 +57,7 @@ export 'src/krui_confetti.dart';
 export 'src/krui_confetti_controller.dart' hide ConfettiParticle;
 export 'src/krui_carousel.dart';
 export 'src/krui_button.dart';
+export 'src/krui_gap.dart';
+export 'src/krui_separator.dart';
+export 'src/krui_avatar.dart';
+export 'src/krui_app_bar.dart';

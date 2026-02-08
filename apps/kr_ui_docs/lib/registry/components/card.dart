@@ -104,7 +104,20 @@ final kruiGlassyCardInfo = ComponentInfo(
     ),
   ],
   basicExample: '''KruiGlassyCard(
-  child: Text('Beautiful Glass Effect'),
+  child: Padding(
+    padding: const EdgeInsets.all(20),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(Icons.auto_awesome, color: Colors.white, size: 32),
+        SizedBox(height: 12),
+        Text('Premium Glass', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+        SizedBox(height: 8),
+        Text('Frosted glass effect with depth', style: TextStyle(color: Colors.white70)),
+      ],
+    ),
+  ),
 )''',
   advancedExample: '''KruiGlassyCard(
   blur: 15,
@@ -284,26 +297,202 @@ final kruiGlassyCardInfo = ComponentInfo(
         child: Text('Elegant Dark', style: TextStyle(color: Colors.white)),
       ),
     ),
+    PresetInfo(
+      name: 'Credit Card',
+      description: 'Glassmorphic credit card style',
+      code: '''KruiGlassyCard(
+  width: 320,
+  height: 200,
+  borderRadius: BorderRadius.circular(20),
+  blur: 15,
+  opacity: 0.1,
+  border: Border.all(color: Colors.white.withOpacity(0.2)),
+  child: Stack(
+    children: [
+      Positioned(top: 20, right: 20, child: Icon(Icons.contactless, color: Colors.white70, size: 32)),
+      Positioned(top: 20, left: 20, child: Text('Glass Bank', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18))),
+      Positioned(bottom: 60, left: 20, child: Text('**** **** **** 4242', style: TextStyle(color: Colors.white, fontSize: 22, letterSpacing: 2))),
+      Positioned(bottom: 20, left: 20, child: Text('JOHN DOE', style: TextStyle(color: Colors.white70))),
+      Positioned(bottom: 20, right: 20, child: Text('12/26', style: TextStyle(color: Colors.white70))),
+    ],
+  ),
+)''',
+      builder: () => Container(
+        width: 400,
+        height: 250,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFff9966), Color(0xFFff5e62)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: KruiGlassyCard(
+            width: 300,
+            height: 190,
+            borderRadius: BorderRadius.circular(20),
+            blur: 15,
+            opacity: 0.1,
+            border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+            child: const Stack(
+              children: [
+                Positioned(
+                    top: 20,
+                    right: 20,
+                    child: Icon(Icons.contactless,
+                        color: Colors.white70, size: 32)),
+                Positioned(
+                    top: 20,
+                    left: 20,
+                    child: Text('Glass Bank',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18))),
+                Positioned(
+                    bottom: 60,
+                    left: 20,
+                    child: Text('**** **** **** 4242',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            letterSpacing: 2))),
+                Positioned(
+                    bottom: 20,
+                    left: 20,
+                    child: Text('JOHN DOE',
+                        style: TextStyle(color: Colors.white70))),
+                Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child:
+                        Text('12/26', style: TextStyle(color: Colors.white70))),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+    PresetInfo(
+      name: 'Weather Widget',
+      description: 'Elegant weather display',
+      code: '''KruiGlassyCard(
+  borderRadius: BorderRadius.circular(24),
+  blur: 20,
+  opacity: 0.15,
+  child: Padding(
+    padding: EdgeInsets.all(24),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('San Francisco', style: TextStyle(color: Colors.white, fontSize: 16)),
+            Text('72°', style: TextStyle(color: Colors.white, fontSize: 48, fontWeight: FontWeight.w300)),
+          ],
+        ),
+        SizedBox(width: 32),
+        Icon(Icons.wb_sunny, color: Colors.amber, size: 48),
+      ],
+    ),
+  ),
+)''',
+      builder: () => Container(
+        width: 300,
+        height: 180,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=1000'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: KruiGlassyCard(
+            borderRadius: BorderRadius.circular(24),
+            blur: 20,
+            opacity: 0.15,
+            child: const Padding(
+              padding: EdgeInsets.all(24),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('San Francisco',
+                          style: TextStyle(color: Colors.white, fontSize: 16)),
+                      Text('72°',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 48,
+                              fontWeight: FontWeight.w300)),
+                    ],
+                  ),
+                  SizedBox(width: 32),
+                  Icon(Icons.wb_sunny, color: Colors.amber, size: 48),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
   ],
   demoBuilder: () => Container(
     width: 300,
-    height: 200,
+    height: 350,
     decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+      image: DecorationImage(
+        image: NetworkImage(
+            'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2000'),
+        fit: BoxFit.cover,
       ),
     ),
-    child: const Center(
+    child: Center(
       child: KruiGlassyCard(
+        blur: 15,
+        opacity: 0.1,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
         child: Padding(
-          padding: EdgeInsets.all(24),
-          child: Text(
-            'Glassmorphism',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.diamond_outlined,
+                    size: 40, color: Colors.white),
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                'Premium Glass',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 1,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Experience depth & blur',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white.withValues(alpha: 0.8),
+                ),
+              ),
+            ],
           ),
         ),
       ),

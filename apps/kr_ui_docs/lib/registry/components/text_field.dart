@@ -72,6 +72,26 @@ final kruiTextFieldInfo = ComponentInfo(
         type: 'Color?',
         defaultValue: 'null',
         description: 'Border color when focused'),
+    const PropertyInfo(
+        name: 'prefix',
+        type: 'Widget?',
+        defaultValue: 'null',
+        description: 'Widget to display before the input'),
+    const PropertyInfo(
+        name: 'suffix',
+        type: 'Widget?',
+        defaultValue: 'null',
+        description: 'Widget to display after the input'),
+    const PropertyInfo(
+        name: 'prefixIcon',
+        type: 'Widget?',
+        defaultValue: 'null',
+        description: 'Icon to display before the input'),
+    const PropertyInfo(
+        name: 'suffixIcon',
+        type: 'Widget?',
+        defaultValue: 'null',
+        description: 'Icon to display after the input'),
   ],
   basicExample: '''KruiTextField(
   label: 'Email',
@@ -145,6 +165,38 @@ final kruiTextFieldInfo = ComponentInfo(
         hint: 'Min 3 characters',
         validator: (v) => v != null && v.length < 3 ? 'Min 3 characters' : null,
         autovalidate: true,
+        onChanged: (_) {},
+      ),
+    ),
+    PresetInfo(
+      name: 'Prefix & Suffix',
+      description: 'With leading and trailing widgets',
+      code: '''KruiTextField(
+  label: 'Amount',
+  prefixIcon: Icon(Icons.attach_money),
+  suffix: Container(
+    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    decoration: BoxDecoration(
+      color: Colors.grey.shade200,
+      borderRadius: BorderRadius.circular(4),
+    ),
+    child: Text('USD'),
+  ),
+  keyboardType: TextInputType.number,
+  onChanged: (v) {},
+)''',
+      builder: () => KruiTextField(
+        label: 'Amount',
+        prefixIcon: const Icon(Icons.attach_money),
+        suffix: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: const Text('USD'),
+        ),
+        keyboardType: TextInputType.number,
         onChanged: (_) {},
       ),
     ),

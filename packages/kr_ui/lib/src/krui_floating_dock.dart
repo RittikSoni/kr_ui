@@ -55,14 +55,14 @@ class KruiFloatingDock extends StatefulWidget {
     required this.items,
     this.position = FloatingDockPosition.bottom,
     this.height = 70,
-    this.spacing = 12,
-    this.iconSize = 28,
-    this.maxScale = 1.4,
-    this.blurIntensity = 10,
+    this.spacing = 16,
+    this.iconSize = 24,
+    this.maxScale = 1.5,
+    this.blurIntensity = 15,
     this.backgroundColor,
     this.borderColor,
     this.autoHide = false,
-    this.padding = const EdgeInsets.all(12),
+    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
   }) : assert(items.length > 0, 'Must have at least one item');
 
   @override
@@ -139,8 +139,7 @@ class _KruiFloatingDockState extends State<KruiFloatingDock>
             width: widget.iconSize + 16,
             height: widget.iconSize + 16,
             decoration: BoxDecoration(
-              color:
-                  item.backgroundColor ?? Colors.white.withValues(alpha: 0.1),
+              color: item.backgroundColor ?? Colors.transparent,
               borderRadius: BorderRadius.circular(12),
               border: item.showBorder
                   ? Border.all(
@@ -167,7 +166,29 @@ class _KruiFloatingDockState extends State<KruiFloatingDock>
                 ? Tooltip(
                     message: item.label!,
                     preferBelow: false,
-                    verticalOffset: 10,
+                    verticalOffset: 16,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.8),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.1),
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
                     child: iconWidget,
                   )
                 : iconWidget,
@@ -190,17 +211,26 @@ class _KruiFloatingDockState extends State<KruiFloatingDock>
           padding: widget.padding,
           decoration: BoxDecoration(
             color:
-                widget.backgroundColor ?? Colors.black.withValues(alpha: 0.3),
+                widget.backgroundColor ?? Colors.black.withValues(alpha: 0.4),
             borderRadius: BorderRadius.circular(widget.height / 2),
             border: Border.all(
-              color: widget.borderColor ?? Colors.white.withValues(alpha: 0.2),
+              color: widget.borderColor ?? Colors.white.withValues(alpha: 0.1),
               width: 1,
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white.withValues(alpha: 0.1),
+                Colors.white.withValues(alpha: 0.05),
+              ],
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.3),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 24,
+                spreadRadius: -4,
+                offset: const Offset(0, 12),
               ),
             ],
           ),
