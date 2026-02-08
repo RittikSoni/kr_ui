@@ -81,6 +81,39 @@ class KruiLiquidSwipeButton extends StatefulWidget {
   /// Custom border radius (null uses pill shape)
   final BorderRadius? borderRadius;
 
+  /// Custom drag handle size (defaults to button height)
+  final double? dragHandleSize;
+
+  /// Custom drag handle color (defaults to white)
+  final Color? dragHandleColor;
+
+  /// Custom background gradient colors (overrides primaryColor and accentColor for background)
+  final List<Color>? backgroundGradientColors;
+
+  /// Gradient begin alignment
+  final Alignment gradientBegin;
+
+  /// Gradient end alignment
+  final Alignment gradientEnd;
+
+  /// Animation duration for fill effect (milliseconds)
+  final int fillAnimationDuration;
+
+  /// Animation duration for reset (milliseconds)
+  final int resetAnimationDuration;
+
+  /// Minimum drag distance in pixels before slider moves
+  final double minDragDistance;
+
+  /// Enable haptic-like visual feedback on drag
+  final bool enableHapticFeedback;
+
+  /// Custom completion animation curve
+  final Curve completionCurve;
+
+  /// Custom reset animation curve
+  final Curve resetCurve;
+
   const KruiLiquidSwipeButton({
     super.key,
     required this.text,
@@ -104,10 +137,26 @@ class KruiLiquidSwipeButton extends StatefulWidget {
     this.fillOpacity = 0.3,
     this.shadowBlurRadius = 20,
     this.borderRadius,
+    this.dragHandleSize,
+    this.dragHandleColor,
+    this.backgroundGradientColors,
+    this.gradientBegin = Alignment.centerLeft,
+    this.gradientEnd = Alignment.centerRight,
+    this.fillAnimationDuration = 200,
+    this.resetAnimationDuration = 300,
+    this.minDragDistance = 5.0,
+    this.enableHapticFeedback = true,
+    this.completionCurve = Curves.easeOut,
+    this.resetCurve = Curves.easeInOut,
   })  : assert(completionThreshold > 0 && completionThreshold <= 1.0,
             'completionThreshold must be between 0 and 1'),
         assert(fillOpacity >= 0 && fillOpacity <= 1.0,
-            'fillOpacity must be between 0 and 1');
+            'fillOpacity must be between 0 and 1'),
+        assert(minDragDistance >= 0, 'minDragDistance must be non-negative'),
+        assert(fillAnimationDuration > 0,
+            'fillAnimationDuration must be positive'),
+        assert(resetAnimationDuration > 0,
+            'resetAnimationDuration must be positive');
 
   @override
   State<KruiLiquidSwipeButton> createState() => _KruiLiquidSwipeButtonState();
@@ -123,6 +172,8 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
   late Animation<double> _bounceAnimation;
   bool _isCompleted = false;
   bool _isDragging = false;
+  double _dragStartX = 0.0;
+  bool _hasCompletedThisGesture = false;
 
   @override
   void initState() {
@@ -138,9 +189,9 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
 
     _pulseController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 2000),
     )..repeat(reverse: true);
-    _pulseAnimation = Tween<double>(begin: 0.95, end: 1.05).animate(
+    _pulseAnimation = Tween<double>(begin: 0.98, end: 1.02).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
@@ -162,25 +213,54 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
     super.dispose();
   }
 
-  void _onHorizontalDragUpdate(DragUpdateDetails details) {
-    if (!_isDragging) {
-      setState(() => _isDragging = true);
+  void _onHorizontalDragStart(DragStartDetails details) {
+    if (!_isCompleted && !_hasCompletedThisGesture) {
+      setState(() {
+        _isDragging = true;
+        _dragStartX = details.localPosition.dx;
+      });
     }
+  }
+
+  void _onHorizontalDragUpdate(DragUpdateDetails details) {
+    // Guard against updates during completion animation
+    if (_isCompleted || _hasCompletedThisGesture) return;
+
+    // Calculate progress from the drag start position
+    final dragDistance = details.localPosition.dx - _dragStartX;
+
+    // Only update if dragging to the right and minimum threshold met
+    if (dragDistance < widget.minDragDistance) return;
 
     final progress = (details.localPosition.dx / widget.width).clamp(0.0, 1.0);
     _controller.value = progress;
 
-    if (progress >= widget.completionThreshold && !_isCompleted) {
-      _isCompleted = true;
-      _controller.forward().then((_) {
+    // Trigger completion only once per gesture
+    if (progress >= widget.completionThreshold && !_hasCompletedThisGesture) {
+      setState(() {
+        _isCompleted = true;
+        _hasCompletedThisGesture = true;
+      });
+
+      _controller
+          .animateTo(
+        1.0,
+        duration: Duration(milliseconds: widget.fillAnimationDuration),
+        curve: widget.completionCurve,
+      )
+          .then((_) {
         widget.onComplete();
-        Future.delayed(const Duration(milliseconds: 300), () {
+        Future.delayed(const Duration(milliseconds: 400), () {
           if (mounted) {
             setState(() {
               _isCompleted = false;
               _isDragging = false;
             });
-            _controller.reverse();
+            _controller.animateBack(
+              0.0,
+              duration: Duration(milliseconds: widget.resetAnimationDuration),
+              curve: widget.resetCurve,
+            );
             _bounceController.forward(from: 0);
           }
         });
@@ -189,11 +269,19 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
   }
 
   void _onHorizontalDragEnd(DragEndDetails details) {
-    setState(() => _isDragging = false);
     if (!_isCompleted && _controller.value > 0) {
-      _controller.reverse();
+      _controller.animateBack(
+        0.0,
+        duration: Duration(milliseconds: widget.resetAnimationDuration),
+        curve: widget.resetCurve,
+      );
       _bounceController.forward(from: 0);
     }
+
+    setState(() {
+      _isDragging = false;
+      _hasCompletedThisGesture = false;
+    });
   }
 
   String _getDisplayText() {
@@ -223,6 +311,7 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onHorizontalDragStart: _onHorizontalDragStart,
       onHorizontalDragUpdate: _onHorizontalDragUpdate,
       onHorizontalDragEnd: _onHorizontalDragEnd,
       child: Container(
@@ -232,9 +321,10 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
           borderRadius:
               widget.borderRadius ?? BorderRadius.circular(widget.height / 2),
           gradient: LinearGradient(
-            colors: [widget.primaryColor, widget.accentColor],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+            colors: widget.backgroundGradientColors ??
+                [widget.primaryColor, widget.accentColor],
+            begin: widget.gradientBegin,
+            end: widget.gradientEnd,
           ),
           border: widget.borderWidth > 0
               ? Border.all(
@@ -245,9 +335,14 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
               : null,
           boxShadow: [
             BoxShadow(
-              color: widget.primaryColor.withValues(alpha: 0.4),
-              blurRadius: widget.shadowBlurRadius,
-              offset: const Offset(0, 10),
+              color: widget.primaryColor.withValues(alpha: 0.3),
+              blurRadius: widget.shadowBlurRadius * 0.8,
+              offset: const Offset(0, 8),
+            ),
+            BoxShadow(
+              color: widget.primaryColor.withValues(alpha: 0.2),
+              blurRadius: widget.shadowBlurRadius * 0.4,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -335,42 +430,50 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
               ),
             ),
 
-            // Drag handle with rotation
+            // Drag handle without rotation
             AnimatedBuilder(
               animation: Listenable.merge(
                   [_fillAnimation, _pulseAnimation, _bounceAnimation]),
               builder: (context, child) {
-                final rotation =
-                    _fillAnimation.value * 0.5; // Rotate up to 90 degrees
                 final scale = (_isDragging && widget.enablePulse)
                     ? _pulseAnimation.value
                     : 1.0;
 
+                final handleSize = widget.dragHandleSize ?? widget.height;
+                final handleColor = widget.dragHandleColor ?? Colors.white;
+
                 return Positioned(
-                  left: (widget.width - widget.height) * _fillAnimation.value,
+                  left: (widget.width - handleSize) * _fillAnimation.value,
                   child: Transform.scale(
-                    scale: scale * (1.0 + _bounceAnimation.value * 0.2),
+                    scale: scale *
+                        (1.0 +
+                            _bounceAnimation.value *
+                                (widget.enableHapticFeedback ? 0.15 : 0.05)),
                     child: Container(
-                      width: widget.height,
-                      height: widget.height,
+                      width: handleSize,
+                      height: handleSize,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white,
+                        color: handleColor,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.2),
-                            blurRadius: 15,
-                            spreadRadius: 2,
+                            color: Colors.black.withValues(alpha: 0.15),
+                            blurRadius: 12,
+                            spreadRadius: 0,
+                            offset: const Offset(0, 2),
+                          ),
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 8,
+                            spreadRadius: -2,
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
-                      child: Transform.rotate(
-                        angle: rotation * 3.14159, // Convert to radians
-                        child: Icon(
-                          widget.icon,
-                          color: _getProgressColor(),
-                          size: 20,
-                        ),
+                      child: Icon(
+                        widget.icon,
+                        color: _getProgressColor(),
+                        size: 20,
                       ),
                     ),
                   ),

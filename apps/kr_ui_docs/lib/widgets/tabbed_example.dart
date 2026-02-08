@@ -29,7 +29,7 @@ enum _PreviewBackground {
 class _TabbedExampleState extends State<TabbedExample>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  _PreviewBackground _backgroundType = _PreviewBackground.gradient;
+  _PreviewBackground _backgroundType = _PreviewBackground.solid;
 
   @override
   void initState() {
@@ -312,41 +312,5 @@ class _TabContentWrapperState extends State<_TabContentWrapper>
   Widget build(BuildContext context) {
     super.build(context);
     return widget.child;
-  }
-}
-
-// Checkerboard pattern painter
-class _CheckerboardPainter extends CustomPainter {
-  final Color color1;
-  final Color color2;
-  final double squareSize;
-
-  _CheckerboardPainter({
-    required this.color1,
-    required this.color2,
-  }) : squareSize = 20.0;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint1 = Paint()..color = color1;
-    final paint2 = Paint()..color = color2;
-
-    for (var y = 0.0; y < size.height; y += squareSize) {
-      for (var x = 0.0; x < size.width; x += squareSize) {
-        final isEven =
-            ((x / squareSize).floor() + (y / squareSize).floor()) % 2 == 0;
-        canvas.drawRect(
-          Rect.fromLTWH(x, y, squareSize, squareSize),
-          isEven ? paint1 : paint2,
-        );
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(_CheckerboardPainter oldDelegate) {
-    return oldDelegate.color1 != color1 ||
-        oldDelegate.color2 != color2 ||
-        oldDelegate.squareSize != squareSize;
   }
 }
