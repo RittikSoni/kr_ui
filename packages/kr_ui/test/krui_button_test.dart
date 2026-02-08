@@ -116,7 +116,7 @@ void main() {
 
       // Try to tap - should not work
       await tester.tap(find.byType(KruiButton));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       expect(tapCount, 0);
     });
