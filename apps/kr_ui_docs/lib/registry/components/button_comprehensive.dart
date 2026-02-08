@@ -319,6 +319,18 @@ class _ButtonComprehensiveExampleState
                 }),
                 enableRipple: _enableRipple,
               ),
+              KruiButton(
+                variant: KruiButtonVariant.gradient,
+                label: 'Custom Gradient',
+                icon: Icons.color_lens,
+                gradientColors: const [
+                  Color(0xFFFF6B6B), // Red
+                  Color(0xFFFFD93D), // Yellow
+                  Color(0xFF6BCF7F), // Green
+                ],
+                onPressed: () => _showSnackBar('Custom gradient pressed'),
+                enableRipple: _enableRipple,
+              ),
             ],
           ),
 

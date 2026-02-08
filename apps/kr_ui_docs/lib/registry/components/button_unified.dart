@@ -7,7 +7,7 @@ final ComponentInfo kruiButtonInfo = ComponentInfo(
   name: 'KruiButton',
   displayName: 'Button',
   description:
-      'Universal button component with multiple variants (Primary, Secondary, Destructive, Outline, Ghost, Link, Gradient, Glassy, Glowy), icon support with leading/trailing positioning, loading states, and optional ripple effects',
+      'Universal button component with multiple variants (Primary, Secondary, Destructive, Outline, Ghost, Link, Gradient, Glassy, Glowy), icon support with leading/trailing positioning, loading states, optional ripple effects, and customizable gradient colors',
   category: 'Actions',
   icon: Icons.smart_button_outlined,
   properties: [
@@ -88,6 +88,13 @@ final ComponentInfo kruiButtonInfo = ComponentInfo(
       type: 'double',
       defaultValue: '2',
       description: 'Shadow intensity (0-10)',
+    ),
+    const PropertyInfo(
+      name: 'gradientColors',
+      type: 'List<Color>?',
+      defaultValue: 'null',
+      description:
+          'Custom gradient colors for gradient variant (defaults to Purple → Pink → Indigo)',
     ),
   ],
   basicExample: '''KruiButton(
@@ -215,6 +222,32 @@ final ComponentInfo kruiButtonInfo = ComponentInfo(
         label: 'Gradient',
         icon: Icons.auto_awesome,
         elevation: 4,
+        onPressed: () {},
+      ),
+    ),
+    PresetInfo(
+      name: 'Custom Gradient',
+      description: 'Gradient with custom colors via gradientColors',
+      code: '''KruiButton(
+  variant: KruiButtonVariant.gradient,
+  label: 'Custom',
+  icon: Icons.color_lens,
+  gradientColors: const [
+    Color(0xFFFF6B6B), // Red
+    Color(0xFFFFD93D), // Yellow
+    Color(0xFF6BCF7F), // Green
+  ],
+  onPressed: () {},
+)''',
+      builder: () => KruiButton(
+        variant: KruiButtonVariant.gradient,
+        label: 'Custom',
+        icon: Icons.color_lens,
+        gradientColors: const [
+          Color(0xFFFF6B6B),
+          Color(0xFFFFD93D),
+          Color(0xFF6BCF7F),
+        ],
         onPressed: () {},
       ),
     ),
