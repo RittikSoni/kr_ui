@@ -32,14 +32,17 @@ class KruiGap extends StatelessWidget {
   /// Creates a vertical gap.
   ///
   /// If [size] is null, it defaults to 16.0.
-  const KruiGap.vertical([double? size])
-      : this(size: size ?? 16.0, axis: Axis.vertical);
+  /// Creates a vertical gap.
+  ///
+  /// If [size] is null, it defaults to 16.0.
+  const KruiGap.vertical(double? size, {Key? key})
+      : this(size: size ?? 16.0, axis: Axis.vertical, key: key);
 
   /// Creates a horizontal gap.
   ///
   /// If [size] is null, it defaults to 16.0.
-  const KruiGap.horizontal([double? size])
-      : this(size: size ?? 16.0, axis: Axis.horizontal);
+  const KruiGap.horizontal(double? size, {Key? key})
+      : this(size: size ?? 16.0, axis: Axis.horizontal, key: key);
 
   @override
   Widget build(BuildContext context) {

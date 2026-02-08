@@ -63,7 +63,7 @@ final kruiAppBarInfo = ComponentInfo(
   centerTitle: false,
   glass: true,
   blurIntensity: 15,
-  backgroundColor: Colors.black.withOpacity(0.2),
+  backgroundColor: Colors.black.withValues(alpha: 0.2),
   leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
   actions: [
     KruiSimpleIconButton(icon: Icons.notifications, onPressed: () {}),

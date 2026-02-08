@@ -306,7 +306,7 @@ final kruiGlassyCardInfo = ComponentInfo(
   borderRadius: BorderRadius.circular(20),
   blur: 15,
   opacity: 0.1,
-  border: Border.all(color: Colors.white.withOpacity(0.2)),
+  border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
   child: Stack(
     children: [
       Positioned(top: 20, right: 20, child: Icon(Icons.contactless, color: Colors.white70, size: 32)),

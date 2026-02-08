@@ -285,14 +285,14 @@ class _KruiButtonState extends State<KruiButton>
         return _ButtonStyle(
           backgroundColor: widget.backgroundColor ??
               (isDark
-                  ? Colors.white.withOpacity(0.1)
-                  : Colors.white.withOpacity(0.2)),
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.white.withValues(alpha: 0.2)),
           foregroundColor: widget.foregroundColor ??
               (isDark ? Colors.white : const Color(0xFF1F2937)),
           borderColor: widget.borderColor ??
               (isDark
-                  ? Colors.white.withOpacity(0.2)
-                  : Colors.white.withOpacity(0.3)),
+                  ? Colors.white.withValues(alpha: 0.2)
+                  : Colors.white.withValues(alpha: 0.3)),
           showBorder: true,
           showShadow: true,
           isGlassy: true,
@@ -316,7 +316,7 @@ class _KruiButtonState extends State<KruiButton>
   Widget _buildButtonContent(_ButtonStyle style) {
     final isEnabled = widget.onPressed != null && !widget.isLoading;
     final contentColor =
-        style.foregroundColor.withOpacity(isEnabled ? 1.0 : 0.5);
+        style.foregroundColor.withValues(alpha: isEnabled ? 1.0 : 0.5);
 
     // Loading state
     if (widget.isLoading) {
@@ -417,15 +417,15 @@ class _KruiButtonState extends State<KruiButton>
     if (widget.variant == KruiButtonVariant.ghost && _isHovered && isEnabled) {
       final isDark = Theme.of(context).brightness == Brightness.dark;
       computedBgColor = isDark
-          ? Colors.white.withOpacity(0.1)
-          : Colors.black.withOpacity(0.05);
+          ? Colors.white.withValues(alpha: 0.1)
+          : Colors.black.withValues(alpha: 0.05);
     } else if (widget.variant == KruiButtonVariant.outline &&
         _isHovered &&
         isEnabled) {
       final isDark = Theme.of(context).brightness == Brightness.dark;
       computedBgColor = isDark
-          ? Colors.white.withOpacity(0.05)
-          : Colors.black.withOpacity(0.02);
+          ? Colors.white.withValues(alpha: 0.05)
+          : Colors.black.withValues(alpha: 0.02);
     }
 
     if (_isPressed && isEnabled) {
@@ -451,7 +451,9 @@ class _KruiButtonState extends State<KruiButton>
       decoration: BoxDecoration(
         color: widget.variant == KruiButtonVariant.gradient
             ? null
-            : (isEnabled ? computedBgColor : computedBgColor.withOpacity(0.5)),
+            : (isEnabled
+                ? computedBgColor
+                : computedBgColor.withValues(alpha: 0.5)),
         gradient: widget.variant == KruiButtonVariant.gradient
             ? LinearGradient(
                 colors: widget.gradientColors ??
@@ -469,7 +471,7 @@ class _KruiButtonState extends State<KruiButton>
             ? Border.all(
                 color: isEnabled
                     ? style.borderColor
-                    : style.borderColor.withOpacity(0.5),
+                    : style.borderColor.withValues(alpha: 0.5),
                 width: style.isGlassy ? 1.2 : 1.5,
               )
             : null,
@@ -479,15 +481,16 @@ class _KruiButtonState extends State<KruiButton>
                   color: (widget.variant == KruiButtonVariant.gradient
                           ? const Color(0xFF8B5CF6)
                           : widget.variant == KruiButtonVariant.glassy
-                              ? Colors.black.withOpacity(0.1)
+                              ? Colors.black.withValues(alpha: 0.1)
                               : widget.variant == KruiButtonVariant.glowy
                                   ? style.backgroundColor
                                   : style.backgroundColor)
-                      .withOpacity(widget.variant == KruiButtonVariant.glassy
-                          ? 0.15
-                          : widget.variant == KruiButtonVariant.glowy
-                              ? 0.6 + (_gradientController.value * 0.2)
-                              : 0.3 * widget.elevation / 2),
+                      .withValues(
+                          alpha: widget.variant == KruiButtonVariant.glassy
+                              ? 0.15
+                              : widget.variant == KruiButtonVariant.glowy
+                                  ? 0.6 + (_gradientController.value * 0.2)
+                                  : 0.3 * widget.elevation / 2),
                   blurRadius: widget.variant == KruiButtonVariant.glassy
                       ? 20
                       : widget.variant == KruiButtonVariant.glowy
@@ -508,14 +511,14 @@ class _KruiButtonState extends State<KruiButton>
                 ),
                 if (widget.variant == KruiButtonVariant.glassy)
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     blurRadius: 10,
                     offset: const Offset(0, -2),
                   ),
                 if (widget.variant == KruiButtonVariant.glowy)
                   BoxShadow(
-                    color: style.backgroundColor
-                        .withOpacity(0.4 + (_gradientController.value * 0.2)),
+                    color: style.backgroundColor.withValues(
+                        alpha: 0.4 + (_gradientController.value * 0.2)),
                     blurRadius: 40 + (_gradientController.value * 15),
                     offset: const Offset(0, 0),
                     spreadRadius: -5,
@@ -585,8 +588,8 @@ class _KruiButtonState extends State<KruiButton>
         child: InkWell(
           onTap: isEnabled ? _handleTap : null,
           borderRadius: effectiveBorderRadius,
-          splashColor: style.foregroundColor.withOpacity(0.1),
-          highlightColor: style.foregroundColor.withOpacity(0.05),
+          splashColor: style.foregroundColor.withValues(alpha: 0.1),
+          highlightColor: style.foregroundColor.withValues(alpha: 0.05),
           child: IgnorePointer(
             child: result,
           ),
