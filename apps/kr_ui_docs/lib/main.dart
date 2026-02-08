@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Theme and Config
 import 'theme/app_theme.dart';
@@ -129,6 +130,21 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
                 elevation: 0,
                 centerTitle: false,
                 actions: [
+                  if (!isMobile) ...[
+                    IconButton(
+                      icon: const FaIcon(FontAwesomeIcons.github, size: 20),
+                      tooltip: 'GitHub Repository',
+                      onPressed: () =>
+                          _launchURL('https://github.com/RittikSoni/kr_ui'),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.bug_report_rounded),
+                      tooltip: 'Report Issue',
+                      onPressed: () => _launchURL(
+                          'https://github.com/RittikSoni/kr_ui/issues'),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
                   if (isMobile)
                     SearchTrigger(onComponentSelected: (component) {
                       context.go('/components/${component.id}');
@@ -239,6 +255,25 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
           ),
         ),
         const SizedBox(width: 24),
+        IconButton(
+          icon: const FaIcon(FontAwesomeIcons.github, size: 20),
+          color: dynamicTheme.textSecondary,
+          tooltip: 'GitHub',
+          onPressed: () => _launchURL('https://github.com/RittikSoni/kr_ui'),
+        ),
+        IconButton(
+          icon:
+              Icon(Icons.bug_report_rounded, color: dynamicTheme.textSecondary),
+          tooltip: 'Report Issue',
+          onPressed: () =>
+              _launchURL('https://github.com/RittikSoni/kr_ui/issues'),
+        ),
+        IconButton(
+          icon: const FaIcon(FontAwesomeIcons.discord, size: 20),
+          color: dynamicTheme.textSecondary,
+          tooltip: 'Discord',
+          onPressed: () => _launchURL('https://discord.gg/Tmn6BKwSnr'),
+        ),
       ],
     );
   }
@@ -253,7 +288,139 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
+
+          // Author Profile
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: InkWell(
+              onTap: () =>
+                  _launchURL('https://www.linkedin.com/in/rittik-soni/'),
+              borderRadius: BorderRadius.circular(12),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: dynamicTheme.borderLight,
+                          width: 2,
+                        ),
+                        image: const DecorationImage(
+                          image: NetworkImage(
+                              'https://avatars.githubusercontent.com/u/42760562?v=4'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Rittik Soni',
+                          style: AppTheme.bodyMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: dynamicTheme.textPrimary,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Author & Maintainer',
+                              style: AppTheme.caption.copyWith(
+                                color: dynamicTheme.textTertiary,
+                                fontSize: 11,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(
+                              Icons.arrow_outward_rounded,
+                              size: 10,
+                              color: dynamicTheme.textTertiary,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Sponsor Section
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.pink.withValues(alpha: 0.1),
+                  Colors.purple.withValues(alpha: 0.05),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Colors.pink.withValues(alpha: 0.2),
+              ),
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () =>
+                    _launchURL('https://github.com/sponsors/RittikSoni'),
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.pink.withValues(alpha: 0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.favorite,
+                            color: Colors.pink, size: 20),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Sponsor Project',
+                              style: AppTheme.bodySmall.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: dynamicTheme.textPrimary,
+                              ),
+                            ),
+                            Text(
+                              'Support development',
+                              style: AppTheme.caption.copyWith(
+                                color: dynamicTheme.textTertiary,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 24),
 
           _buildNavItem(
             context,
@@ -405,34 +572,57 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
           ),
           const SizedBox(height: 16),
 
-          _buildFooterLink(
-            dynamicTheme,
-            'YouTube',
-            Icons.play_circle_outline,
-            'https://www.youtube.com/@king_rittik',
-          ),
-          _buildFooterLink(
-            dynamicTheme,
-            'Discord',
-            Icons.chat_outlined,
-            'https://discord.gg/Tmn6BKwSnr',
-          ),
-          _buildFooterLink(
-            dynamicTheme,
-            'GitHub',
-            Icons.code,
-            'https://github.com/RittikSoni/kr_ui',
+          // Improved Resources Section
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _buildResourceCard(
+                  dynamicTheme,
+                  'YouTube',
+                  FontAwesomeIcons.youtube,
+                  'https://www.youtube.com/@king_rittik',
+                  Colors.red,
+                ),
+                _buildResourceCard(
+                  dynamicTheme,
+                  'Discord',
+                  FontAwesomeIcons.discord,
+                  'https://discord.gg/Tmn6BKwSnr',
+                  const Color(0xFF5865F2),
+                ),
+                _buildResourceCard(
+                  dynamicTheme,
+                  'GitHub',
+                  FontAwesomeIcons.github,
+                  'https://github.com/RittikSoni/kr_ui',
+                  dynamicTheme.textPrimary,
+                ),
+              ],
+            ),
           ),
 
           const SizedBox(height: 32),
 
           // Version info
           Padding(
-            padding: const EdgeInsets.all(24),
-            child: Text(
-              'v1.0.0',
-              style:
-                  AppTheme.caption.copyWith(color: dynamicTheme.textTertiary),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              children: [
+                Text(
+                  'v1.0.0',
+                  style: AppTheme.caption
+                      .copyWith(color: dynamicTheme.textTertiary),
+                ),
+                const Spacer(),
+                Text(
+                  'Made with 💙',
+                  style: AppTheme.caption
+                      .copyWith(color: dynamicTheme.textTertiary),
+                ),
+              ],
             ),
           ),
         ],
@@ -540,21 +730,40 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
     );
   }
 
-  Widget _buildFooterLink(
-      DynamicTheme dynamicTheme, String label, IconData icon, String url) {
-    return InkWell(
-      onTap: () => _launchURL(url),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Row(
-          children: [
-            const SizedBox(width: 8),
-            Icon(icon, size: 18, color: dynamicTheme.textSecondary),
-            const SizedBox(width: 12),
-            Text(label,
-                style: AppTheme.bodySmall
-                    .copyWith(color: dynamicTheme.textSecondary)),
-          ],
+  Widget _buildResourceCard(
+    DynamicTheme dynamicTheme,
+    String label,
+    IconData icon,
+    String url,
+    Color accentColor,
+  ) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => _launchURL(url),
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          width: 76,
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            border: Border.all(color: dynamicTheme.borderLight),
+            borderRadius: BorderRadius.circular(8),
+            color: dynamicTheme.surface.withValues(alpha: 0.5),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, size: 24, color: accentColor.withValues(alpha: 0.8)),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: AppTheme.caption.copyWith(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: dynamicTheme.textSecondary,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
