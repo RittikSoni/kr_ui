@@ -31,6 +31,7 @@ import '../registry/components/ripple_reveal.dart';
 import '../registry/components/skeleton_shimmer.dart';
 import '../registry/components/confetti.dart';
 import '../registry/components/carousel.dart';
+import '../registry/components/button_unified.dart';
 
 export 'component_models.dart';
 
@@ -69,6 +70,7 @@ class ComponentRegistry {
     kruiSkeletonShimmerInfo,
     kruiConfettiInfo,
     kruiCarouselInfo,
+    kruiButtonInfo,
   ];
 
   /// Get all registered components
