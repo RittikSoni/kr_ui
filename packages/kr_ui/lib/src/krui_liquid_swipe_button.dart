@@ -285,9 +285,7 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
   }
 
   String _getDisplayText() {
-    if (_fillAnimation.value >= widget.completionThreshold) {
-      return String.fromCharCode(widget.completionIcon.codePoint);
-    }
+    // Removed codepoint logic as we now use an Icon widget
     if (_fillAnimation.value > 0.8 && _isDragging) {
       return widget.almostCompleteText ?? 'Release!';
     }
@@ -399,6 +397,7 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
             ),
 
             // Dynamic text with smooth transitions
+            // Dynamic text/icon with smooth transitions
             Center(
               child: AnimatedBuilder(
                 animation: Listenable.merge([_fillAnimation, _bounceAnimation]),
@@ -407,23 +406,41 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
                   final isComplete =
                       _fillAnimation.value >= widget.completionThreshold;
 
-                  final defaultStyle = TextStyle(
-                    color: Colors.white,
-                    fontSize: isComplete ? 32 : 16,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: isComplete ? 0 : 1.2,
-                  );
-
-                  final effectiveStyle = isComplete
-                      ? (widget.completionTextStyle ?? defaultStyle)
-                      : (widget.textStyle ?? defaultStyle);
-
                   return Transform.scale(
                     scale: 1.0 + (_bounceAnimation.value * 0.1),
-                    child: AnimatedDefaultTextStyle(
+                    child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 200),
-                      style: effectiveStyle,
-                      child: Text(displayText),
+                      transitionBuilder: (child, animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: ScaleTransition(
+                            scale: animation,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: isComplete
+                          ? Icon(
+                              widget.completionIcon,
+                              key: const ValueKey('completion_icon'),
+                              color: widget.completionTextStyle?.color ??
+                                  Colors.white,
+                              size: widget.completionTextStyle?.fontSize ?? 32,
+                            )
+                          : AnimatedDefaultTextStyle(
+                              duration: const Duration(milliseconds: 200),
+                              style: widget.textStyle ??
+                                  const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.2,
+                                  ),
+                              child: Text(
+                                displayText,
+                                key: ValueKey('text_$displayText'),
+                              ),
+                            ),
                     ),
                   );
                 },
