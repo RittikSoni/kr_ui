@@ -324,35 +324,57 @@ Stack(
   ],
 );''',
       builder: () {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Scaffold Demo'),
-            backgroundColor: Colors.indigo,
-          ),
-          body: const Center(
-            child: Text('Main Content'),
-          ),
-          floatingActionButton: KruiFloatingDock(
-            items: [
-              KruiFloatingDockItem(
-                icon: Icons.home,
-                label: 'Home',
-                onTap: () {},
+        return Container(
+          height: 300,
+          width: double.infinity,
+          color: Colors.grey.shade900,
+          child: Stack(
+            children: [
+              const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.widgets, size: 64, color: Colors.white24),
+                    SizedBox(height: 16),
+                    Text(
+                      'Content Area',
+                      style: TextStyle(color: Colors.white70, fontSize: 18),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'In Scaffold: usePositioning = false (default)',
+                      style: TextStyle(color: Colors.white38, fontSize: 12),
+                    ),
+                    Text(
+                      'In Stack: usePositioning = true',
+                      style: TextStyle(color: Colors.white38, fontSize: 12),
+                    ),
+                  ],
+                ),
               ),
-              KruiFloatingDockItem(
-                icon: Icons.add_circle,
-                label: 'Add',
-                onTap: () {},
-              ),
-              KruiFloatingDockItem(
-                icon: Icons.person,
-                label: 'Profile',
-                onTap: () {},
+              // Demo with Stack (usePositioning: true)
+              KruiFloatingDock(
+                usePositioning: true,
+                items: [
+                  KruiFloatingDockItem(
+                    icon: Icons.home,
+                    label: 'Home',
+                    onTap: () {},
+                  ),
+                  KruiFloatingDockItem(
+                    icon: Icons.add_circle,
+                    label: 'Add',
+                    onTap: () {},
+                  ),
+                  KruiFloatingDockItem(
+                    icon: Icons.person,
+                    label: 'Profile',
+                    onTap: () {},
+                  ),
+                ],
               ),
             ],
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
         );
       },
     ),
