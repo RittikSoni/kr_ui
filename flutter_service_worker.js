@@ -17,7 +17,7 @@ const RESOURCES = {"flutter.js": "24bc71911b75b5f8135c949e27a2984e",
 "assets/assets/logo/krui_logo_only.png": "acda05cd609c70eba66002d8f89c56e3",
 "assets/assets/logo/krui_logo.png": "bc16d6f03c1da39e604264d0112fcd96",
 "assets/assets/logo/krui-banner.png": "7cb6cdb0ee73ef42a6c75d2a24643d3a",
-"assets/fonts/MaterialIcons-Regular.otf": "78b9a5d69d12eb07c82085f89ad7d257",
+"assets/fonts/MaterialIcons-Regular.otf": "669fb2a746d3e4ca51d2efeb19d5438d",
 "assets/NOTICES": "c39bb696817bc5b356034620b17eeda1",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "33b7d9392238c04c131b6ce224e13711",
 "assets/packages/font_awesome_flutter/lib/fonts/Font-Awesome-7-Free-Solid-900.otf": "ee93daa2cc46a2c4b83aac689149a19d",
@@ -38,9 +38,9 @@ const RESOURCES = {"flutter.js": "24bc71911b75b5f8135c949e27a2984e",
 "canvaskit/canvaskit.js.symbols": "a3c9f77715b642d0437d9c275caba91e",
 "canvaskit/skwasm.js.symbols": "3a4aadf4e8141f284bd524976b1d6bdc",
 "favicon.png": "a245baf6bc0f6ec935947bc9655e74ad",
-"flutter_bootstrap.js": "5fd6fde80c48f3657814b6d14f53e81a",
+"flutter_bootstrap.js": "3f7538115fc4eb836e258dbf14fa304e",
 "version.json": "95cbc19310fcbf939c39cfb6c5ea8adc",
-"main.dart.js": "5996b99f98363abf2ea5edd82e24cb28"};
+"main.dart.js": "7d5a8cd8ac691393d81ca7fed07e1864"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
