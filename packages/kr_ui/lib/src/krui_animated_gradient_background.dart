@@ -189,7 +189,9 @@ class _KruiAnimatedGradientBackgroundState
             gradient: LinearGradient(
               begin: widget.begin,
               end: widget.end,
-              colors: widget.colors.map((c) => c.withOpacity(opacity)).toList(),
+              colors: widget.colors
+                  .map((c) => c.withValues(alpha: opacity))
+                  .toList(),
             ),
           ),
           child: widget.child,
