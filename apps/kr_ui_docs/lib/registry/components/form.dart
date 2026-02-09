@@ -155,6 +155,44 @@ KruiForm(
       builder: () => const _SignUpFormDemo(),
     ),
     PresetInfo(
+      name: 'Auto-validation showcase',
+      description: 'Visual indicators for built-in validation types',
+      code: '''// Built-in validations trigger automatically with autovalidate
+// Visual feedback: checkmark (valid), error icon (invalid)
+final controller = KruiFormController(initialValues: {
+  'email': '',
+  'website': '',
+  'phone': '',
+});
+
+KruiForm(
+  controller: controller,
+  child: Column(
+    children: [
+      KruiTextField(
+        name: 'email',
+        label: 'Email',
+        validation: KruiTextFieldValidation.email,
+        autovalidate: true,
+      ),
+      KruiTextField(
+        name: 'website',
+        label: 'Website',
+        validation: KruiTextFieldValidation.url,
+        autovalidate: true,
+      ),
+      KruiTextField(
+        name: 'phone',
+        label: 'Phone',
+        validation: KruiTextFieldValidation.phone,
+        autovalidate: true,
+      ),
+    ],
+  ),
+)''',
+      builder: () => const _ValidationShowcaseDemo(),
+    ),
+    PresetInfo(
       name: 'Initial values only',
       description: 'Pre-filled form with controller',
       code: '''final controller = KruiFormController(initialValues: {
@@ -239,6 +277,77 @@ class _LinkByNameOrIdDemoState extends State<_LinkByNameOrIdDemo> {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+/// Demo: automatic validation with visual indicators
+class _ValidationShowcaseDemo extends StatefulWidget {
+  const _ValidationShowcaseDemo();
+
+  @override
+  State<_ValidationShowcaseDemo> createState() =>
+      _ValidationShowcaseDemoState();
+}
+
+class _ValidationShowcaseDemoState extends State<_ValidationShowcaseDemo> {
+  late final KruiFormController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = KruiFormController(initialValues: {
+      'email': '',
+      'website': '',
+      'phone': '',
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KruiForm(
+      controller: _controller,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          KruiTextField(
+            name: 'email',
+            label: 'Email',
+            hint: 'test@example.com',
+            validation: KruiTextFieldValidation.email,
+            autovalidate: true,
+          ),
+          const SizedBox(height: 16),
+          KruiTextField(
+            name: 'website',
+            label: 'Website',
+            hint: 'https://example.com',
+            validation: KruiTextFieldValidation.url,
+            autovalidate: true,
+          ),
+          const SizedBox(height: 16),
+          KruiTextField(
+            name: 'phone',
+            label: 'Phone',
+            hint: '+1234567890',
+            validation: KruiTextFieldValidation.phone,
+            autovalidate: true,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Try typing valid/invalid values to see visual feedback!',
+            style: Theme.of(context).textTheme.bodySmall,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

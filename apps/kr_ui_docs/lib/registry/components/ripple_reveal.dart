@@ -47,6 +47,24 @@ final ComponentInfo kruiRippleRevealInfo = ComponentInfo(
       defaultValue: 'null',
       description: 'Optional color overlay during ripple.',
     ),
+    PropertyInfo(
+      name: 'width',
+      type: 'double?',
+      defaultValue: 'null',
+      description: 'Fixed width (null = expand to parent constraints).',
+    ),
+    PropertyInfo(
+      name: 'height',
+      type: 'double?',
+      defaultValue: 'null',
+      description: 'Fixed height (null = expand to parent constraints).',
+    ),
+    PropertyInfo(
+      name: 'controller',
+      type: 'KruiRippleRevealController?',
+      defaultValue: 'null',
+      description: 'Controller for programmatic reveal/hide.',
+    ),
   ],
   basicExample: '''KruiRippleReveal(
   revealChild: Image.asset('secret.jpg'),
@@ -193,6 +211,28 @@ final ComponentInfo kruiRippleRevealInfo = ComponentInfo(
 );''',
       builder: () => const _QuizCardDemo(),
     ),
+    PresetInfo(
+      name: 'Programmatic Control',
+      description: 'Controller-based reveal with custom sizing',
+      code: '''// Create controller
+final controller = KruiRippleRevealController();
+
+// Use with explicit sizing
+KruiRippleReveal(
+  controller: controller,
+  width: 300,
+  height: 200,
+  revealChild: Image.network('image.jpg'),
+  hiddenChild: Container(color: Colors.grey),
+)
+
+// Trigger programmatically
+ElevatedButton(
+  onPressed: () => controller.reveal(),
+  child: Text('Reveal'),
+)''',
+      builder: () => const _ProgrammaticControlDemo(),
+    ),
   ],
   demoBuilder: () {
     return SizedBox(
@@ -253,6 +293,97 @@ final ComponentInfo kruiRippleRevealInfo = ComponentInfo(
     );
   },
 );
+
+// Programmatic Control Demo
+class _ProgrammaticControlDemo extends StatefulWidget {
+  const _ProgrammaticControlDemo();
+
+  @override
+  State<_ProgrammaticControlDemo> createState() =>
+      _ProgrammaticControlDemoState();
+}
+
+class _ProgrammaticControlDemoState extends State<_ProgrammaticControlDemo> {
+  final _controller = KruiRippleRevealController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        KruiRippleReveal(
+          controller: _controller,
+          width: 300,
+          height: 200,
+          revealChild: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.blue.shade300, Colors.purple.shade400],
+              ),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.check_circle, size: 48, color: Colors.white),
+                  SizedBox(height: 12),
+                  Text(
+                    'Revealed!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          hiddenChild: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade800,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.visibility_off, size: 48, color: Colors.white60),
+                  SizedBox(height: 12),
+                  Text(
+                    'Hidden Content',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              onPressed: () => _controller.reveal(),
+              icon: const Icon(Icons.visibility),
+              label: const Text('Reveal'),
+            ),
+            const SizedBox(width: 12),
+            OutlinedButton.icon(
+              onPressed: () => _controller.hide(),
+              icon: const Icon(Icons.visibility_off),
+              label: const Text('Hide'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
 
 // Quiz Card Demo
 class _QuizCardDemo extends StatelessWidget {

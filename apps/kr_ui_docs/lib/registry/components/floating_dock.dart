@@ -48,6 +48,12 @@ final ComponentInfo kruiFloatingDockInfo = ComponentInfo(
       description: 'Maximum scale factor on hover.',
     ),
     PropertyInfo(
+      name: 'usePositioning',
+      type: 'bool',
+      defaultValue: 'false',
+      description: 'Wrap in Positioned (true for Stack, false for Scaffold).',
+    ),
+    PropertyInfo(
       name: 'blurIntensity',
       type: 'double',
       defaultValue: '10',
@@ -151,6 +157,7 @@ final ComponentInfo kruiFloatingDockInfo = ComponentInfo(
                   ),
                 ),
                 KruiFloatingDock(
+                  usePositioning: true,
                   items: [
                     KruiFloatingDockItem(
                       icon: Icons.home,
@@ -216,6 +223,7 @@ final ComponentInfo kruiFloatingDockInfo = ComponentInfo(
                   ),
                 ),
                 KruiFloatingDock(
+                  usePositioning: true,
                   maxScale: 1.6,
                   items: [
                     KruiFloatingDockItem(
@@ -276,6 +284,7 @@ final ComponentInfo kruiFloatingDockInfo = ComponentInfo(
                 KruiFloatingDock(
                   position: FloatingDockPosition.right,
                   height: 60,
+                  usePositioning: true,
                   items: [
                     KruiFloatingDockItem(icon: Icons.dashboard, onTap: () {}),
                     KruiFloatingDockItem(icon: Icons.folder, onTap: () {}),
@@ -285,6 +294,65 @@ final ComponentInfo kruiFloatingDockInfo = ComponentInfo(
               ],
             ),
           ),
+        );
+      },
+    ),
+    PresetInfo(
+      name: 'Scaffold Integration',
+      description:
+          'Use in Scaffold floatingActionButton (usePositioning: false)',
+      code: '''// In Scaffold, set usePositioning: false (default)
+Scaffold(
+  appBar: AppBar(title: Text('App')),
+  floatingActionButton: KruiFloatingDock(
+    items: [
+      KruiFloatingDockItem(icon: Icons.home, onTap: () {}),
+      KruiFloatingDockItem(icon: Icons.add, onTap: () {}),
+      KruiFloatingDockItem(icon: Icons.person, onTap: () {}),
+    ],
+  ),
+);
+
+// In Stack, set usePositioning: true
+Stack(
+  children: [
+    YourContent(),
+    KruiFloatingDock(
+      usePositioning: true,
+      items: [...],
+    ),
+  ],
+);''',
+      builder: () {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Scaffold Demo'),
+            backgroundColor: Colors.indigo,
+          ),
+          body: const Center(
+            child: Text('Main Content'),
+          ),
+          floatingActionButton: KruiFloatingDock(
+            items: [
+              KruiFloatingDockItem(
+                icon: Icons.home,
+                label: 'Home',
+                onTap: () {},
+              ),
+              KruiFloatingDockItem(
+                icon: Icons.add_circle,
+                label: 'Add',
+                onTap: () {},
+              ),
+              KruiFloatingDockItem(
+                icon: Icons.person,
+                label: 'Profile',
+                onTap: () {},
+              ),
+            ],
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         );
       },
     ),
@@ -315,6 +383,7 @@ final ComponentInfo kruiFloatingDockInfo = ComponentInfo(
             ),
           ),
           KruiFloatingDock(
+            usePositioning: true,
             items: [
               KruiFloatingDockItem(
                 icon: Icons.home,

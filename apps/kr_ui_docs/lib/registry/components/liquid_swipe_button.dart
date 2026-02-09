@@ -63,6 +63,13 @@ final kruiLiquidSwipeButtonInfo = ComponentInfo(
       description: 'Custom color for the drag handle.',
     ),
     const PropertyInfo(
+      name: 'width',
+      type: 'double?',
+      defaultValue: 'null (auto)',
+      description:
+          'Button width (null = expand to parent, use double.infinity for full width).',
+    ),
+    const PropertyInfo(
       name: 'backgroundGradientColors',
       type: 'List<Color>?',
       defaultValue: 'null',
@@ -208,6 +215,42 @@ final kruiLiquidSwipeButtonInfo = ComponentInfo(
         ),
         primaryColor: const Color(0xFF007AFF),
         accentColor: const Color(0xFF5AC8FA),
+      ),
+    ),
+    PresetInfo(
+      name: 'Full Width',
+      description: 'Dynamic width supporting double.infinity',
+      code: '''// No width parameter = expands to parent
+// Works with double.infinity and flexible layouts
+SizedBox(
+  width: double.infinity,
+  child: KruiLiquidSwipeButton(
+    text: 'Swipe Across',
+    onComplete: () {},
+  ),
+)''',
+      builder: () => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            const Text('Full Width:', style: TextStyle(fontSize: 12)),
+            const SizedBox(height: 8),
+            KruiLiquidSwipeButton(
+              text: 'Swipe Across',
+              onComplete: () =>
+                  KruiToast.show(message: 'Full width confirmed!'),
+            ),
+            const SizedBox(height: 16),
+            const Text('Fixed Width:', style: TextStyle(fontSize: 12)),
+            const SizedBox(height: 8),
+            KruiLiquidSwipeButton(
+              text: 'Swipe',
+              width: 200,
+              onComplete: () =>
+                  KruiToast.show(message: 'Fixed width confirmed!'),
+            ),
+          ],
+        ),
       ),
     ),
   ],
