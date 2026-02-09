@@ -163,7 +163,10 @@ class _KruiTextFieldState extends State<KruiTextField> {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
     _obscureText = widget.obscureText;
-    if (widget.autovalidate && widget.validator != null) {
+    // Validate initial value for custom validators OR any built-in validation type
+    if (widget.autovalidate &&
+        (widget.validator != null ||
+            widget.validation != KruiTextFieldValidation.none)) {
       _validationError = widget.validate(_controller.text);
     }
   }
@@ -181,7 +184,10 @@ class _KruiTextFieldState extends State<KruiTextField> {
   }
 
   void _onChanged(String value) {
-    if (widget.autovalidate && widget.validator != null) {
+    // Run validation for custom validators OR any built-in validation type
+    if (widget.autovalidate &&
+        (widget.validator != null ||
+            widget.validation != KruiTextFieldValidation.none)) {
       setState(() => _validationError = widget.validate(value));
     }
     widget.onChanged?.call(value);
@@ -191,6 +197,59 @@ class _KruiTextFieldState extends State<KruiTextField> {
   void dispose() {
     if (widget.controller == null) _controller.dispose();
     super.dispose();
+  }
+
+  Widget? _buildSuffixIcon(
+      TextEditingController controller, bool hasError, String? errorMessage) {
+    // If custom suffix icon is provided, use it
+    if (widget.suffixIcon != null && !widget.obscureText) {
+      return widget.suffixIcon;
+    }
+
+    // For password fields, show visibility toggle
+    if (widget.obscureText) {
+      // Check if we should also show validation state
+      if (widget.autovalidate &&
+          widget.validation != KruiTextFieldValidation.none &&
+          controller.text.isNotEmpty) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (!hasError && _validationError == null)
+              const Icon(Icons.check_circle, color: Colors.green, size: 20),
+            if (hasError || _validationError != null)
+              Icon(Icons.error, color: widget.errorBorderColor, size: 20),
+            IconButton(
+              icon: Icon(_obscureText
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined),
+              onPressed: () => setState(() => _obscureText = !_obscureText),
+            ),
+          ],
+        );
+      }
+      return IconButton(
+        icon: Icon(_obscureText
+            ? Icons.visibility_off_outlined
+            : Icons.visibility_outlined),
+        onPressed: () => setState(() => _obscureText = !_obscureText),
+      );
+    }
+
+    // For non-password fields with validation, show validation state
+    if (widget.autovalidate &&
+        widget.validation != KruiTextFieldValidation.none &&
+        controller.text.isNotEmpty) {
+      if (!hasError && _validationError == null) {
+        return const Icon(Icons.check_circle, color: Colors.green, size: 20);
+      }
+      if (hasError || _validationError != null) {
+        return Icon(Icons.error,
+            color: widget.errorBorderColor ?? Colors.red, size: 20);
+      }
+    }
+
+    return null;
   }
 
   @override
@@ -287,15 +346,8 @@ class _KruiTextFieldState extends State<KruiTextField> {
             prefixIcon: widget.prefixIcon,
             prefix: widget.prefix,
             suffix: widget.suffix,
-            suffixIcon: widget.obscureText
-                ? IconButton(
-                    icon: Icon(_obscureText
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined),
-                    onPressed: () =>
-                        setState(() => _obscureText = !_obscureText),
-                  )
-                : widget.suffixIcon,
+            suffixIcon:
+                _buildSuffixIcon(effectiveController, hasError, errorMessage),
             counterText: widget.maxLength != null ? null : '',
           ),
         ),

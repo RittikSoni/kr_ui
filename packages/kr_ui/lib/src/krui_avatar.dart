@@ -35,8 +35,13 @@ class KruiAvatar extends StatelessWidget {
   /// The border width.
   final double borderWidth;
 
-  /// The border radius (defaults to circular).
+  /// The border radius (defaults to circular based on size/2).
+  /// Set this to customize the shape (e.g., BorderRadius.circular(8) for rounded square).
   final BorderRadius? borderRadius;
+
+  /// Custom radius for circular avatars (overrides default size/2).
+  /// When null, uses size/2 for circular shape.
+  final double? radius;
 
   /// The status badge color (e.g., green for online).
   final Color? badgeColor;
@@ -68,6 +73,7 @@ class KruiAvatar extends StatelessWidget {
     this.borderColor,
     this.borderWidth = 0,
     this.borderRadius,
+    this.radius,
     this.badgeColor,
     this.badgeSize = 12,
     this.badgeAlignment = Alignment.bottomRight,
@@ -92,17 +98,25 @@ class KruiAvatar extends StatelessWidget {
 
     final remaining = children.length - effectiveChildren.length;
 
+    // Calculate total width to prevent clipping
+    final itemWidth = size + borderWidth * 2; // Account for border
+    final effectiveOverlap = size * overlap;
+    final totalItems = effectiveChildren.length + (remaining > 0 ? 1 : 0);
+    final totalWidth =
+        itemWidth + ((totalItems - 1) * (itemWidth - effectiveOverlap));
+
     return SizedBox(
-      height: size,
-      width: size +
-          (effectiveChildren.length + (remaining > 0 ? 1 : 0) - 1) *
-              (size * (1 - overlap)),
+      height: itemWidth, // Add border width to height
+      width: totalWidth,
       child: Stack(
+        clipBehavior: Clip.none, // Prevent clipping
         children: [
           for (int i = 0; i < effectiveChildren.length; i++)
             Positioned(
               left: i * (size * (1 - overlap)),
               child: Container(
+                width: size,
+                height: size,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -117,6 +131,8 @@ class KruiAvatar extends StatelessWidget {
             Positioned(
               left: effectiveChildren.length * (size * (1 - overlap)),
               child: Container(
+                width: size,
+                height: size,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
@@ -182,7 +198,8 @@ class KruiAvatar extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         color: effectiveBgColor,
-        borderRadius: borderRadius ?? BorderRadius.circular(size / 2),
+        borderRadius: borderRadius ??
+            BorderRadius.circular(radius ?? (size / 2)), // Use radius if set
         border: borderColor != null && borderWidth > 0
             ? Border.all(color: borderColor!, width: borderWidth)
             : null,

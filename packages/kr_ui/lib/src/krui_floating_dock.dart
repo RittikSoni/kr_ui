@@ -50,6 +50,10 @@ class KruiFloatingDock extends StatefulWidget {
   /// Padding around the dock
   final EdgeInsets padding;
 
+  /// Whether to wrap the dock in Positioned widget
+  /// Set to true when using in a Stack, false for Scaffold properties
+  final bool usePositioning;
+
   const KruiFloatingDock({
     super.key,
     required this.items,
@@ -63,6 +67,7 @@ class KruiFloatingDock extends StatefulWidget {
     this.borderColor,
     this.autoHide = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    this.usePositioning = false,
   }) : assert(items.length > 0, 'Must have at least one item');
 
   @override
@@ -253,7 +258,12 @@ class _KruiFloatingDockState extends State<KruiFloatingDock>
   Widget build(BuildContext context) {
     Widget dockWidget = _buildDock();
 
-    // Position the dock based on FloatingDockPosition
+    // If usePositioning is false, return dock directly (for Scaffold properties)
+    if (!widget.usePositioning) {
+      return Center(child: dockWidget);
+    }
+
+    // Position the dock based on FloatingDockPosition (for Stack usage)
     switch (widget.position) {
       case FloatingDockPosition.bottom:
         return Positioned(

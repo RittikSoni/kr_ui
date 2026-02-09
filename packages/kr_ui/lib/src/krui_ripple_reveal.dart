@@ -41,6 +41,15 @@ class KruiRippleReveal extends StatefulWidget {
   /// Custom ripple curve
   final Curve curve;
 
+  /// Optional width for the widget (null = expand to parent constraints)
+  final double? width;
+
+  /// Optional height for the widget (null = expand to parent constraints)
+  final double? height;
+
+  /// Optional controller for programmatic reveal/hide
+  final KruiRippleRevealController? controller;
+
   const KruiRippleReveal({
     super.key,
     required this.revealChild,
@@ -51,6 +60,9 @@ class KruiRippleReveal extends StatefulWidget {
     this.rippleColor,
     this.allowReverse = true,
     this.curve = Curves.easeInOut,
+    this.width,
+    this.height,
+    this.controller,
   });
 
   @override
@@ -82,10 +94,14 @@ class _KruiRippleRevealState extends State<KruiRippleReveal>
     if (_isRevealed) {
       _controller.value = 1.0;
     }
+
+    // Connect to external controller if provided
+    widget.controller?._attach(this);
   }
 
   @override
   void dispose() {
+    widget.controller?._detach();
     _controller.dispose();
     super.dispose();
   }
@@ -108,13 +124,12 @@ class _KruiRippleRevealState extends State<KruiRippleReveal>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    Widget stack = GestureDetector(
       onTapDown: _handleTap,
       child: Stack(
-        fit: StackFit.expand,
         children: [
           // Base revealed widget (always visible)
-          widget.revealChild,
+          Positioned.fill(child: widget.revealChild),
           // Clipped hidden widget on top (clips away as progress increases)
           AnimatedBuilder(
             animation: _animation,
@@ -125,23 +140,24 @@ class _KruiRippleRevealState extends State<KruiRippleReveal>
                   tapPosition: _tapPosition,
                 ),
                 child: Stack(
-                  fit: StackFit.expand,
                   children: [
                     // Hidden widget
-                    if (widget.hiddenChild != null)
-                      widget.hiddenChild!
-                    else
-                      Container(
-                        color: Colors.grey.shade300,
-                        child: const Center(
-                          child: Icon(Icons.touch_app, size: 48),
-                        ),
-                      ),
+                    Positioned.fill(
+                      child: widget.hiddenChild ??
+                          Container(
+                            color: Colors.grey.shade300,
+                            child: const Center(
+                              child: Icon(Icons.touch_app, size: 48),
+                            ),
+                          ),
+                    ),
                     // Optional ripple color overlay
                     if (widget.rippleColor != null)
-                      Container(
-                        color: widget.rippleColor!
-                            .withValues(alpha: _animation.value * 0.3),
+                      Positioned.fill(
+                        child: Container(
+                          color: widget.rippleColor!
+                              .withValues(alpha: _animation.value * 0.3),
+                        ),
                       ),
                   ],
                 ),
@@ -151,7 +167,66 @@ class _KruiRippleRevealState extends State<KruiRippleReveal>
         ],
       ),
     );
+
+    // If width or height is specified, wrap in SizedBox
+    if (widget.width != null || widget.height != null) {
+      return SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: stack,
+      );
+    }
+
+    return stack;
   }
+
+  /// Programmatically reveal the content
+  void reveal({Offset? fromPosition}) {
+    setState(() {
+      _tapPosition = fromPosition;
+      _isRevealed = true;
+    });
+    _controller.forward();
+    widget.onTap?.call(true);
+  }
+
+  /// Programmatically hide the content
+  void hide({Offset? fromPosition}) {
+    if (widget.allowReverse) {
+      setState(() {
+        _tapPosition = fromPosition;
+        _isRevealed = false;
+      });
+      _controller.reverse();
+      widget.onTap?.call(false);
+    }
+  }
+}
+
+/// Controller for programmatically controlling KruiRippleReveal
+class KruiRippleRevealController {
+  _KruiRippleRevealState? _state;
+
+  void _attach(_KruiRippleRevealState state) {
+    _state = state;
+  }
+
+  void _detach() {
+    _state = null;
+  }
+
+  /// Reveal the content with optional starting position
+  void reveal({Offset? fromPosition}) {
+    _state?.reveal(fromPosition: fromPosition);
+  }
+
+  /// Hide the content with optional starting position
+  void hide({Offset? fromPosition}) {
+    _state?.hide(fromPosition: fromPosition);
+  }
+
+  /// Check if content is currently revealed
+  bool get isRevealed => _state?._isRevealed ?? false;
 }
 
 /// Custom clipper that creates circular reveal from tap point

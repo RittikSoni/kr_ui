@@ -1,4 +1,17 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
+
+/// Animation direction for gradient
+enum GradientAnimationDirection {
+  /// Rotates the gradient alignment
+  rotate,
+
+  /// Slides color stops
+  slide,
+
+  /// Pulses with opacity
+  pulse,
+}
 
 /// A container with smoothly animated gradient background.
 ///
@@ -28,11 +41,31 @@ class KruiAnimatedGradientBackground extends StatefulWidget {
   /// Optional child widget to overlay on the gradient
   final Widget? child;
 
+  /// Gradient begin alignment
+  final Alignment begin;
+
+  /// Gradient end alignment
+  final Alignment end;
+
+  /// Animation curve
+  final Curve curve;
+
+  /// Whether to reverse the animation (continuous loop)
+  final bool reverse;
+
+  /// Animation direction type
+  final GradientAnimationDirection animationDirection;
+
   const KruiAnimatedGradientBackground({
     super.key,
     required this.colors,
     this.duration = const Duration(seconds: 4),
     this.child,
+    this.begin = Alignment.topLeft,
+    this.end = Alignment.bottomRight,
+    this.curve = Curves.easeInOut,
+    this.reverse = true,
+    this.animationDirection = GradientAnimationDirection.slide,
   });
 
   @override
@@ -52,11 +85,17 @@ class _KruiAnimatedGradientBackgroundState
     _controller = AnimationController(
       vsync: this,
       duration: widget.duration,
-    )..repeat(reverse: true);
+    );
+
+    if (widget.reverse) {
+      _controller.repeat(reverse: true);
+    } else {
+      _controller.repeat();
+    }
 
     _animation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeInOut,
+      curve: widget.curve,
     );
   }
 
@@ -66,8 +105,18 @@ class _KruiAnimatedGradientBackgroundState
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildGradient() {
+    switch (widget.animationDirection) {
+      case GradientAnimationDirection.rotate:
+        return _buildRotatingGradient();
+      case GradientAnimationDirection.slide:
+        return _buildSlidingGradient();
+      case GradientAnimationDirection.pulse:
+        return _buildPulsingGradient();
+    }
+  }
+
+  Widget _buildSlidingGradient() {
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
@@ -87,8 +136,8 @@ class _KruiAnimatedGradientBackgroundState
         return Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: widget.begin,
+              end: widget.end,
               colors: widget.colors,
               stops: stops,
             ),
@@ -97,5 +146,60 @@ class _KruiAnimatedGradientBackgroundState
         );
       },
     );
+  }
+
+  Widget _buildRotatingGradient() {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        // Rotate alignment based on animation value
+        final angle = _animation.value * 2 * math.pi; // Full rotation
+        final begin = Alignment(
+          widget.begin.x * math.cos(angle) - widget.begin.y * math.sin(angle),
+          widget.begin.x * math.sin(angle) + widget.begin.y * math.cos(angle),
+        );
+        final end = Alignment(
+          widget.end.x * math.cos(angle) - widget.end.y * math.sin(angle),
+          widget.end.x * math.sin(angle) + widget.end.y * math.cos(angle),
+        );
+
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: begin,
+              end: end,
+              colors: widget.colors,
+            ),
+          ),
+          child: widget.child,
+        );
+      },
+    );
+  }
+
+  Widget _buildPulsingGradient() {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        // Pulse opacity of gradient overlay
+        final opacity = 0.7 + (_animation.value * 0.3); // Range: 0.7 to 1.0
+
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: widget.begin,
+              end: widget.end,
+              colors: widget.colors.map((c) => c.withOpacity(opacity)).toList(),
+            ),
+          ),
+          child: widget.child,
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildGradient();
   }
 }

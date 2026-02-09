@@ -110,7 +110,11 @@ Future<T?> showKruiGlassySheet<T>(
                 ),
               ],
             ),
-            child: child,
+            // Wrap child in DefaultTextStyle to prevent yellow/red underlines
+            child: DefaultTextStyle(
+              style: DefaultTextStyle.of(sheetContext).style,
+              child: child,
+            ),
           ),
         ),
       );

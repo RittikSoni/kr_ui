@@ -33,8 +33,8 @@ class KruiLiquidSwipeButton extends StatefulWidget {
   /// Button height
   final double height;
 
-  /// Button width
-  final double width;
+  /// Button width (null for double.infinity / expand to parent)
+  final double? width;
 
   /// Text displayed when user is actively dragging
   final String? swipingText;
@@ -121,7 +121,7 @@ class KruiLiquidSwipeButton extends StatefulWidget {
     this.primaryColor = const Color(0xFF6C63FF),
     this.accentColor = const Color(0xFF4ECDC4),
     this.height = 60,
-    this.width = 280,
+    this.width, // null = expand to parent
     this.swipingText,
     this.almostCompleteText,
     this.completionThreshold = 0.95,
@@ -222,52 +222,6 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
     }
   }
 
-  void _onHorizontalDragUpdate(DragUpdateDetails details) {
-    // Guard against updates during completion animation
-    if (_isCompleted || _hasCompletedThisGesture) return;
-
-    // Calculate progress from the drag start position
-    final dragDistance = details.localPosition.dx - _dragStartX;
-
-    // Only update if dragging to the right and minimum threshold met
-    if (dragDistance < widget.minDragDistance) return;
-
-    final progress = (details.localPosition.dx / widget.width).clamp(0.0, 1.0);
-    _controller.value = progress;
-
-    // Trigger completion only once per gesture
-    if (progress >= widget.completionThreshold && !_hasCompletedThisGesture) {
-      setState(() {
-        _isCompleted = true;
-        _hasCompletedThisGesture = true;
-      });
-
-      _controller
-          .animateTo(
-        1.0,
-        duration: Duration(milliseconds: widget.fillAnimationDuration),
-        curve: widget.completionCurve,
-      )
-          .then((_) {
-        widget.onComplete();
-        Future.delayed(const Duration(milliseconds: 400), () {
-          if (mounted) {
-            setState(() {
-              _isCompleted = false;
-              _isDragging = false;
-            });
-            _controller.animateBack(
-              0.0,
-              duration: Duration(milliseconds: widget.resetAnimationDuration),
-              curve: widget.resetCurve,
-            );
-            _bounceController.forward(from: 0);
-          }
-        });
-      });
-    }
-  }
-
   void _onHorizontalDragEnd(DragEndDetails details) {
     if (!_isCompleted && _controller.value > 0) {
       _controller.animateBack(
@@ -308,228 +262,291 @@ class _KruiLiquidSwipeButtonState extends State<KruiLiquidSwipeButton>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragStart: _onHorizontalDragStart,
-      onHorizontalDragUpdate: _onHorizontalDragUpdate,
-      onHorizontalDragEnd: _onHorizontalDragEnd,
-      child: Container(
-        width: widget.width,
-        height: widget.height,
-        decoration: BoxDecoration(
-          borderRadius:
-              widget.borderRadius ?? BorderRadius.circular(widget.height / 2),
-          gradient: LinearGradient(
-            colors: widget.backgroundGradientColors ??
-                [widget.primaryColor, widget.accentColor],
-            begin: widget.gradientBegin,
-            end: widget.gradientEnd,
-          ),
-          border: widget.borderWidth > 0
-              ? Border.all(
-                  color:
-                      widget.borderColor ?? Colors.white.withValues(alpha: 0.3),
-                  width: widget.borderWidth,
-                )
-              : null,
-          boxShadow: [
-            BoxShadow(
-              color: widget.primaryColor.withValues(alpha: 0.3),
-              blurRadius: widget.shadowBlurRadius * 0.8,
-              offset: const Offset(0, 8),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Use provided width or expand to max width
+        final effectiveWidth = widget.width ?? constraints.maxWidth;
+
+        return GestureDetector(
+          onHorizontalDragStart: _onHorizontalDragStart,
+          onHorizontalDragUpdate: _buildDragUpdate(effectiveWidth),
+          onHorizontalDragEnd: _onHorizontalDragEnd,
+          child: Container(
+            width: effectiveWidth,
+            height: widget.height,
+            decoration: BoxDecoration(
+              borderRadius: widget.borderRadius ??
+                  BorderRadius.circular(widget.height / 2),
+              gradient: LinearGradient(
+                colors: widget.backgroundGradientColors ??
+                    [widget.primaryColor, widget.accentColor],
+                begin: widget.gradientBegin,
+                end: widget.gradientEnd,
+              ),
+              border: widget.borderWidth > 0
+                  ? Border.all(
+                      color: widget.borderColor ??
+                          Colors.white.withValues(alpha: 0.3),
+                      width: widget.borderWidth,
+                    )
+                  : null,
+              boxShadow: [
+                BoxShadow(
+                  color: widget.primaryColor.withValues(alpha: 0.3),
+                  blurRadius: widget.shadowBlurRadius * 0.8,
+                  offset: const Offset(0, 8),
+                ),
+                BoxShadow(
+                  color: widget.primaryColor.withValues(alpha: 0.2),
+                  blurRadius: widget.shadowBlurRadius * 0.4,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-            BoxShadow(
-              color: widget.primaryColor.withValues(alpha: 0.2),
-              blurRadius: widget.shadowBlurRadius * 0.4,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            // Animated fill indicator with shimmer
-            AnimatedBuilder(
-              animation: _fillAnimation,
-              builder: (context, child) {
-                return Positioned(
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: widget.width * _fillAnimation.value,
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: widget.borderRadius ??
-                              BorderRadius.circular(widget.height / 2),
-                          color: Colors.white
-                              .withValues(alpha: widget.fillOpacity),
-                        ),
-                      ),
-                      // Shimmer effect
-                      if (_isDragging && widget.enableShimmer)
-                        AnimatedBuilder(
-                          animation: _pulseAnimation,
-                          builder: (context, child) {
-                            return Positioned(
-                              right: -50,
-                              top: 0,
-                              bottom: 0,
-                              child: Container(
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.white.withValues(alpha: 0),
-                                      Colors.white.withValues(
-                                          alpha: 0.3 * _pulseAnimation.value),
-                                      Colors.white.withValues(alpha: 0),
-                                    ],
+            child: Stack(
+              children: [
+                // Animated fill indicator with shimmer
+                AnimatedBuilder(
+                  animation: _fillAnimation,
+                  builder: (context, child) {
+                    return Positioned(
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: effectiveWidth * _fillAnimation.value,
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: widget.borderRadius ??
+                                  BorderRadius.circular(widget.height / 2),
+                              color: Colors.white
+                                  .withValues(alpha: widget.fillOpacity),
+                            ),
+                          ),
+                          // Shimmer effect
+                          if (_isDragging && widget.enableShimmer)
+                            AnimatedBuilder(
+                              animation: _pulseAnimation,
+                              builder: (context, child) {
+                                return Positioned(
+                                  right: -50,
+                                  top: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.white.withValues(alpha: 0),
+                                          Colors.white.withValues(
+                                              alpha:
+                                                  0.3 * _pulseAnimation.value),
+                                          Colors.white.withValues(alpha: 0),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                );
+                              },
+                            ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+
+                // Dynamic text/icon with smooth transitions
+                Center(
+                  child: AnimatedBuilder(
+                    animation:
+                        Listenable.merge([_fillAnimation, _bounceAnimation]),
+                    builder: (context, child) {
+                      final displayText = _getDisplayText();
+                      final isComplete =
+                          _fillAnimation.value >= widget.completionThreshold;
+
+                      return Transform.scale(
+                        scale: 1.0 + (_bounceAnimation.value * 0.1),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 200),
+                          transitionBuilder: (child, animation) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: ScaleTransition(
+                                scale: animation,
+                                child: child,
                               ),
                             );
                           },
-                        ),
-                    ],
-                  ),
-                );
-              },
-            ),
-
-            // Dynamic text with smooth transitions
-            // Dynamic text/icon with smooth transitions
-            Center(
-              child: AnimatedBuilder(
-                animation: Listenable.merge([_fillAnimation, _bounceAnimation]),
-                builder: (context, child) {
-                  final displayText = _getDisplayText();
-                  final isComplete =
-                      _fillAnimation.value >= widget.completionThreshold;
-
-                  return Transform.scale(
-                    scale: 1.0 + (_bounceAnimation.value * 0.1),
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: ScaleTransition(
-                            scale: animation,
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: isComplete
-                          ? Icon(
-                              widget.completionIcon,
-                              key: const ValueKey('completion_icon'),
-                              color: widget.completionTextStyle?.color ??
-                                  Colors.white,
-                              size: widget.completionTextStyle?.fontSize ?? 32,
-                            )
-                          : AnimatedDefaultTextStyle(
-                              duration: const Duration(milliseconds: 200),
-                              style: widget.textStyle ??
-                                  const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1.2,
+                          child: isComplete
+                              ? Icon(
+                                  widget.completionIcon,
+                                  key: const ValueKey('completion_icon'),
+                                  color: widget.completionTextStyle?.color ??
+                                      Colors.white,
+                                  size: widget.completionTextStyle?.fontSize ??
+                                      32,
+                                )
+                              : AnimatedDefaultTextStyle(
+                                  duration: const Duration(milliseconds: 200),
+                                  style: widget.textStyle ??
+                                      const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.2,
+                                      ),
+                                  child: Text(
+                                    displayText,
+                                    key: ValueKey('text_$displayText'),
                                   ),
-                              child: Text(
-                                displayText,
-                                key: ValueKey('text_$displayText'),
-                              ),
-                            ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            // Drag handle without rotation
-            AnimatedBuilder(
-              animation: Listenable.merge(
-                  [_fillAnimation, _pulseAnimation, _bounceAnimation]),
-              builder: (context, child) {
-                final scale = (_isDragging && widget.enablePulse)
-                    ? _pulseAnimation.value
-                    : 1.0;
-
-                final handleSize = widget.dragHandleSize ?? widget.height;
-                final handleColor = widget.dragHandleColor ?? Colors.white;
-
-                return Positioned(
-                  left: (widget.width - handleSize) * _fillAnimation.value,
-                  child: Transform.scale(
-                    scale: scale *
-                        (1.0 +
-                            _bounceAnimation.value *
-                                (widget.enableHapticFeedback ? 0.15 : 0.05)),
-                    child: Container(
-                      width: handleSize,
-                      height: handleSize,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: handleColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.15),
-                            blurRadius: 12,
-                            spreadRadius: 0,
-                            offset: const Offset(0, 2),
-                          ),
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 8,
-                            spreadRadius: -2,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        widget.icon,
-                        color: _getProgressColor(),
-                        size: 20,
-                      ),
-                    ),
+                                ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
+                ),
 
-            // Progress dots indicator
-            if (_isDragging && widget.enableProgressDots)
-              AnimatedBuilder(
-                animation: _fillAnimation,
-                builder: (context, child) {
-                  return Positioned(
-                    left: 10,
-                    right: 10,
-                    bottom: 8,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(3, (index) {
-                        final dotProgress =
-                            (_fillAnimation.value * 3 - index).clamp(0.0, 1.0);
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 3),
-                          width: 4,
-                          height: 4,
+                // Drag handle without rotation
+                AnimatedBuilder(
+                  animation: Listenable.merge(
+                      [_fillAnimation, _pulseAnimation, _bounceAnimation]),
+                  builder: (context, child) {
+                    final scale = (_isDragging && widget.enablePulse)
+                        ? _pulseAnimation.value
+                        : 1.0;
+
+                    final handleSize = widget.dragHandleSize ?? widget.height;
+                    final handleColor = widget.dragHandleColor ?? Colors.white;
+
+                    return Positioned(
+                      left:
+                          (effectiveWidth - handleSize) * _fillAnimation.value,
+                      child: Transform.scale(
+                        scale: scale *
+                            (1.0 +
+                                _bounceAnimation.value *
+                                    (widget.enableHapticFeedback
+                                        ? 0.15
+                                        : 0.05)),
+                        child: Container(
+                          width: handleSize,
+                          height: handleSize,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.white
-                                .withValues(alpha: 0.3 + (dotProgress * 0.7)),
+                            color: handleColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.15),
+                                blurRadius: 12,
+                                spreadRadius: 0,
+                                offset: const Offset(0, 2),
+                              ),
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.1),
+                                blurRadius: 8,
+                                spreadRadius: -2,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
-                        );
-                      }),
-                    ),
-                  );
-                },
-              ),
-          ],
-        ),
-      ),
+                          child: Icon(
+                            widget.icon,
+                            color: _getProgressColor(),
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+
+                // Progress dots indicator
+                if (_isDragging && widget.enableProgressDots)
+                  AnimatedBuilder(
+                    animation: _fillAnimation,
+                    builder: (context, child) {
+                      return Positioned(
+                        left: 10,
+                        right: 10,
+                        bottom: 8,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(3, (index) {
+                            final dotProgress =
+                                (_fillAnimation.value * 3 - index)
+                                    .clamp(0.0, 1.0);
+                            return Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 3),
+                              width: 4,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white.withValues(
+                                    alpha: 0.3 + (dotProgress * 0.7)),
+                              ),
+                            );
+                          }),
+                        ),
+                      );
+                    },
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
     );
+  }
+
+  // Create drag update handler with effective width
+  Function(DragUpdateDetails) _buildDragUpdate(double effectiveWidth) {
+    return (DragUpdateDetails details) {
+      // Guard against updates during completion animation
+      if (_isCompleted || _hasCompletedThisGesture) return;
+
+      // Calculate progress from the drag start position
+      final dragDistance = details.localPosition.dx - _dragStartX;
+
+      // Only update if dragging to the right and minimum threshold met
+      if (dragDistance < widget.minDragDistance) return;
+
+      final progress =
+          (details.localPosition.dx / effectiveWidth).clamp(0.0, 1.0);
+      _controller.value = progress;
+
+      // Trigger completion only once per gesture
+      if (progress >= widget.completionThreshold && !_hasCompletedThisGesture) {
+        setState(() {
+          _isCompleted = true;
+          _hasCompletedThisGesture = true;
+        });
+
+        _controller
+            .animateTo(
+          1.0,
+          duration: Duration(milliseconds: widget.fillAnimationDuration),
+          curve: widget.completionCurve,
+        )
+            .then((_) {
+          widget.onComplete();
+          Future.delayed(const Duration(milliseconds: 400), () {
+            if (mounted) {
+              setState(() {
+                _isCompleted = false;
+                _isDragging = false;
+              });
+              _controller.animateBack(
+                0.0,
+                duration: Duration(milliseconds: widget.resetAnimationDuration),
+                curve: widget.resetCurve,
+              );
+              _bounceController.forward(from: 0);
+            }
+          });
+        });
+      }
+    };
   }
 }
