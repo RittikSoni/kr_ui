@@ -453,6 +453,40 @@ final ComponentInfo kruiCarouselInfo = ComponentInfo(
         );
       },
     ),
+    PresetInfo(
+      name: 'Indicator Styles',
+      description: 'Showcase all indicator types',
+      code: '''// Dots indicator (default)
+KruiCarousel(
+  items: [...],
+  indicatorType: CarouselIndicatorType.dots,
+)
+
+// Bars indicator
+KruiCarousel(
+  items: [...],
+  indicatorType: CarouselIndicatorType.bars,
+)
+
+// Numbers indicator
+KruiCarousel(
+  items: [...],
+  indicatorType: CarouselIndicatorType.numbers,
+)
+
+// Thumbnails indicator
+KruiCarousel(
+  items: [...],
+  indicatorType: CarouselIndicatorType.thumbnails,
+)
+
+// No indicators
+KruiCarousel(
+  items: [...],
+  showIndicators: false,
+)''',
+      builder: () => const _IndicatorStylesDemo(),
+    ),
   ],
   demoBuilder: () {
     return Container(
@@ -507,6 +541,104 @@ final ComponentInfo kruiCarouselInfo = ComponentInfo(
     );
   },
 );
+
+// Indicator Styles Demo
+class _IndicatorStylesDemo extends StatelessWidget {
+  const _IndicatorStylesDemo();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Text(
+            'Dots Indicator',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          KruiCarousel(
+            height: 180,
+            styleMode: CarouselStyleMode.simple,
+            backgroundColor: Colors.grey.shade900,
+            indicatorType: CarouselIndicatorType.dots,
+            items: _buildDemoItems(),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Bars Indicator',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          KruiCarousel(
+            height: 180,
+            styleMode: CarouselStyleMode.simple,
+            backgroundColor: Colors.grey.shade900,
+            indicatorType: CarouselIndicatorType.bars,
+            items: _buildDemoItems(),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Numbers Indicator',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          KruiCarousel(
+            height: 180,
+            styleMode: CarouselStyleMode.simple,
+            backgroundColor: Colors.grey.shade900,
+            indicatorType: CarouselIndicatorType.numbers,
+            items: _buildDemoItems(),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Thumbnails Indicator',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          KruiCarousel(
+            height: 180,
+            styleMode: CarouselStyleMode.simple,
+            backgroundColor: Colors.grey.shade900,
+            indicatorType: CarouselIndicatorType.thumbnails,
+            items: _buildDemoItems(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildDemoItems() {
+    final colors = [
+      [Colors.purple.shade600, Colors.blue.shade600],
+      [Colors.pink.shade600, Colors.orange.shade600],
+      [Colors.teal.shade600, Colors.green.shade600],
+    ];
+
+    return List.generate(3, (index) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: colors[index],
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Text(
+            'Slide ${index + 1}',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    });
+  }
+}
 
 Widget _buildTestimonialCard(
   String quote,

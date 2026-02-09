@@ -1,3 +1,18 @@
+## 0.0.4
+
+- Fixes
+  - Scaffold integration preset builder error
+
+- Improvements
+  - Form
+  - Liquid swipe button
+  - Glassy sheet
+  - Modern Bottom nav
+  - Ripple reveal
+  - avatar group
+  - Carousel
+  - Animated background
+
 ## 0.0.3
 
 - New Components
