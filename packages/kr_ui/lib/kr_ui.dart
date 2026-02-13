@@ -61,3 +61,4 @@ export 'src/krui_gap.dart';
 export 'src/krui_separator.dart';
 export 'src/krui_avatar.dart';
 export 'src/krui_app_bar.dart';
+export 'src/krui_otp_field.dart';

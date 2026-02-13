@@ -37,6 +37,8 @@ import '../registry/components/separator.dart';
 import '../registry/components/avatar.dart';
 import '../registry/components/app_bar.dart';
 
+import '../registry/components/otp_field.dart';
+
 export 'component_models.dart';
 
 /// Central registry of all kr_ui components
@@ -56,6 +58,7 @@ class ComponentRegistry {
     kruiToastInfo,
     kruiSnackbarInfo,
     kruiTextFieldInfo,
+    kruiOtpFieldInfo,
     kruiSelectInfo,
     kruiMultiSelectInfo,
     kruiRadioInfo,
