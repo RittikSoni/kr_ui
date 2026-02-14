@@ -11,15 +11,9 @@ Use this section to tell people about which versions of your project are current
 
 ---
 
-## Reporting a Vulnerability
+## 📫 Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a reported vulnerability, what to expect if the vulnerability is accepted or rejected, etc.
-
-If you discover a security vulnerability within this project, please send an e-mail to Rittik Soni via [contact.kingrittik@gmail.com](mailto:contact.kingrittik@gmail.com). All security vulnerabilities will be promptly addressed.
-
----
+If you discover a security issue, **please report it privately** using one of the following options:
 
 ### 🔗 Contact Channels
 
@@ -27,6 +21,30 @@ If you discover a security vulnerability within this project, please send an e-m
 - 💬 Discord: DM any `@👑 KR Team member` or `@Admin` in our [Community Server](https://discord.gg/Tmn6BKwSnr)
 
 We aim to acknowledge all reports within **24 hours**.
+
+---
+
+## 🛡️ Responsible Disclosure
+
+We appreciate your help in keeping this project secure. For valid vulnerabilities:
+
+- We’ll acknowledge your report within 24 hours.
+- We aim to fix critical issues within 7 working days.
+- Credit will be given (with your consent).
+
+---
+
+## 🔒 Scope
+
+This policy covers:
+
+- All code in this repository.
+- Any official services deployed by our team.
+
+**Out of Scope:**
+
+- Issues caused by 3rd-party dependencies.
+- Misuse or insecure deployments beyond our control.
 
 ---
 
