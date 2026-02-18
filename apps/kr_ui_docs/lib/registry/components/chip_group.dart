@@ -470,9 +470,9 @@ final kruiChipGroupInfo = ComponentInfo(
   ),
 )''',
       builder: () => _wrap(StatefulBuilder(builder: (context, setState) {
-        final Set<String> _selected = {};
-        void _toggle(String id) => setState(() =>
-            _selected.contains(id) ? _selected.remove(id) : _selected.add(id));
+        final Set<String> selected = {};
+        void toggle(String id) => setState(() =>
+            selected.contains(id) ? selected.remove(id) : selected.add(id));
 
         return Wrap(
           spacing: 10,
@@ -480,8 +480,8 @@ final kruiChipGroupInfo = ComponentInfo(
           children: [
             KruiTagChip(
               label: 'Bold text chip',
-              isSelected: _selected.contains('a'),
-              onTap: () => _toggle('a'),
+              isSelected: selected.contains('a'),
+              onTap: () => toggle('a'),
               variant: KruiChipVariant.glassy,
               child: const Text(
                 'Bold  ·  14sp',
@@ -495,8 +495,8 @@ final kruiChipGroupInfo = ComponentInfo(
             ),
             KruiTagChip(
               label: 'Gradient',
-              isSelected: _selected.contains('c'),
-              onTap: () => _toggle('c'),
+              isSelected: selected.contains('c'),
+              onTap: () => toggle('c'),
               variant: KruiChipVariant.glassy,
               child: ShaderMask(
                 shaderCallback: (bounds) => const LinearGradient(
@@ -514,8 +514,8 @@ final kruiChipGroupInfo = ComponentInfo(
             ),
             KruiTagChip(
               label: 'Badge chip',
-              isSelected: _selected.contains('d'),
-              onTap: () => _toggle('d'),
+              isSelected: selected.contains('d'),
+              onTap: () => toggle('d'),
               variant: KruiChipVariant.glassy,
               accentColor: const Color(0xFFFF6584),
               child: Stack(

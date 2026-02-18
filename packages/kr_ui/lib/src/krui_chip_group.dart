@@ -1097,8 +1097,6 @@ class _KruiChipGroupState extends State<KruiChipGroup>
       label: data.label,
       icon: data.icon,
       avatar: data.avatar,
-      // ── Custom child passthrough ──────────────────────────────────────────
-      child: data.customChild,
       applyPaddingToChild: data.applyPaddingToCustomChild,
       isSelected: isSelected,
       isDisabled: data.isDisabled,
@@ -1119,6 +1117,8 @@ class _KruiChipGroupState extends State<KruiChipGroup>
       onDeleted: widget.onChipDeleted != null
           ? () => _handleChipDelete(data.id)
           : null,
+      // ── Custom child passthrough ──────────────────────────────────────────
+      child: data.customChild,
     );
 
     // Stagger animation wrapper.
