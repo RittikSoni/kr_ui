@@ -36,6 +36,7 @@ import '../registry/components/gap.dart';
 import '../registry/components/separator.dart';
 import '../registry/components/avatar.dart';
 import '../registry/components/app_bar.dart';
+import '../registry/components/chip_group.dart';
 
 import '../registry/components/otp_field.dart';
 
@@ -82,6 +83,7 @@ class ComponentRegistry {
     kruiSeparatorInfo,
     kruiAvatarInfo,
     kruiAppBarInfo,
+    kruiChipGroupInfo,
   ];
 
   /// Get all registered components
