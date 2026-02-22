@@ -116,7 +116,7 @@ class MyApp extends StatelessWidget {
 
 ✅ Accordion
 
-✅ Carousel
+✅ Carousel (with built-in indicators, animations, and more)
 
 ✅ GlassyCard
 
@@ -136,7 +136,7 @@ class MyApp extends StatelessWidget {
 
 ✅ Form
 
-✅ TextField
+✅ TextField (with built-in validators, error messages, and more)
 
 ✅ Select
 
@@ -175,6 +175,10 @@ class MyApp extends StatelessWidget {
 ✅ AnimatedGradientBackground
 
 ✅ ParticleBurst
+
+✅ OTPInput
+
+✅ ChipGroup
 
 check out [kr_ui_docs](https://rittiksoni.github.io/kr_ui/) for more examples
 

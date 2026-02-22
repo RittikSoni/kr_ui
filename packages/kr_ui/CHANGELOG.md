@@ -1,7 +1,12 @@
+## 0.0.6
+
+- New Widget / Component
+  - ChipGroup
+
 ## 0.0.5
 
 - New Widget
-  - OTP Field
+  - OTP Field / OTP Input
 
 ## 0.0.4
 
