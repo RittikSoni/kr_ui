@@ -1,3 +1,8 @@
+## 0.0.7
+
+- New Widget / Component
+  - Animated Gradient Border
+
 ## 0.0.6
 
 - New Widget / Component
