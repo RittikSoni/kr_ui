@@ -538,9 +538,9 @@ class KruiGradientBorder extends StatefulWidget {
             : KruiGradientBorderVariant.glow,
         style: KruiGradientBorderStyle(
           colors: [
-            glowColor.withOpacity(0.6),
+            glowColor.withValues(alpha: 0.6),
             glowColor,
-            glowColor.withOpacity(0.6)
+            glowColor.withValues(alpha: 0.6)
           ],
           borderWidth: borderWidth,
           borderRadius: borderRadius ?? BorderRadius.circular(12),
@@ -734,7 +734,7 @@ class _GradientBorderPainter extends CustomPainter {
     ..strokeCap = StrokeCap.round
     ..shader = LinearGradient(
       colors: style.colors
-          .map((c) => c.withOpacity((c.opacity * opacity).clamp(0.0, 1.0)))
+          .map((c) => c.withValues(alpha: (c.a * opacity).clamp(0.0, 1.0)))
           .toList(),
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
@@ -800,7 +800,7 @@ class _GradientBorderPainter extends CustomPainter {
           ..maskFilter = MaskFilter.blur(BlurStyle.normal, style.glowSpread)
           ..shader = LinearGradient(
             colors: style.colors
-                .map((c) => c.withOpacity((opacity * 0.35).clamp(0, 1)))
+                .map((c) => c.withValues(alpha: (opacity * 0.35).clamp(0, 1)))
                 .toList(),
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -848,7 +848,7 @@ class _GradientBorderPainter extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = style.borderWidth + style.glowSpread * 2
-          ..color = gc.withOpacity(0.2)
+          ..color = gc.withValues(alpha: 0.2)
           ..maskFilter =
               MaskFilter.blur(BlurStyle.normal, style.glowSpread * 2));
     // Layer 2 — mid halo
@@ -857,7 +857,7 @@ class _GradientBorderPainter extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = style.borderWidth + style.glowSpread
-          ..color = gc.withOpacity(0.45)
+          ..color = gc.withValues(alpha: 0.45)
           ..maskFilter = MaskFilter.blur(BlurStyle.normal, style.glowSpread));
     // Layer 3 — crisp gradient on top
     c.drawRRect(_rr(s), _lp(s));

@@ -445,13 +445,13 @@ class _KruiTagChipState extends State<KruiTagChip>
   Color _glassBackground(BuildContext context) {
     if (widget.isSelected) {
       return (widget.selectedColor ?? _resolvedAccent)
-          .withOpacity(widget.glassOpacity + 0.12);
+          .withValues(alpha: widget.glassOpacity + 0.12);
     }
     return (widget.backgroundColor ??
             (Theme.of(context).brightness == Brightness.dark
                 ? Colors.white
                 : Colors.white))
-        .withOpacity(widget.glassOpacity);
+        .withValues(alpha: widget.glassOpacity);
   }
 
   Color _simpleBackground(BuildContext context) {
@@ -462,8 +462,9 @@ class _KruiTagChipState extends State<KruiTagChip>
       // Flat tint: blend accent into the surface at a fixed alpha.
       return isDark
           ? Color.alphaBlend(
-              _resolvedAccent.withOpacity(0.28), const Color(0xFF1E1E1E))
-          : Color.alphaBlend(_resolvedAccent.withOpacity(0.13), Colors.white);
+              _resolvedAccent.withValues(alpha: 0.28), const Color(0xFF1E1E1E))
+          : Color.alphaBlend(
+              _resolvedAccent.withValues(alpha: 0.13), Colors.white);
     }
     // Unselected: fully opaque surface — no opacity manipulation.
     return widget.backgroundColor ??
@@ -475,8 +476,8 @@ class _KruiTagChipState extends State<KruiTagChip>
     final base = _simpleBackground(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return isDark
-        ? Color.alphaBlend(Colors.white.withOpacity(0.06), base)
-        : Color.alphaBlend(Colors.black.withOpacity(0.04), base);
+        ? Color.alphaBlend(Colors.white.withValues(alpha: 0.06), base)
+        : Color.alphaBlend(Colors.black.withValues(alpha: 0.04), base);
   }
 
   Color get _labelColor {
@@ -596,7 +597,7 @@ class _KruiTagChipState extends State<KruiTagChip>
     if (widget.child != null) {
       // Close icon colour: derive from accent / white depending on variant.
       final Color closeColor = isGlassy
-          ? Colors.white.withOpacity(0.75)
+          ? Colors.white.withValues(alpha: 0.75)
           : (widget.isSelected ? _resolvedAccent : Colors.black54);
 
       // If deletable, we must wrap in a Row to append the close icon.
@@ -693,7 +694,7 @@ class _KruiTagChipState extends State<KruiTagChip>
                 child: Icon(
                   Icons.close_rounded,
                   size: _deleteIconSize,
-                  color: textColor.withOpacity(0.7),
+                  color: textColor.withValues(alpha: 0.7),
                 ),
               ),
             ),
@@ -732,10 +733,10 @@ class _GlassyChipSurface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderColor = isSelected
-        ? accentColor.withOpacity(0.75)
+        ? accentColor.withValues(alpha: 0.75)
         : isHovered
-            ? Colors.white.withOpacity(0.45)
-            : Colors.white.withOpacity(0.28);
+            ? Colors.white.withValues(alpha: 0.45)
+            : Colors.white.withValues(alpha: 0.28);
 
     return AnimatedContainer(
       duration: animationDuration,
@@ -759,16 +760,16 @@ class _GlassyChipSurface extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        accentColor.withOpacity(0.20),
-                        accentColor.withOpacity(0.08),
+                        accentColor.withValues(alpha: 0.20),
+                        accentColor.withValues(alpha: 0.08),
                       ],
                     )
                   : LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.white.withOpacity(isHovered ? 0.22 : 0.15),
-                        Colors.white.withOpacity(0.05),
+                        Colors.white.withValues(alpha: isHovered ? 0.22 : 0.15),
+                        Colors.white.withValues(alpha: 0.05),
                       ],
                     ),
             ),
@@ -820,7 +821,7 @@ class _SimpleChipSurface extends StatelessWidget {
     } else if (isHovered) {
       // Blend accent at 40% into the surface for a solid hover ring.
       borderColor = Color.alphaBlend(
-        accentColor.withOpacity(0.40),
+        accentColor.withValues(alpha: 0.40),
         backgroundColor,
       );
     } else {
@@ -840,7 +841,7 @@ class _SimpleChipSurface extends StatelessWidget {
         ? [
             BoxShadow(
               color: Color.alphaBlend(
-                accentColor.withOpacity(0.20),
+                accentColor.withValues(alpha: 0.20),
                 Colors.transparent,
               ),
               blurRadius: 4,
