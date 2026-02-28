@@ -46,6 +46,7 @@ class ComponentInfo {
   final String advancedExample;
   final List<PresetInfo> presets;
   final Widget Function() demoBuilder;
+  final String? videoUrl;
 
   const ComponentInfo({
     required this.id,
@@ -60,5 +61,6 @@ class ComponentInfo {
     required this.advancedExample,
     required this.presets,
     required this.demoBuilder,
+    this.videoUrl,
   });
 }

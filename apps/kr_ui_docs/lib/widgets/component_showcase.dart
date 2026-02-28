@@ -4,6 +4,8 @@ import '../config/component_registry.dart';
 import '../theme/app_theme.dart';
 import '../theme/theme_provider.dart';
 import '../widgets/tabbed_example.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/property_table.dart';
 import '../widgets/component_navigation.dart';
 
@@ -168,6 +170,12 @@ class _ComponentShowcaseState extends State<ComponentShowcase> {
                         key: _sectionKeys['Overview']),
 
                     const SizedBox(height: AppTheme.space48),
+
+                    if (widget.component.videoUrl != null) ...[
+                      _buildVideoSection(
+                          isMobile, dynamicTheme, widget.component.videoUrl!),
+                      const SizedBox(height: AppTheme.space48),
+                    ],
 
                     // Usage section (Basic Example)
                     _buildUsageSection(isMobile, dynamicTheme),
@@ -405,6 +413,98 @@ class _ComponentShowcaseState extends State<ComponentShowcase> {
             ),
           );
         }),
+      ],
+    );
+  }
+
+  String? _parseYoutubeId(String url) {
+    if (url.contains('youtu.be/')) {
+      return url.split('youtu.be/').last.split('?').first;
+    } else if (url.contains('youtube.com/shorts/')) {
+      return url.split('youtube.com/shorts/').last.split('?').first;
+    } else if (url.contains('youtube.com/watch')) {
+      final uri = Uri.parse(url);
+      return uri.queryParameters['v'];
+    }
+    return null;
+  }
+
+  Widget _buildVideoSection(
+      bool isMobile, DynamicTheme dynamicTheme, String url) {
+    final videoId = _parseYoutubeId(url);
+    final thumbnailUrl = videoId != null
+        ? 'https://img.youtube.com/vi/$videoId/hqdefault.jpg'
+        : null;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Video Showcase',
+          style: AppTheme.h2.copyWith(color: dynamicTheme.textPrimary),
+        ),
+        const SizedBox(height: AppTheme.space24),
+        InkWell(
+          onTap: () => launchUrl(Uri.parse(url)),
+          borderRadius: AppTheme.borderRadiusLarge,
+          child: Container(
+            height: isMobile ? 220 : 360,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: dynamicTheme.surfaceCard,
+              borderRadius: AppTheme.borderRadiusLarge,
+              border: Border.all(color: dynamicTheme.borderLight),
+              image: thumbnailUrl != null
+                  ? DecorationImage(
+                      image: NetworkImage(thumbnailUrl),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withValues(alpha: 0.4),
+                        BlendMode.darken,
+                      ),
+                    )
+                  : null,
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    shape: BoxShape.circle,
+                    border:
+                        Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                  ),
+                  child: const Icon(
+                    FontAwesomeIcons.play,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                ),
+                Positioned(
+                  bottom: 16,
+                  left: 20,
+                  right: 20,
+                  child: Row(
+                    children: [
+                      const Icon(FontAwesomeIcons.youtube,
+                          color: Colors.white, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Watch on YouTube',
+                        style: AppTheme.bodyMedium.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

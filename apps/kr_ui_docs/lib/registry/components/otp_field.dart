@@ -8,7 +8,8 @@ final kruiOtpFieldInfo = ComponentInfo(
   name: 'KruiOtpField',
   displayName: 'OTP Field',
   description:
-      'A highly customizable OTP (One Time Password) input field with support for various styles, animations, and states (error/success).',
+      'A customizable OTP (One-Time Password) input field supporting single and multi-node input layouts with built-in animations, auto-focus, paste support, and various styles (glassy, outlined, filled).',
+  videoUrl: 'https://youtube.com/shorts/bC3D09cUfKk?si=6uccW1NBgtT4iKUY',
   category: 'Forms',
   icon: Icons.password,
   properties: [

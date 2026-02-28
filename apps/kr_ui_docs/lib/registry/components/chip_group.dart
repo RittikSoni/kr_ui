@@ -24,6 +24,7 @@ final kruiChipGroupInfo = ComponentInfo(
   displayName: 'Chip Group',
   description:
       'A flexible chip group component supporting single/multi selection, custom layouts, and various visual styles. Perfect for filters, tags, and choices.',
+  videoUrl: 'https://youtube.com/shorts/fXIkzjLFtxo?si=i2qTrimhQoSfNgCp',
   category: 'Selection',
   icon: Icons.sell_outlined,
   properties: [
