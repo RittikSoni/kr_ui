@@ -141,7 +141,8 @@ KruiCountdown.circularProgress(
     ),
     PresetInfo(
       name: 'Custom Formatter',
-      description: 'Fully custom display string using the formatBuilder property',
+      description:
+          'Fully custom display string using the formatBuilder property',
       code: '''KruiCountdown.simple(
   duration: const Duration(minutes: 5),
   controller: KruiCountdownController(initialDuration: const Duration(minutes: 5)),
@@ -301,7 +302,8 @@ class _KruiCountdownDemoState extends State<_KruiCountdownDemo> {
           controller: _controller,
           label: "COUNTDOWN",
           primaryColor: Colors.blueAccent,
-          onComplete: () => setState(() {}), // Refresh UI on completion for label/color
+          onComplete: () =>
+              setState(() {}), // Refresh UI on completion for label/color
           onAction: () => _controller.restart(), // Example action
         ),
         const SizedBox(height: 32),
@@ -317,7 +319,8 @@ class _KruiCountdownDemoState extends State<_KruiCountdownDemo> {
                 }
                 setState(() {});
               },
-              icon: Icon(_controller.isRunning ? Icons.pause : Icons.play_arrow),
+              icon:
+                  Icon(_controller.isRunning ? Icons.pause : Icons.play_arrow),
               tooltip: _controller.isRunning ? 'Pause' : 'Start',
             ),
             const SizedBox(width: 16),
