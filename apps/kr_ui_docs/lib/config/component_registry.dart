@@ -40,6 +40,7 @@ import '../registry/components/chip_group.dart';
 
 import '../registry/components/otp_field.dart';
 import '../registry/components/gradient_border.dart';
+import '../registry/components/countdown.dart';
 
 export 'component_models.dart';
 
@@ -86,6 +87,7 @@ class ComponentRegistry {
     kruiAppBarInfo,
     kruiChipGroupInfo,
     kruiGradientBorderInfo,
+    kruiCountdownInfo,
   ];
 
   /// Get all registered components
