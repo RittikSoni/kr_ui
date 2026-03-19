@@ -1,3 +1,8 @@
+## 0.0.8
+
+- New Widget / Component
+  - Countdown
+
 ## 0.0.7
 
 - New Widget / Component

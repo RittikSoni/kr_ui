@@ -4,7 +4,7 @@
 
 **Premium glassmorphic UI, Elegant Simple & Clean UI components for Flutter**
 
-Beautiful, customizable iOS-style glass effects, Elegant Simple & Clean UI. Pure Flutter. Zero dependencies.
+Flutter UI components library with glassmorphic, elegant, minimal & clean UI components. Beautiful, customizable widgets with animations & frosted glass effects. Pure Flutter, zero dependencies.
 
 [![pub package](https://img.shields.io/pub/v/kr_ui.svg)](https://pub.dev/packages/kr_ui)
 [![pub points](https://img.shields.io/pub/points/kr_ui)](https://pub.dev/packages/kr_ui/score)
@@ -181,6 +181,8 @@ class MyApp extends StatelessWidget {
 ✅ ChipGroup 
 
 ✅ AnimatedGradientBorder
+
+✅ Countdown
 
 check out [kr_ui_docs](https://rittiksoni.github.io/kr_ui/) for more examples
 
