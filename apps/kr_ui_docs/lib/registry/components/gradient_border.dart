@@ -8,6 +8,7 @@ final kruiGradientBorderInfo = ComponentInfo(
   displayName: 'Gradient Border',
   description:
       'A zero-dependency, production-grade gradient border wrapper. Features various animated and static variants perfect for cards, avatars, drop zones, statuses, and focused inputs.',
+  videoUrl: 'https://youtube.com/shorts/BX6rBDuNQtw',
   category: 'Containers',
   icon: Icons.border_outer_rounded,
   properties: [

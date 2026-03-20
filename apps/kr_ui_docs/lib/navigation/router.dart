@@ -5,6 +5,7 @@ import '../main.dart';
 import '../pages/home_page.dart';
 import '../pages/components_page.dart';
 import '../pages/getting_started_page.dart';
+import '../pages/video_showcase_page.dart';
 import '../widgets/component_showcase.dart';
 import '../config/component_registry.dart';
 
@@ -27,6 +28,13 @@ class AppRouter {
             pageBuilder: (context, state) => NoTransitionPage(
               key: state.pageKey,
               child: const HomePage(),
+            ),
+          ),
+          GoRoute(
+            path: '/videos',
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              child: const VideoShowcasePage(),
             ),
           ),
           GoRoute(

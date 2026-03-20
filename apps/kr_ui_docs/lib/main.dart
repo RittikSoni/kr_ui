@@ -176,7 +176,7 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
             ? NavigationBar(
                 selectedIndex: _getSelectedIndex(currentPath),
                 onDestinationSelected: (index) {
-                  final routes = ['/', '/components', '/getting-started'];
+                  final routes = ['/', '/components', '/getting-started', '/videos'];
                   context.go(routes[index]);
                 },
                 destinations: const [
@@ -195,6 +195,11 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
                     selectedIcon: Icon(Icons.code),
                     label: 'Docs',
                   ),
+                  NavigationDestination(
+                    icon: Icon(FontAwesomeIcons.youtube),
+                    selectedIcon: Icon(FontAwesomeIcons.youtube),
+                    label: 'Videos',
+                  ),
                 ],
               )
             : null,
@@ -206,6 +211,7 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
     if (path == '/') return 0;
     if (path.startsWith('/components')) return 1;
     if (path.startsWith('/getting-started')) return 2;
+    if (path == '/videos') return 3;
     return 0;
   }
 
@@ -424,6 +430,15 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
             label: 'Getting Started',
             path: '/getting-started',
             isSelected: currentPath.startsWith('/getting-started'),
+          ),
+          _buildNavItem(
+            context,
+            dynamicTheme,
+            icon: FontAwesomeIcons.youtube,
+            selectedIcon: FontAwesomeIcons.youtube,
+            label: 'Videos',
+            path: '/videos',
+            isSelected: currentPath == '/videos',
           ),
 
           const SizedBox(height: 32),

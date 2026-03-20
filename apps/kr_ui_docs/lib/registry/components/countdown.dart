@@ -8,6 +8,7 @@ final kruiCountdownInfo = ComponentInfo(
   displayName: 'Countdown',
   description:
       'A versatile countdown timer component for OTP resends, fitness workouts, event launches, and ecommerce deals. Supports multiple visual variants including glassmorphism and circular progress.',
+  videoUrl: 'https://youtube.com/shorts/y0oLXe8-n-Y',
   category: 'Utilities',
   icon: Icons.timer_outlined,
   properties: [
