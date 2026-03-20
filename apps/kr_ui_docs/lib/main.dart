@@ -176,7 +176,12 @@ class _ShowcaseHomePageState extends State<ShowcaseHomePage> {
             ? NavigationBar(
                 selectedIndex: _getSelectedIndex(currentPath),
                 onDestinationSelected: (index) {
-                  final routes = ['/', '/components', '/getting-started', '/videos'];
+                  final routes = [
+                    '/',
+                    '/components',
+                    '/getting-started',
+                    '/videos'
+                  ];
                   context.go(routes[index]);
                 },
                 destinations: const [

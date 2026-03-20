@@ -25,7 +25,7 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final dynamicTheme = DynamicTheme(themeProvider);
     final isMobile = AppTheme.isMobile(context);
-    
+
     // Filter components that have a videoUrl and match category/search
     var filteredComponents = ComponentRegistry.all
         .where((c) => c.videoUrl != null && c.videoUrl!.isNotEmpty)
@@ -40,21 +40,25 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
     if (_searchQuery.isNotEmpty) {
       final query = _searchQuery.toLowerCase();
       filteredComponents = filteredComponents
-          .where((c) => 
-            c.displayName.toLowerCase().contains(query) || 
-            c.description.toLowerCase().contains(query))
+          .where((c) =>
+              c.displayName.toLowerCase().contains(query) ||
+              c.description.toLowerCase().contains(query))
           .toList();
     }
 
-    final categories = ['All', ...ComponentRegistry.all
-        .where((c) => c.videoUrl != null && c.videoUrl!.isNotEmpty)
-        .map((c) => c.category)
-        .toSet()
-        .toList()
-      ..sort()];
+    final categories = [
+      'All',
+      ...ComponentRegistry.all
+          .where((c) => c.videoUrl != null && c.videoUrl!.isNotEmpty)
+          .map((c) => c.category)
+          .toSet()
+          .toList()
+        ..sort()
+    ];
 
     // Featured video is the last one added (or we could pick a specific one)
-    final featuredComponent = filteredComponents.isNotEmpty ? filteredComponents.last : null;
+    final featuredComponent =
+        filteredComponents.isNotEmpty ? filteredComponents.last : null;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -69,19 +73,21 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
               Colors.purpleAccent.withValues(alpha: 0.05),
             ],
           ),
-          
+
           CustomScrollView(
             slivers: [
               // Hero Section
               SliverToBoxAdapter(
-                child: _buildHeroSection(context, featuredComponent, isMobile, dynamicTheme),
+                child: _buildHeroSection(
+                    context, featuredComponent, isMobile, dynamicTheme),
               ),
 
               // Filter Bar
               SliverPersistentHeader(
                 pinned: true,
                 delegate: _FilterBarDelegate(
-                  child: _buildFilterBar(context, categories, isMobile, dynamicTheme),
+                  child: _buildFilterBar(
+                      context, categories, isMobile, dynamicTheme),
                 ),
               ),
 
@@ -98,14 +104,19 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                       )
                     : SliverGrid(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: isMobile ? 1 : (MediaQuery.of(context).size.width > 1600 ? 3 : 2),
+                          crossAxisCount: isMobile
+                              ? 1
+                              : (MediaQuery.of(context).size.width > 1600
+                                  ? 3
+                                  : 2),
                           crossAxisSpacing: 32,
                           mainAxisSpacing: 32,
                           mainAxisExtent: isMobile ? 460 : 540,
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            final component = filteredComponents.reversed.toList()[index];
+                            final component =
+                                filteredComponents.reversed.toList()[index];
                             return _VideoCard(
                               component: component,
                               isMobile: isMobile,
@@ -116,7 +127,7 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                         ),
                       ),
               ),
-              
+
               const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
           ),
@@ -125,16 +136,20 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
     );
   }
 
-  Widget _buildHeroSection(BuildContext context, ComponentInfo? featured, bool isMobile, DynamicTheme dynamicTheme) {
+  Widget _buildHeroSection(BuildContext context, ComponentInfo? featured,
+      bool isMobile, DynamicTheme dynamicTheme) {
     if (featured == null) {
       return Padding(
-        padding: EdgeInsets.fromLTRB(isMobile ? 24 : 48, 64, isMobile ? 24 : 48, 24),
+        padding:
+            EdgeInsets.fromLTRB(isMobile ? 24 : 48, 64, isMobile ? 24 : 48, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Video Showcase',
-              style: (isMobile ? AppTheme.h1.copyWith(fontSize: 32) : AppTheme.h1.copyWith(fontSize: 56))
+              style: (isMobile
+                      ? AppTheme.h1.copyWith(fontSize: 32)
+                      : AppTheme.h1.copyWith(fontSize: 56))
                   .copyWith(color: dynamicTheme.textPrimary),
             ),
             const SizedBox(height: 16),
@@ -157,7 +172,8 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(isMobile ? 24 : 48, 64, isMobile ? 24 : 48, 48),
+      padding:
+          EdgeInsets.fromLTRB(isMobile ? 24 : 48, 64, isMobile ? 24 : 48, 48),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -169,7 +185,8 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                   color: Colors.red.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(FontAwesomeIcons.youtube, color: Colors.red, size: 24),
+                child: const Icon(FontAwesomeIcons.youtube,
+                    color: Colors.red, size: 24),
               ),
               const SizedBox(width: 16),
               Text(
@@ -183,18 +200,21 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
             ],
           ),
           const SizedBox(height: 24),
-          
           LayoutBuilder(
             builder: (context, constraints) {
               final useVertical = isMobile || constraints.maxWidth < 900;
-              
+
               final content = [
                 // Featured Video Preview
                 Expanded(
                   flex: useVertical ? 0 : 3,
                   child: KruiGradientBorder(
                     style: KruiGradientBorderStyle(
-                      colors: [dynamicTheme.primary, Colors.purpleAccent, dynamicTheme.primary],
+                      colors: [
+                        dynamicTheme.primary,
+                        Colors.purpleAccent,
+                        dynamicTheme.primary
+                      ],
                       borderWidth: 3,
                       borderRadius: BorderRadius.circular(24),
                     ),
@@ -215,7 +235,8 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                                   width: double.infinity,
                                   height: double.infinity,
                                   fit: BoxFit.cover,
-                                  errorBuilder: (_, __, ___) => Container(color: Colors.black26),
+                                  errorBuilder: (_, __, ___) =>
+                                      Container(color: Colors.black26),
                                 ),
                               Container(
                                 decoration: BoxDecoration(
@@ -234,9 +255,12 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                                 decoration: BoxDecoration(
                                   color: Colors.white.withValues(alpha: 0.2),
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                                  border: Border.all(
+                                      color:
+                                          Colors.white.withValues(alpha: 0.3)),
                                 ),
-                                child: const Icon(FontAwesomeIcons.play, color: Colors.white, size: 40),
+                                child: const Icon(FontAwesomeIcons.play,
+                                    color: Colors.white, size: 40),
                               ),
                             ],
                           ),
@@ -245,7 +269,7 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                     ),
                   ),
                 ),
-                
+
                 if (!useVertical) const SizedBox(width: 48),
                 if (useVertical) const SizedBox(height: 32),
 
@@ -257,11 +281,14 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: dynamicTheme.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: dynamicTheme.primary.withValues(alpha: 0.2)),
+                          border: Border.all(
+                              color:
+                                  dynamicTheme.primary.withValues(alpha: 0.2)),
                         ),
                         child: Text(
                           featured.category,
@@ -274,8 +301,11 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                       const SizedBox(height: 16),
                       Text(
                         featured.displayName,
-                        style: (isMobile ? AppTheme.h1 : AppTheme.h1.copyWith(fontSize: 48))
-                            .copyWith(color: dynamicTheme.textPrimary, height: 1.1),
+                        style: (isMobile
+                                ? AppTheme.h1
+                                : AppTheme.h1.copyWith(fontSize: 48))
+                            .copyWith(
+                                color: dynamicTheme.textPrimary, height: 1.1),
                       ),
                       const SizedBox(height: 16),
                       Text(
@@ -290,7 +320,8 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                       Row(
                         children: [
                           KruiGlassyButton(
-                            onPressed: () => launchUrl(Uri.parse(featured.videoUrl!)),
+                            onPressed: () =>
+                                launchUrl(Uri.parse(featured.videoUrl!)),
                             color: Colors.red,
                             child: const Row(
                               children: [
@@ -302,7 +333,8 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                           ),
                           const SizedBox(width: 16),
                           KruiGlassyButton(
-                            onPressed: () => context.go('/components/${featured.id}'),
+                            onPressed: () =>
+                                context.go('/components/${featured.id}'),
                             child: const Text('Documentation'),
                           ),
                         ],
@@ -312,8 +344,10 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                 ),
               ];
 
-              return useVertical 
-                  ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: content) 
+              return useVertical
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: content)
                   : Row(children: content);
             },
           ),
@@ -322,7 +356,8 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
     );
   }
 
-  Widget _buildFilterBar(BuildContext context, List<String> categories, bool isMobile, DynamicTheme dynamicTheme) {
+  Widget _buildFilterBar(BuildContext context, List<String> categories,
+      bool isMobile, DynamicTheme dynamicTheme) {
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -347,16 +382,24 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 12),
                         child: KruiGlassyButton(
-                          onPressed: () => setState(() => _selectedCategory = cat),
-                          color: isSelected ? dynamicTheme.primary : dynamicTheme.surfaceCard,
+                          onPressed: () =>
+                              setState(() => _selectedCategory = cat),
+                          color: isSelected
+                              ? dynamicTheme.primary
+                              : dynamicTheme.surfaceCard,
                           blur: isSelected ? 12 : 8,
                           opacity: isSelected ? 0.3 : 0.1,
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
                           child: Text(
                             cat,
                             style: TextStyle(
-                              color: isSelected ? Colors.white : dynamicTheme.textPrimary,
-                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                              color: isSelected
+                                  ? Colors.white
+                                  : dynamicTheme.textPrimary,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                             ),
                           ),
                         ),
@@ -374,9 +417,11 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
                     onChanged: (v) => setState(() => _searchQuery = v),
                     decoration: InputDecoration(
                       hintText: 'Search videos...',
-                      prefixIcon: Icon(Icons.search, color: dynamicTheme.textTertiary),
+                      prefixIcon:
+                          Icon(Icons.search, color: dynamicTheme.textTertiary),
                       filled: true,
-                      fillColor: dynamicTheme.surfaceCard.withValues(alpha: 0.5),
+                      fillColor:
+                          dynamicTheme.surfaceCard.withValues(alpha: 0.5),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(color: dynamicTheme.borderLight),
@@ -407,7 +452,9 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.video_library_outlined, size: 80, color: dynamicTheme.textTertiary.withValues(alpha: 0.3)),
+          Icon(Icons.video_library_outlined,
+              size: 80,
+              color: dynamicTheme.textTertiary.withValues(alpha: 0.3)),
           const SizedBox(height: 24),
           Text(
             'No videos found',
@@ -416,7 +463,8 @@ class _VideoShowcasePageState extends State<VideoShowcasePage> {
           const SizedBox(height: 12),
           Text(
             'Try adjusting your search or filters',
-            style: AppTheme.bodyLarge.copyWith(color: dynamicTheme.textTertiary),
+            style:
+                AppTheme.bodyLarge.copyWith(color: dynamicTheme.textTertiary),
           ),
           const SizedBox(height: 32),
           KruiGlassyButton(
@@ -486,16 +534,25 @@ class _VideoCardState extends State<_VideoCard> {
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        transform: Matrix4.identity()..translate(0.0, _isHovered ? -8.0 : 0.0),
+        transform: Matrix4.translationValues(0.0, _isHovered ? -8.0 : 0.0, 0.0),
         child: KruiGradientBorder(
           style: KruiGradientBorderStyle(
-            colors: _isHovered 
-              ? [widget.dynamicTheme.primary, Colors.purpleAccent, widget.dynamicTheme.primary]
-              : [widget.dynamicTheme.borderLight, widget.dynamicTheme.borderLight],
+            colors: _isHovered
+                ? [
+                    widget.dynamicTheme.primary,
+                    Colors.purpleAccent,
+                    widget.dynamicTheme.primary
+                  ]
+                : [
+                    widget.dynamicTheme.borderLight,
+                    widget.dynamicTheme.borderLight
+                  ],
             borderWidth: _isHovered ? 2 : 1,
             borderRadius: BorderRadius.circular(20),
           ),
-          variant: _isHovered ? KruiGradientBorderVariant.shimmer : KruiGradientBorderVariant.staticGradient,
+          variant: _isHovered
+              ? KruiGradientBorderVariant.shimmer
+              : KruiGradientBorderVariant.staticGradient,
           child: KruiGlassyCard(
             borderRadius: BorderRadius.circular(18),
             padding: EdgeInsets.zero,
@@ -506,7 +563,8 @@ class _VideoCardState extends State<_VideoCard> {
                 AspectRatio(
                   aspectRatio: 16 / 9,
                   child: InkWell(
-                    onTap: () => launchUrl(Uri.parse(widget.component.videoUrl!)),
+                    onTap: () =>
+                        launchUrl(Uri.parse(widget.component.videoUrl!)),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -516,7 +574,8 @@ class _VideoCardState extends State<_VideoCard> {
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Container(color: Colors.black12),
+                            errorBuilder: (_, __, ___) =>
+                                Container(color: Colors.black12),
                           ),
                         Container(
                           decoration: BoxDecoration(
@@ -538,22 +597,28 @@ class _VideoCardState extends State<_VideoCard> {
                             decoration: BoxDecoration(
                               color: Colors.white.withValues(alpha: 0.2),
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                              border: Border.all(
+                                  color: Colors.white.withValues(alpha: 0.3)),
                             ),
-                            child: const Icon(FontAwesomeIcons.play, color: Colors.white, size: 24),
+                            child: const Icon(FontAwesomeIcons.play,
+                                color: Colors.white, size: 24),
                           ),
                         ),
                         Positioned(
                           top: 12,
                           right: 12,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: (_isHovered ? Colors.red : Colors.black).withValues(alpha: 0.8),
+                              color: (_isHovered ? Colors.red : Colors.black)
+                                  .withValues(alpha: 0.8),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
-                              widget.component.videoUrl!.contains('shorts') ? 'SHORTS' : 'TUTORIAL',
+                              widget.component.videoUrl!.contains('shorts')
+                                  ? 'SHORTS'
+                                  : 'TUTORIAL',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 9,
@@ -567,7 +632,7 @@ class _VideoCardState extends State<_VideoCard> {
                     ),
                   ),
                 ),
-                
+
                 // Content
                 Expanded(
                   child: Padding(
@@ -577,7 +642,8 @@ class _VideoCardState extends State<_VideoCard> {
                       children: [
                         Row(
                           children: [
-                            Icon(widget.component.icon, size: 18, color: widget.dynamicTheme.primary),
+                            Icon(widget.component.icon,
+                                size: 18, color: widget.dynamicTheme.primary),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
@@ -605,14 +671,16 @@ class _VideoCardState extends State<_VideoCard> {
                           children: [
                             Expanded(
                               child: KruiGlassyButton(
-                                onPressed: () => context.go('/components/${widget.component.id}'),
+                                onPressed: () => context
+                                    .go('/components/${widget.component.id}'),
                                 child: const Text('Doc'),
                               ),
                             ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: KruiGlassyButton(
-                                onPressed: () => launchUrl(Uri.parse(widget.component.videoUrl!)),
+                                onPressed: () => launchUrl(
+                                    Uri.parse(widget.component.videoUrl!)),
                                 color: Colors.red,
                                 opacity: 0.15,
                                 child: const Text('Watch'),
@@ -639,7 +707,8 @@ class _FilterBarDelegate extends SliverPersistentHeaderDelegate {
   _FilterBarDelegate({required this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child;
   }
 
